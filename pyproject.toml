@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "dreamai"
+version = "2.0"
+description = "🔂"
+authors = ["Hamza Farhan <thehamza96@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.12"
+notebook = "^7.1.2"
+ipython = "^8.23.0"
+ipywidgets = "^8.1.2"
+pytest = "^8.1.1"
+ruff = "^0.3.5"
+python-dotenv = "^1.0.1"
+termcolor = "^2.4.0"
+openai = "^1.16.1"
+tiktoken = "^0.6.0"
+instructor = "^1.0.0"
+langchain = "^0.1.14"
+fastapi = "^0.110.1"
+demoji = "^1.1.0"
+unstructured = "^0.13.0"
+litellm = "^1.34.22"
+dspy-ai = "^2.4.0"
+pypdf = "^4.1.0"
+chromadb = "^0.4.24"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
