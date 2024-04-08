@@ -45,6 +45,7 @@ def pdf_to_collection(
     delete_existing: bool = CHROMA_DELETE_EXISTING,
     embedding_model: str = CHROMA_EMBEDDING_MODEL,
     device: str = CHROMA_DEVICE,
+    add_links: bool = True,
 ) -> ChromaCollection:
     pdf_docs = pdf_to_docs(
         pdf_file=pdf_file,
@@ -59,6 +60,5 @@ def pdf_to_collection(
         embedding_model=embedding_model,
         device=device,
     )
-    ids, docs, metadatas = lc_docs_to_chroma_docs(pdf_docs)
-    collection.add(ids=ids, documents=docs, metadatas=metadatas)
+    collection.add(**lc_docs_to_chroma_docs(pdf_docs, add_links=add_links))
     return collection

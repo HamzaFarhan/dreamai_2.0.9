@@ -4,15 +4,18 @@ from typing import Callable
 from uuid import uuid4
 
 import chromadb
+import torch
 from chromadb import Collection as ChromaCollection
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from langchain_core.documents import Document as LCDocument
+from sentence_transformers import CrossEncoder
 from termcolor import colored
 
 CHROMA_EMBEDDING_MODEL = "multi-qa-mpnet-base-cos-v1"
 CHROMA_DIR = "chroma_dir"
 CHROMA_DEVICE = "cuda"
 CHROMA_DELETE_EXISTING = False
+CROSS_ENCODER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 
 def chroma_collection(
@@ -107,6 +110,8 @@ def traverse_id_tree(
     n_steps: int = 2,
 ) -> list:
     ids = []
+    if metadata is None:
+        return ids
     curr_id = metadata.get(direction + "_id")
     for _ in range(n_steps):
         if not curr_id:
@@ -117,21 +122,39 @@ def traverse_id_tree(
     return ids
 
 
+def rerank_chroma_results(
+    query_text: str,
+    results: dict,
+    cross_encoder_model: str = CROSS_ENCODER_MODEL,
+) -> dict:
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    cross_encoder = CrossEncoder(cross_encoder_model, device=device)
+    pairs = [[query_text, doc] for doc in results["documents"][0]]
+    scores = cross_encoder.predict(pairs)
+    scores_idx = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
+    results = {k: [[v[0][i] for i in scores_idx]] for k, v in results.items() if v}
+    return results
+
+
 def query_collection(
     query_text: str,
     collection: ChromaCollection,
     n_results: int = 10,
-    n_traversal_steps: int = 2,
+    rerank_results: bool = False,
+    n_prev_links: int = 2,
+    n_next_links: int = 2,
     include: list[str] = ["metadatas", "documents"],
+    reranker_model: str = CROSS_ENCODER_MODEL,
 ) -> list[dict]:
     query_res = collection.query(
         query_texts=query_text, n_results=n_results, include=include
     )
-    if n_traversal_steps == 0:
-        return [
-            {k: [v[0][i]] for k, v in query_res.items() if v is not None}
-            for i in range(n_results)
-        ]
+    if rerank_results:
+        query_res = rerank_chroma_results(
+            query_text=query_text,
+            results=query_res,
+            cross_encoder_model=reranker_model,
+        )
     results = []
     for i, metadata in enumerate(query_res["metadatas"][0]):
         curr_id = query_res["ids"][0][i]
@@ -139,15 +162,14 @@ def query_collection(
             metadata=metadata,
             collection=collection,
             direction="prev",
-            n_steps=n_traversal_steps,
+            n_steps=n_prev_links,
         )
         next_ids = traverse_id_tree(
             metadata=metadata,
             collection=collection,
             direction="next",
-            n_steps=n_traversal_steps,
+            n_steps=n_next_links,
         )
         res_ids = prev_ids[::-1] + [curr_id] + next_ids
-        print(res_ids)
         results.append(collection.get(ids=res_ids, include=include))
     return results

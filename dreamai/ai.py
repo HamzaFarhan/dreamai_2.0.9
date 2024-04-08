@@ -11,9 +11,10 @@ litellm.drop_params = True
 class ModelName(str, Enum):
     GPT_3 = "gpt-3.5-turbo"
     GPT_4 = "gpt-4-turbo-preview"
+    HAIKU = "claude-3-haiku-20240307"
+    SONNET = "claude-3-sonnet-20240229"
+    OPUS = "claude-3-opus-20240229"
     GEMINI = "gemini/gemini-pro"
-    CLAUDE2 = "claude-2.1"
-    CLAUDE3 = "claude-3-haiku-20240307"
     MISTRAL = "anyscale/mistralai/Mistral-7B-Instruct-v0.1"
     MIXTRAL = "anyscale/mistralai/Mixtral-8x7B-Instruct-v0.1"
 
