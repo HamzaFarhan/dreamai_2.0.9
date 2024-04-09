@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dreamai"
-version = "2.0.3"
+version = "2.0.4"
 description = "🔂"
 authors = ["Hamza Farhan <thehamza96@gmail.com>"]
 readme = "README.md"

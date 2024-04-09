@@ -103,23 +103,46 @@ def lc_docs_to_chroma_docs(
     return {"ids": chroma_ids, "documents": chroma_docs, "metadatas": chroma_metadatas}
 
 
-def traverse_id_tree(
-    metadata: dict,
+def traverse_id(
+    id: str,
     collection: ChromaCollection,
     direction: str = "prev",
     n_steps: int = 2,
 ) -> list:
     ids = []
-    if metadata is None:
-        return ids
-    curr_id = metadata.get(direction + "_id")
     for _ in range(n_steps):
-        if not curr_id:
+        metadata = collection.get(ids=[id])["metadatas"][0]
+        id = metadata.get(f"{direction}_id", "")
+        if not id:
             break
-        ids.append(curr_id)
-        metadata = collection.get(ids=[curr_id])["metadatas"][0]
-        curr_id = metadata.get(direction + "_id")
+        ids.append(id)
     return ids
+
+
+def traverse_ids(
+    ids: str | list[str],
+    collection: ChromaCollection,
+    n_prev_links: int = 2,
+    n_next_links: int = 2,
+) -> list[list[str]]:
+    if isinstance(ids, str):
+        ids = [ids]
+    res_ids = []
+    for id in ids:
+        prev_ids = traverse_id(
+            id=id,
+            collection=collection,
+            direction="prev",
+            n_steps=n_prev_links,
+        )
+        next_ids = traverse_id(
+            id=id,
+            collection=collection,
+            direction="next",
+            n_steps=n_next_links,
+        )
+        res_ids.append(prev_ids[::-1] + [id] + next_ids)
+    return res_ids
 
 
 def rerank_chroma_results(
@@ -145,7 +168,7 @@ def query_collection(
     n_next_links: int = 2,
     include: list[str] = ["metadatas", "documents"],
     reranker_model: str = CROSS_ENCODER_MODEL,
-) -> list[dict]:
+) -> tuple[list[dict], list[str]]:
     query_res = collection.query(
         query_texts=query_text, n_results=n_results, include=include
     )
@@ -155,21 +178,12 @@ def query_collection(
             results=query_res,
             cross_encoder_model=reranker_model,
         )
-    results = []
-    for i, metadata in enumerate(query_res["metadatas"][0]):
-        curr_id = query_res["ids"][0][i]
-        prev_ids = traverse_id_tree(
-            metadata=metadata,
-            collection=collection,
-            direction="prev",
-            n_steps=n_prev_links,
-        )
-        next_ids = traverse_id_tree(
-            metadata=metadata,
-            collection=collection,
-            direction="next",
-            n_steps=n_next_links,
-        )
-        res_ids = prev_ids[::-1] + [curr_id] + next_ids
-        results.append(collection.get(ids=res_ids, include=include))
-    return results
+    init_ids = query_res["ids"][0]
+    traversed_ids = traverse_ids(
+        ids=init_ids,
+        collection=collection,
+        n_prev_links=n_prev_links,
+        n_next_links=n_next_links,
+    )
+    results = [collection.get(ids=ids, include=include) for ids in traversed_ids]
+    return results, init_ids
