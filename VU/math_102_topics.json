@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Set Theory",
+    "subtopics": [
+      "Representations of Sets",
+      "Classifying Sets",
+      "Set Operations: Union and Intersection",
+      "Understanding Set Difference",
+      "Exploring Set Complement"
+    ]
+  },
+  {
+    "name": "Complex Number Operations",
+    "subtopics": [
+      "Adding and Subtracting Complex Numbers",
+      "Multiplying Complex Numbers",
+      "Dividing Complex Numbers",
+      "Complex Number Modulus",
+      "The Argument of Complex Numbers"
+    ]
+  },
+  {
+    "name": "Mapping & Functions Overview",
+    "subtopics": [
+      "Mapping Types Explored",
+      "Function Varieties",
+      "Composite and Inverse Functions Demystified",
+      "Function Operations",
+      "Exploring Bijective, Injective, and Surjective Functions"
+    ]
+  },
+  {
+    "name": "Quadratic Equations",
+    "subtopics": [
+      "The Quadratic Formula",
+      "Solution Types of Quadratic Equations",
+      "Graphical Interpretation of Quadratics",
+      "Quadratic Equations in Vertex Form",
+      "Quadratic Factoring Techniques"
+    ]
+  },
+  {
+    "name": "Matrices and Their Applications",
+    "subtopics": [
+      "Matrix Operations",
+      "Finding the Matrix Inverse",
+      "Matrix Applications in Linear Equations",
+      "Understanding Cramer's Rule",
+      "The Determinant and Trace of Matrices"
+    ]
+  },
+  {
+    "name": "Determinant Fundamentals",
+    "subtopics": [
+      "Determinant Properties",
+      "Computing Determinants",
+      "Determinants in Matrix Theory",
+      "Cofactor Expansion Method",
+      "Leverrier-Faddeev Method for Determinants"
+    ]
+  },
+  {
+    "name": "Sequences & Series Analysis",
+    "subtopics": [
+      "Arithmetic Sequences",
+      "Geometric Sequences",
+      "Finding the Nth Term",
+      "Summation of Series",
+      "Convergence & Divergence of Series"
+    ]
+  },
+  {
+    "name": "Combinatorial Mathematics",
+    "subtopics": [
+      "Permutation Fundamentals",
+      "Combination Basics",
+      "Applications in Real Life",
+      "Introduction to Counting Principles",
+      "Permutations and Combinations in Probability"
+    ]
+  },
+  {
+    "name": "The Binomial Theorem",
+    "subtopics": [
+      "Binomial Expansion Techniques",
+      "Determining Coefficients",
+      "Generalizing Formulas Using Binomial Theorem",
+      "Utilizing Pascal's Triangle",
+      "Binomial Theorem in Probability"
+    ]
+  },
+  {
+    "name": "Exploring Coordinate Geometry",
+    "subtopics": [
+      "Calculating Distances Between Points",
+      "Determining the Slope of a Line",
+      "Line Equations",
+      "The Midpoint Formula in Geometry",
+      "Circle Equations and Properties"
+    ]
+  },
+  {
+    "name": "Circle Geometry",
+    "subtopics": [
+      "Circle Equation Fundamentals",
+      "Properties of Circles",
+      "Tangents and Normals to Circles",
+      "Circle Chords Insights",
+      "Exploring Sectors and Segments"
+    ]
+  },
+  {
+    "name": "Trigonometry Essentials",
+    "subtopics": [
+      "Basic Trigonometric Function Graphs",
+      "The Periodicity of Trigonometric Functions",
+      "Solving Trigonometric Identities",
+      "Applying Sum and Difference Formulas",
+      "Exploring Double Angle Formulas"
+    ]
+  },
+  {
+    "name": "Statistical Methods",
+    "subtopics": [
+      "The Role of Statistics",
+      "Categories of Statistics",
+      "Methods of Data Collection",
+      "Comparing Descriptive and Inferential Statistics",
+      "Probability Distributions and Their Importance"
+    ]
+  },
+  {
+    "name": "Data Representation Techniques",
+    "subtopics": [
+      "Central Tendency Measures",
+      "Dispersion Measures",
+      "Understanding Partial Fractions",
+      "Trigonometric Identities in Depth",
+      "Visualizing Data Graphically"
+    ]
+  }
+]

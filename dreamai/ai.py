@@ -10,7 +10,7 @@ litellm.drop_params = True
 
 class ModelName(str, Enum):
     GPT_3 = "gpt-3.5-turbo"
-    GPT_4 = "gpt-4-turbo-preview"
+    GPT_4 = "gpt-4-turbo"
     HAIKU = "claude-3-haiku-20240307"
     SONNET = "claude-3-sonnet-20240229"
     OPUS = "claude-3-opus-20240229"
@@ -60,7 +60,7 @@ def dspy_prompt(lm: DSPyLM) -> str:
         if provider == "cohere":
             text = choices[0].text
         elif provider == "openai" or provider == "ollama":
-            text = " " + lm._get_choice_text(choices[0]).strip()
+            text = " " + lm._get_choice_text(choices[0]).strip()  # type: ignore
         elif provider == "clarifai":
             text = choices
         elif provider == "google":

@@ -6,6 +6,7 @@ from uuid import uuid4
 import chromadb
 import torch
 from chromadb import Collection as ChromaCollection
+from chromadb.api.types import Include, QueryResult, GetResult
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from langchain_core.documents import Document as LCDocument
 from sentence_transformers import CrossEncoder
@@ -36,7 +37,8 @@ def chroma_collection(
         model_name=embedding_model, device=device
     )
     collection = chroma_client.get_or_create_collection(
-        name, embedding_function=embedding_function
+        name,
+        embedding_function=embedding_function,  # type: ignore
     )
     return collection
 
@@ -83,7 +85,7 @@ def lc_docs_to_chroma_docs(
     docs: list[LCDocument],
     id_fn: Callable = id_from_lc_doc,
     add_links: bool = True,
-) -> tuple[list[str], list[str], list[dict]]:
+) -> dict:
     chroma_ids = []
     chroma_docs = []
     chroma_metadatas = []
@@ -111,8 +113,8 @@ def traverse_id(
 ) -> list:
     ids = []
     for _ in range(n_steps):
-        metadata = collection.get(ids=[id])["metadatas"][0]
-        id = metadata.get(f"{direction}_id", "")
+        metadata = collection.get(ids=[id])["metadatas"][0]  # type: ignore
+        id = metadata.get(f"{direction}_id", "")  # type: ignore
         if not id:
             break
         ids.append(id)
@@ -147,16 +149,17 @@ def traverse_ids(
 
 def rerank_chroma_results(
     query_text: str,
-    results: dict,
+    results: QueryResult,
     cross_encoder_model: str = CROSS_ENCODER_MODEL,
 ) -> dict:
     device = "cuda" if torch.cuda.is_available() else "cpu"
     cross_encoder = CrossEncoder(cross_encoder_model, device=device)
-    pairs = [[query_text, doc] for doc in results["documents"][0]]
+    pairs = [[query_text, doc] for doc in results["documents"][0]]  # type: ignore
     scores = cross_encoder.predict(pairs)
-    scores_idx = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
-    results = {k: [[v[0][i] for i in scores_idx]] for k, v in results.items() if v}
-    return results
+    scores_idx = sorted(
+        range(len(scores)), key=lambda i: scores[i].item(), reverse=True
+    )
+    return {k: [[v[0][i] for i in scores_idx]] for k, v in results.items() if v}  # type: ignore
 
 
 def query_collection(
@@ -166,9 +169,9 @@ def query_collection(
     rerank_results: bool = False,
     n_prev_links: int = 2,
     n_next_links: int = 2,
-    include: list[str] = ["metadatas", "documents"],
+    include: Include = ["metadatas", "documents"],
     reranker_model: str = CROSS_ENCODER_MODEL,
-) -> tuple[list[dict], list[str]]:
+) -> tuple[list[GetResult], list[str]]:
     query_res = collection.query(
         query_texts=query_text, n_results=n_results, include=include
     )

@@ -2,16 +2,17 @@ import inspect
 import json
 import re
 import textwrap
+import traceback
 import typing
 from datetime import datetime
 from functools import partial
-from inspect import cleandoc
 from itertools import chain
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Iterable
 
 import demoji
 from IPython.display import Markdown
+from pydantic import create_model
 from unstructured.cleaners.core import (
     bytes_string_to_string,
     clean_non_ascii_chars,
@@ -22,7 +23,29 @@ from unstructured.cleaners.core import (
 )
 
 
-def flatten(o):
+def run_code(code, *args, **kwargs):
+    try:
+        function_def = "def " + code.split("def ")[1].split("\n")[0]
+        code_before, code_after = code.split(function_def)
+        code = f"{function_def}\n{' '*4}{code_before.strip()}\n{code_after}"
+        func = code.split("def ")[1].split("(")[0]
+        exec(code)
+        func = locals()[func]
+        return func(*args, **kwargs)
+    except Exception:
+        return traceback.format_exc()
+
+
+def function_schema(f: Callable) -> dict:
+    kw = {
+        n: (o.annotation, ... if o.default == inspect.Parameter.empty else o.default)
+        for n, o in inspect.signature(f).parameters.items()
+    }
+    s = create_model(f"Input for `{f.__name__}`", **kw).schema()  # type: ignore
+    return dict(name=f.__name__, description=f.__doc__, parameters=s)
+
+
+def flatten(o: Iterable):
     "Concatenate all collections and items as a generator"
     for item in o:
         if isinstance(item, str):
@@ -49,9 +72,8 @@ def noop(x=None, *args, **kwargs):
 def resolve_data_path(data_path: list | str | Path) -> chain:
     if not isinstance(data_path, list):
         data_path = [data_path]
-    data_path = flatten(data_path)
     paths = []
-    for dp in data_path:
+    for dp in flatten(data_path):
         if isinstance(dp, (str, Path)):
             dp = Path(dp)
             if not dp.exists():
@@ -75,7 +97,7 @@ def flatten_list(my_list: list) -> list:
 
 
 def deindent(text: str) -> str:
-    return textwrap.dedent(cleandoc(text))
+    return textwrap.dedent(inspect.cleandoc(text))
 
 
 def remove_digits(text: str) -> str:
@@ -178,7 +200,7 @@ def get_function_info(func: Callable) -> str:
         desc += f"Signature: {signature}\n"
     if docstring:
         desc += f"Docstring: {docstring}\n"
-    return cleandoc(desc + "---\n\n")
+    return inspect.cleandoc(desc + "---\n\n")
 
 
 def to_markdown(text: str) -> Markdown:
