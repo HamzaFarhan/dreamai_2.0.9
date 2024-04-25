@@ -1,0 +1,378 @@
+[
+  {
+    "name": "Set Theory",
+    "subtopics": [
+      {
+        "name": "Representations of Sets",
+        "concepts": []
+      },
+      {
+        "name": "Classifying Sets",
+        "concepts": []
+      },
+      {
+        "name": "Set Operations: Union and Intersection",
+        "concepts": [
+          {
+            "concept": "Cauchy-Schwarz Inequality and Minimum Value",
+            "question_ids": [
+              "470",
+              "804"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Understanding Set Difference",
+        "concepts": []
+      },
+      {
+        "name": "Exploring Set Complement",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Complex Number Operations",
+    "subtopics": [
+      {
+        "name": "Adding and Subtracting Complex Numbers",
+        "concepts": []
+      },
+      {
+        "name": "Multiplying Complex Numbers",
+        "concepts": []
+      },
+      {
+        "name": "Dividing Complex Numbers",
+        "concepts": []
+      },
+      {
+        "name": "Complex Number Modulus",
+        "concepts": []
+      },
+      {
+        "name": "The Argument of Complex Numbers",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Mapping & Functions Overview",
+    "subtopics": [
+      {
+        "name": "Mapping Types Explored",
+        "concepts": []
+      },
+      {
+        "name": "Function Varieties",
+        "concepts": []
+      },
+      {
+        "name": "Composite and Inverse Functions Demystified",
+        "concepts": []
+      },
+      {
+        "name": "Function Operations",
+        "concepts": []
+      },
+      {
+        "name": "Exploring Bijective, Injective, and Surjective Functions",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Quadratic Equations",
+    "subtopics": [
+      {
+        "name": "The Quadratic Formula",
+        "concepts": []
+      },
+      {
+        "name": "Solution Types of Quadratic Equations",
+        "concepts": [
+          {
+            "concept": "Polynomial Subtraction and Expansion",
+            "question_ids": [
+              "754"
+            ]
+          },
+          {
+            "concept": "Quadratic Equations and Inequalities",
+            "question_ids": []
+          }
+        ]
+      },
+      {
+        "name": "Graphical Interpretation of Quadratics",
+        "concepts": []
+      },
+      {
+        "name": "Quadratic Equations in Vertex Form",
+        "concepts": []
+      },
+      {
+        "name": "Quadratic Factoring Techniques",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Matrices and Their Applications",
+    "subtopics": [
+      {
+        "name": "Matrix Operations",
+        "concepts": []
+      },
+      {
+        "name": "Finding the Matrix Inverse",
+        "concepts": []
+      },
+      {
+        "name": "Matrix Applications in Linear Equations",
+        "concepts": []
+      },
+      {
+        "name": "Understanding Cramer's Rule",
+        "concepts": []
+      },
+      {
+        "name": "The Determinant and Trace of Matrices",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Determinant Fundamentals",
+    "subtopics": [
+      {
+        "name": "Determinant Properties",
+        "concepts": []
+      },
+      {
+        "name": "Computing Determinants",
+        "concepts": []
+      },
+      {
+        "name": "Determinants in Matrix Theory",
+        "concepts": []
+      },
+      {
+        "name": "Cofactor Expansion Method",
+        "concepts": []
+      },
+      {
+        "name": "Leverrier-Faddeev Method for Determinants",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Sequences & Series Analysis",
+    "subtopics": [
+      {
+        "name": "Arithmetic Sequences",
+        "concepts": []
+      },
+      {
+        "name": "Geometric Sequences",
+        "concepts": []
+      },
+      {
+        "name": "Finding the Nth Term",
+        "concepts": []
+      },
+      {
+        "name": "Summation of Series",
+        "concepts": []
+      },
+      {
+        "name": "Convergence & Divergence of Series",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Combinatorial Mathematics",
+    "subtopics": [
+      {
+        "name": "Permutation Fundamentals",
+        "concepts": []
+      },
+      {
+        "name": "Combination Basics",
+        "concepts": []
+      },
+      {
+        "name": "Applications in Real Life",
+        "concepts": []
+      },
+      {
+        "name": "Introduction to Counting Principles",
+        "concepts": []
+      },
+      {
+        "name": "Permutations and Combinations in Probability",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "The Binomial Theorem",
+    "subtopics": [
+      {
+        "name": "Binomial Expansion Techniques",
+        "concepts": []
+      },
+      {
+        "name": "Determining Coefficients",
+        "concepts": []
+      },
+      {
+        "name": "Generalizing Formulas Using Binomial Theorem",
+        "concepts": []
+      },
+      {
+        "name": "Utilizing Pascal's Triangle",
+        "concepts": []
+      },
+      {
+        "name": "Binomial Theorem in Probability",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Exploring Coordinate Geometry",
+    "subtopics": [
+      {
+        "name": "Calculating Distances Between Points",
+        "concepts": []
+      },
+      {
+        "name": "Determining the Slope of a Line",
+        "concepts": []
+      },
+      {
+        "name": "Line Equations",
+        "concepts": [
+          {
+            "concept": "Equation of Lines in Slope-Intercept Form",
+            "question_ids": [
+              "518"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "The Midpoint Formula in Geometry",
+        "concepts": []
+      },
+      {
+        "name": "Circle Equations and Properties",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Circle Geometry",
+    "subtopics": [
+      {
+        "name": "Circle Equation Fundamentals",
+        "concepts": []
+      },
+      {
+        "name": "Properties of Circles",
+        "concepts": []
+      },
+      {
+        "name": "Tangents and Normals to Circles",
+        "concepts": []
+      },
+      {
+        "name": "Circle Chords Insights",
+        "concepts": []
+      },
+      {
+        "name": "Exploring Sectors and Segments",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Trigonometry Essentials",
+    "subtopics": [
+      {
+        "name": "Basic Trigonometric Function Graphs",
+        "concepts": []
+      },
+      {
+        "name": "The Periodicity of Trigonometric Functions",
+        "concepts": []
+      },
+      {
+        "name": "Solving Trigonometric Identities",
+        "concepts": []
+      },
+      {
+        "name": "Applying Sum and Difference Formulas",
+        "concepts": []
+      },
+      {
+        "name": "Exploring Double Angle Formulas",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Statistical Methods",
+    "subtopics": [
+      {
+        "name": "The Role of Statistics",
+        "concepts": []
+      },
+      {
+        "name": "Categories of Statistics",
+        "concepts": []
+      },
+      {
+        "name": "Methods of Data Collection",
+        "concepts": []
+      },
+      {
+        "name": "Comparing Descriptive and Inferential Statistics",
+        "concepts": []
+      },
+      {
+        "name": "Probability Distributions and Their Importance",
+        "concepts": []
+      }
+    ]
+  },
+  {
+    "name": "Data Representation Techniques",
+    "subtopics": [
+      {
+        "name": "Central Tendency Measures",
+        "concepts": []
+      },
+      {
+        "name": "Dispersion Measures",
+        "concepts": []
+      },
+      {
+        "name": "Understanding Partial Fractions",
+        "concepts": []
+      },
+      {
+        "name": "Trigonometric Identities in Depth",
+        "concepts": []
+      },
+      {
+        "name": "Visualizing Data Graphically",
+        "concepts": []
+      }
+    ]
+  }
+]

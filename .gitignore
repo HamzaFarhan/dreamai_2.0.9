@@ -5,6 +5,10 @@
 __pycache__
 dist
 .env
+*.log
 ball
 quotes
 !*.ipynb
+VU/math_102_questions
+VU/math_102_final_questions
+VU/chroma_dir
