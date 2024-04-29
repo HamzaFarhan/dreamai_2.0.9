@@ -1,0 +1,17 @@
+{
+  "if_directory_empty": "download_last_10_episodes",
+  "podcasts": [
+    {
+      "name": "Tactics",
+      "rss_link": "https://feeds.megaphone.fm/tamc1029044713",
+      "path": "audios/TacticsFC",
+      "file_name_template": "[%publish_date%]%title%.%file_extension%"
+    },
+    {
+      "name": "Lex Fridman",
+      "rss_link": "https://lexfridman.com/feed/podcast/",
+      "path": "audios/LexFridman",
+      "file_name_template": "[%publish_date%]%title%.%file_extension%"
+    }
+  ]
+}

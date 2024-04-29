@@ -1,0 +1,306 @@
+{
+  "Set Theory": {
+    "Representations of Sets": {
+      "Absolute Value Functions": [
+        "40",
+        "386",
+        "1757",
+        "1756"
+      ]
+    },
+    "Classifying Sets": {},
+    "Set Operations: Union and Intersection": {
+      "Union of Sets": []
+    },
+    "Understanding Set Difference": {
+      "Floor Function Properties": [
+        "850",
+        "1017",
+        "1086",
+        "963",
+        "101",
+        "152",
+        "1206",
+        "1848",
+        "1692"
+      ]
+    },
+    "Exploring Set Complement": {
+      "Set Complement Intersection Empty Set": []
+    }
+  },
+  "Complex Number Operations": {
+    "Adding and Subtracting Complex Numbers": {
+      "Geometric Series Sum": [
+        "709",
+        "839"
+      ]
+    },
+    "Multiplying Complex Numbers": {
+      "Powers of Complex Numbers": [
+        "18"
+      ]
+    },
+    "Dividing Complex Numbers": {
+      "Binomial Theorem Expansion": [
+        "2020"
+      ]
+    },
+    "Complex Number Modulus": {},
+    "The Argument of Complex Numbers": {}
+  },
+  "Mapping & Functions Overview": {
+    "Mapping Types Explored": {},
+    "Function Varieties": {
+      "Functional Equations Methods": [
+        "817",
+        "415",
+        "305"
+      ]
+    },
+    "Composite and Inverse Functions Demystified": {},
+    "Function Operations": {},
+    "Exploring Bijective, Injective, and Surjective Functions": {}
+  },
+  "Quadratic Equations": {
+    "The Quadratic Formula": {
+      "Linear Equations with Two Variables": [],
+      "Quadratic Formula and Solutions": []
+    },
+    "Solution Types of Quadratic Equations": {
+      "Roots of Polynomial Functions": [
+        "525",
+        "636",
+        "616",
+        "205",
+        "170",
+        "154",
+        "36"
+      ]
+    },
+    "Graphical Interpretation of Quadratics": {
+      "Vertex of a Parabola": []
+    },
+    "Quadratic Equations in Vertex Form": {},
+    "Quadratic Factoring Techniques": {
+      "Perfect Square Trinomials": []
+    }
+  },
+  "Matrices and Their Applications": {
+    "Matrix Operations": {
+      "Vector Cross Product": [
+        "1906",
+        "2017",
+        "1940"
+      ],
+      "Vector Dot Product": [
+        "1858"
+      ],
+      "Matrix Inverse and Solutions": [
+        "1919"
+      ],
+      "Vector Magnitude Calculation": []
+    },
+    "Finding the Matrix Inverse": {
+      "Matrix Inverse Method": []
+    },
+    "Matrix Applications in Linear Equations": {},
+    "Understanding Cramer's Rule": {},
+    "The Determinant and Trace of Matrices": {}
+  },
+  "Determinant Fundamentals": {
+    "Determinant Properties": {},
+    "Computing Determinants": {},
+    "Determinants in Matrix Theory": {},
+    "Cofactor Expansion Method": {},
+    "Leverrier-Faddeev Method for Determinants": {}
+  },
+  "Sequences & Series Analysis": {
+    "Arithmetic Sequences": {
+      "Compound Inequalities Solutions": []
+    },
+    "Geometric Sequences": {
+      "Geometric Series Sum Formula": []
+    },
+    "Finding the Nth Term": {
+      "Recursive Definition of Sequences": []
+    },
+    "Summation of Series": {
+      "Telescoping Series Sum": [
+        "860",
+        "376",
+        "1228",
+        "1687"
+      ]
+    },
+    "Convergence & Divergence of Series": {}
+  },
+  "Combinatorial Mathematics": {
+    "Permutation Fundamentals": {
+      "Inequality with AM-GM": [
+        "804",
+        "517",
+        "880",
+        "960",
+        "1059",
+        "974",
+        "271",
+        "355",
+        "1625",
+        "1706",
+        "1689",
+        "1590",
+        "1663"
+      ]
+    },
+    "Combination Basics": {
+      "Combinations and Permutations Formulas": []
+    },
+    "Applications in Real Life": {},
+    "Introduction to Counting Principles": {},
+    "Permutations and Combinations in Probability": {
+      "Integer Roots Symmetry": [
+        "619",
+        "1003",
+        "232",
+        "1673",
+        "1652",
+        "1826",
+        "1816",
+        "1743",
+        "1713",
+        "1922"
+      ]
+    }
+  },
+  "The Binomial Theorem": {
+    "Binomial Expansion Techniques": {
+      "Binomial Theorem Applications": [
+        "780"
+      ]
+    },
+    "Determining Coefficients": {},
+    "Generalizing Formulas Using Binomial Theorem": {
+      "Finding Specific Terms": []
+    },
+    "Utilizing Pascal's Triangle": {
+      "Pascal's Triangle and Binomial Coefficients": []
+    },
+    "Binomial Theorem in Probability": {}
+  },
+  "Exploring Coordinate Geometry": {
+    "Calculating Distances Between Points": {
+      "Intersection of Lines and Curves": [
+        "469",
+        "1070",
+        "944",
+        "952",
+        "969",
+        "1083",
+        "1088",
+        "1101",
+        "928",
+        "1013",
+        "167",
+        "396",
+        "393",
+        "1486",
+        "1364",
+        "1261",
+        "1132",
+        "1345",
+        "1205",
+        "1419",
+        "1991",
+        "1943"
+      ],
+      "Distance Formula in Coordinate Geometry": [
+        "1509",
+        "1989",
+        "1936"
+      ]
+    },
+    "Determining the Slope of a Line": {
+      "Discriminant in Quadratic Equations": []
+    },
+    "Line Equations": {
+      "Slope of a Line": [
+        "518",
+        "1195"
+      ]
+    },
+    "The Midpoint Formula in Geometry": {},
+    "Circle Equations and Properties": {}
+  },
+  "Circle Geometry": {
+    "Circle Equation Fundamentals": {
+      "Triangle Inequality Theorem": [
+        "1138",
+        "1171",
+        "1190",
+        "1359",
+        "1862"
+      ]
+    },
+    "Properties of Circles": {
+      "Angles in a Convex Polygon": [
+        "1061",
+        "981",
+        "1423",
+        "1124",
+        "1443",
+        "1369"
+      ]
+    },
+    "Tangents and Normals to Circles": {
+      "Tangent lines theorem": [
+        "1214",
+        "1499"
+      ]
+    },
+    "Circle Chords Insights": {
+      "Properties of Chords": [
+        "1502"
+      ]
+    },
+    "Exploring Sectors and Segments": {}
+  },
+  "Trigonometry Essentials": {
+    "Basic Trigonometric Function Graphs": {},
+    "The Periodicity of Trigonometric Functions": {},
+    "Solving Trigonometric Identities": {
+      "Absolute Value Inequalities": [
+        "1877",
+        "1932",
+        "1974",
+        "1956",
+        "2023"
+      ]
+    },
+    "Applying Sum and Difference Formulas": {},
+    "Exploring Double Angle Formulas": {}
+  },
+  "Statistical Methods": {
+    "The Role of Statistics": {
+      "Mean Median Mode": [
+        "954",
+        "1084"
+      ]
+    },
+    "Categories of Statistics": {},
+    "Methods of Data Collection": {},
+    "Comparing Descriptive and Inferential Statistics": {},
+    "Probability Distributions and Their Importance": {}
+  },
+  "Data Representation Techniques": {
+    "Central Tendency Measures": {
+      "Summation of Distances": [
+        "976"
+      ]
+    },
+    "Dispersion Measures": {},
+    "Understanding Partial Fractions": {},
+    "Trigonometric Identities in Depth": {},
+    "Visualizing Data Graphically": {}
+  }
+}

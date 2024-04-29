@@ -1,116 +1,93 @@
 import json
-import random
 
 import pandas as pd
 import streamlit as st
-import time
-from pydantic import BaseModel
 
-st.set_page_config(page_title="Math 102", initial_sidebar_state="collapsed")
-
-
-class Subtopic(BaseModel):
-    topic: str = ""
-    name: str = ""
-    concepts: list[str] = []
-    prerequisites: list[str] = []
-
-
-class Topic(BaseModel):
-    name: str
-    subtopics: list[Subtopic]
-
-
-def ai_delay(message: str = "Processing...⏳", dur: int = 5):
-    with st.spinner(message):
-        time.sleep(dur)
-
+st.set_page_config(page_title="Math 102")
 
 st.title("VU 🎓🏫")
-outline = st.text_input("Enter the course outline here 📋")
-pdf_file = None
-if outline:
-    if "topics_extracted" not in st.session_state:
-        ai_delay("Extracting Topics and Subtopics...⛓️")
-    st.session_state.topics_extracted = True
-    pdf_file = st.file_uploader("Upload a course material PDF file 📖", type=["pdf"])
-    topics = json.load(open("math_102_topics_with_concepts_and_prerequisites.json"))
-    topics = [Topic(**topic) for topic in topics]
+topics = json.load(open("math_102_app_topics.json"))
+# topics = OrderedDict(
+#     {
+#         topic["name"]: OrderedDict(
+#             {
+#                 subtopic["name"]: OrderedDict(
+#                     {
+#                         concept["concept"]: concept["question_ids"]
+#                         for concept in subtopic["concepts"]
+#                     }
+#                 )
+#                 for subtopic in topic["subtopics"]
+#             }
+#         )
+#         for topic in json.load(open("math_102_final_topics.json"))
+#     }
+# )
+# concepts_dict = {}
+selected_topic_name = st.sidebar.selectbox("Select a Topic", options=topics.keys())
+selected_subtopic_name = st.sidebar.selectbox(
+    "Select a Subtopic", options=topics[selected_topic_name].keys()
+)
+subtopic_concepts = topics[selected_topic_name][selected_subtopic_name]
+selected_concept_name = st.sidebar.selectbox(
+    "Select a Concept",
+    options=subtopic_concepts.keys(),
+)
+questions = json.load(open("math_102_app_questions.json"))
+# questions = {
+#     str(q["id"]): q
+#     for q in [
+#         json.loads(f.read_text())
+#         for f in Path("math_102_final_questions").glob("*.json")
+#     ]
+# }
+if subtopic_concepts:
+    st.session_state["show"] = True
+else:
+    st.session_state["show"] = False
+print(f"SUBTOPIC: {selected_subtopic_name}, CONCEPT: {selected_concept_name}")
 
-    # Dropdown to select a topic
-    topic_names = [topic.name for topic in topics]
-    selected_topic_name = st.sidebar.selectbox("Select a Topic", options=topic_names)
-    selected_topic = next(
-        topic for topic in topics if topic.name == selected_topic_name
-    )
-
-    # Dropdown to select a subtopic based on the selected topic
-    subtopic_names = [subtopic.name for subtopic in selected_topic.subtopics]
-    selected_subtopic_name = st.sidebar.selectbox(
-        "Select a Subtopic", options=subtopic_names
-    )
-
-    def find_subtopic_by_name(name: str) -> Subtopic | None:
-        if not name:
-            return Subtopic()
-        for topic in topics:
-            for subtopic in topic.subtopics:
-                if subtopic.name == name:
-                    return subtopic
-        return Subtopic()
-
-    def show_df():
-        subtopic_name = st.session_state.selected_subtopic_name
-        subtopic = find_subtopic_by_name(subtopic_name)
-        prereq_topics = [
-            find_subtopic_by_name(prereq).topic for prereq in subtopic.prerequisites
+if st.session_state.get("show", False):
+    selected_questions = [
+        questions[id]
+        for id in topics[selected_topic_name][selected_subtopic_name][
+            selected_concept_name
         ]
-        df = pd.DataFrame(
-            {
-                "Concepts": subtopic.concepts,
-                "Prerequisite Subtopics": subtopic.prerequisites,
-                "Prerequisite Topics": prereq_topics,
-            }
-        )
-        st.header(f"{subtopic_name.title()}")
-        st.dataframe(df, use_container_width=True)
-
-    if st.sidebar.button("Show Concepts 📊"):
-        st.session_state.selected_subtopic_name = selected_subtopic_name
-
-    if "selected_subtopic_name" in st.session_state:
-        show_df()
-        subtopic = find_subtopic_by_name(st.session_state.selected_subtopic_name)
-        topic = subtopic.topic
-        if st.button("Random Question 💭❔"):
-            if topic == "Quadratic Equations":
-                # ai_delay("Generating Question...🛠️")
-                questions = json.load(open("math_102_quad_eqs_question_codes.json"))
-                values = [value for value in questions.values() if value]
-                code = random.choice(values)
+    ]
+    for i, question in enumerate(selected_questions, start=1):
+        if st.button(f"Question {i}❔"):
+            st.subheader("Question:")
+            st.write(question["problem"])
+            st.subheader("Solution:")
+            st.write(question["solution"])
+            with st.expander("Show Steps 📝"):
+                for j, step in enumerate(question["subquestions"], start=1):
+                    st.subheader(f"Step {j}:")
+                    st.write(step["problem"])
+                    st.subheader("Solution:")
+                    st.write(step["solution"])
+            prereq_questions = set()
+            prereq_concepts = []
+            for subquestion in question["subquestions"]:
                 try:
-                    func = code.split("def ")[1].split("(")[0]
-                    exec(code)
-                    func = locals()[func]
-                    res = func()
-                    st.header("Question:")
-                    st.write(res["question"])
-                    st.header("Answer:")
-                    st.write(res["final_answer"])
-                    with st.expander("Show Steps 📝"):
-                        for i, subquestion in enumerate(res["sub_questions"]):
-                            st.subheader(f"Subquestion {i+1}:")
-                            st.write(subquestion["question"])
-                            st.subheader("Answer:")
-                            st.write(subquestion["answer"])
-                            st.subheader("Explanation:")
-                            st.write(subquestion["explanation"])
-                except Exception as e:
-                    # add red cross emoji
-                    st.error(f"Failed to execute the code. ❌\n{e}")
-                with st.expander("Show Code 🤖"):
-                    st.code(code)
-            else:
-                st.error(
-                    "Random questions are only available for Quadratic Equations. ⚠️"
-                )
+                    prereq_qs = [
+                        questions[id]["problem"]
+                        for id in topics[subquestion["topic"]][subquestion["subtopic"]][
+                            subquestion["concept"]
+                        ]
+                        if questions[id]["problem"] != prereq_questions
+                    ]
+                    prereq_questions |= set(prereq_qs)
+                    prereq_concepts += [subquestion["concept"]] * len(prereq_qs)
+                except KeyError:
+                    pass
+            if len(prereq_questions) > 0:
+                with st.expander("Show Prerequisites 📚"):
+                    st.dataframe(
+                        pd.DataFrame(
+                            {
+                                "Prerequisite Questions": list(prereq_questions),
+                                # "Prerequisite Concepts": prereq_concepts,
+                            }
+                        ),
+                    )

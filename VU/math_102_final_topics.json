@@ -4,7 +4,17 @@
     "subtopics": [
       {
         "name": "Representations of Sets",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Absolute Value Functions",
+            "question_ids": [
+              "40",
+              "386",
+              "1757",
+              "1756"
+            ]
+          }
+        ]
       },
       {
         "name": "Classifying Sets",
@@ -14,21 +24,38 @@
         "name": "Set Operations: Union and Intersection",
         "concepts": [
           {
-            "concept": "Cauchy-Schwarz Inequality and Minimum Value",
-            "question_ids": [
-              "470",
-              "804"
-            ]
+            "concept": "Union of Sets",
+            "question_ids": []
           }
         ]
       },
       {
         "name": "Understanding Set Difference",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Floor Function Properties",
+            "question_ids": [
+              "850",
+              "1017",
+              "1086",
+              "963",
+              "101",
+              "152",
+              "1206",
+              "1848",
+              "1692"
+            ]
+          }
+        ]
       },
       {
         "name": "Exploring Set Complement",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Set Complement Intersection Empty Set",
+            "question_ids": []
+          }
+        ]
       }
     ]
   },
@@ -37,15 +64,37 @@
     "subtopics": [
       {
         "name": "Adding and Subtracting Complex Numbers",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Geometric Series Sum",
+            "question_ids": [
+              "709",
+              "839"
+            ]
+          }
+        ]
       },
       {
         "name": "Multiplying Complex Numbers",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Powers of Complex Numbers",
+            "question_ids": [
+              "18"
+            ]
+          }
+        ]
       },
       {
         "name": "Dividing Complex Numbers",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Binomial Theorem Expansion",
+            "question_ids": [
+              "2020"
+            ]
+          }
+        ]
       },
       {
         "name": "Complex Number Modulus",
@@ -66,7 +115,16 @@
       },
       {
         "name": "Function Varieties",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Functional Equations Methods",
+            "question_ids": [
+              "817",
+              "415",
+              "305"
+            ]
+          }
+        ]
       },
       {
         "name": "Composite and Inverse Functions Demystified",
@@ -87,26 +145,42 @@
     "subtopics": [
       {
         "name": "The Quadratic Formula",
-        "concepts": []
-      },
-      {
-        "name": "Solution Types of Quadratic Equations",
         "concepts": [
           {
-            "concept": "Polynomial Subtraction and Expansion",
-            "question_ids": [
-              "754"
-            ]
+            "concept": "Linear Equations with Two Variables",
+            "question_ids": []
           },
           {
-            "concept": "Quadratic Equations and Inequalities",
+            "concept": "Quadratic Formula and Solutions",
             "question_ids": []
           }
         ]
       },
       {
+        "name": "Solution Types of Quadratic Equations",
+        "concepts": [
+          {
+            "concept": "Roots of Polynomial Functions",
+            "question_ids": [
+              "525",
+              "636",
+              "616",
+              "205",
+              "170",
+              "154",
+              "36"
+            ]
+          }
+        ]
+      },
+      {
         "name": "Graphical Interpretation of Quadratics",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Vertex of a Parabola",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Quadratic Equations in Vertex Form",
@@ -114,7 +188,12 @@
       },
       {
         "name": "Quadratic Factoring Techniques",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Perfect Square Trinomials",
+            "question_ids": []
+          }
+        ]
       }
     ]
   },
@@ -123,11 +202,41 @@
     "subtopics": [
       {
         "name": "Matrix Operations",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Vector Cross Product",
+            "question_ids": [
+              "1906",
+              "2017",
+              "1940"
+            ]
+          },
+          {
+            "concept": "Vector Dot Product",
+            "question_ids": [
+              "1858"
+            ]
+          },
+          {
+            "concept": "Matrix Inverse and Solutions",
+            "question_ids": [
+              "1919"
+            ]
+          },
+          {
+            "concept": "Vector Magnitude Calculation",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Finding the Matrix Inverse",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Matrix Inverse Method",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Matrix Applications in Linear Equations",
@@ -173,19 +282,44 @@
     "subtopics": [
       {
         "name": "Arithmetic Sequences",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Compound Inequalities Solutions",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Geometric Sequences",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Geometric Series Sum Formula",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Finding the Nth Term",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Recursive Definition of Sequences",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Summation of Series",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Telescoping Series Sum",
+            "question_ids": [
+              "860",
+              "376",
+              "1228",
+              "1687"
+            ]
+          }
+        ]
       },
       {
         "name": "Convergence & Divergence of Series",
@@ -198,11 +332,35 @@
     "subtopics": [
       {
         "name": "Permutation Fundamentals",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Inequality with AM-GM",
+            "question_ids": [
+              "804",
+              "517",
+              "880",
+              "960",
+              "1059",
+              "974",
+              "271",
+              "355",
+              "1625",
+              "1706",
+              "1689",
+              "1590",
+              "1663"
+            ]
+          }
+        ]
       },
       {
         "name": "Combination Basics",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Combinations and Permutations Formulas",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Applications in Real Life",
@@ -214,7 +372,23 @@
       },
       {
         "name": "Permutations and Combinations in Probability",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Integer Roots Symmetry",
+            "question_ids": [
+              "619",
+              "1003",
+              "232",
+              "1673",
+              "1652",
+              "1826",
+              "1816",
+              "1743",
+              "1713",
+              "1922"
+            ]
+          }
+        ]
       }
     ]
   },
@@ -223,7 +397,14 @@
     "subtopics": [
       {
         "name": "Binomial Expansion Techniques",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Binomial Theorem Applications",
+            "question_ids": [
+              "780"
+            ]
+          }
+        ]
       },
       {
         "name": "Determining Coefficients",
@@ -231,11 +412,21 @@
       },
       {
         "name": "Generalizing Formulas Using Binomial Theorem",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Finding Specific Terms",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Utilizing Pascal's Triangle",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Pascal's Triangle and Binomial Coefficients",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Binomial Theorem in Probability",
@@ -248,19 +439,61 @@
     "subtopics": [
       {
         "name": "Calculating Distances Between Points",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Intersection of Lines and Curves",
+            "question_ids": [
+              "469",
+              "1070",
+              "944",
+              "952",
+              "969",
+              "1083",
+              "1088",
+              "1101",
+              "928",
+              "1013",
+              "167",
+              "396",
+              "393",
+              "1486",
+              "1364",
+              "1261",
+              "1132",
+              "1345",
+              "1205",
+              "1419",
+              "1991",
+              "1943"
+            ]
+          },
+          {
+            "concept": "Distance Formula in Coordinate Geometry",
+            "question_ids": [
+              "1509",
+              "1989",
+              "1936"
+            ]
+          }
+        ]
       },
       {
         "name": "Determining the Slope of a Line",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Discriminant in Quadratic Equations",
+            "question_ids": []
+          }
+        ]
       },
       {
         "name": "Line Equations",
         "concepts": [
           {
-            "concept": "Equation of Lines in Slope-Intercept Form",
+            "concept": "Slope of a Line",
             "question_ids": [
-              "518"
+              "518",
+              "1195"
             ]
           }
         ]
@@ -280,19 +513,57 @@
     "subtopics": [
       {
         "name": "Circle Equation Fundamentals",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Triangle Inequality Theorem",
+            "question_ids": [
+              "1138",
+              "1171",
+              "1190",
+              "1359",
+              "1862"
+            ]
+          }
+        ]
       },
       {
         "name": "Properties of Circles",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Angles in a Convex Polygon",
+            "question_ids": [
+              "1061",
+              "981",
+              "1423",
+              "1124",
+              "1443",
+              "1369"
+            ]
+          }
+        ]
       },
       {
         "name": "Tangents and Normals to Circles",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Tangent lines theorem",
+            "question_ids": [
+              "1214",
+              "1499"
+            ]
+          }
+        ]
       },
       {
         "name": "Circle Chords Insights",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Properties of Chords",
+            "question_ids": [
+              "1502"
+            ]
+          }
+        ]
       },
       {
         "name": "Exploring Sectors and Segments",
@@ -313,7 +584,18 @@
       },
       {
         "name": "Solving Trigonometric Identities",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Absolute Value Inequalities",
+            "question_ids": [
+              "1877",
+              "1932",
+              "1974",
+              "1956",
+              "2023"
+            ]
+          }
+        ]
       },
       {
         "name": "Applying Sum and Difference Formulas",
@@ -330,7 +612,15 @@
     "subtopics": [
       {
         "name": "The Role of Statistics",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Mean Median Mode",
+            "question_ids": [
+              "954",
+              "1084"
+            ]
+          }
+        ]
       },
       {
         "name": "Categories of Statistics",
@@ -355,7 +645,14 @@
     "subtopics": [
       {
         "name": "Central Tendency Measures",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Summation of Distances",
+            "question_ids": [
+              "976"
+            ]
+          }
+        ]
       },
       {
         "name": "Dispersion Measures",
