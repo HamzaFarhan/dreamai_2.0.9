@@ -1,5 +1,6 @@
 import inspect
 import json
+import quopri
 import re
 import textwrap
 import traceback
@@ -8,19 +9,45 @@ from datetime import datetime
 from functools import partial
 from itertools import chain
 from pathlib import Path
-from typing import Callable, Iterable
+from typing import Callable, Final, Iterable
 
 import demoji
 from IPython.display import Markdown
 from pydantic import create_model
-from unstructured.cleaners.core import (
-    bytes_string_to_string,
-    clean_non_ascii_chars,
-    group_broken_paragraphs,
-    group_bullet_paragraph,
-    replace_mime_encodings,
-    replace_unicode_quotes,
+
+UNICODE_BULLETS: Final[list[str]] = [
+    "\u0095",
+    "\u2022",
+    "\u2023",
+    "\u2043",
+    "\u3164",
+    "\u204c",
+    "\u204d",
+    "\u2219",
+    "\u25cb",
+    "\u25cf",
+    "\u25d8",
+    "\u25e6",
+    "\u2619",
+    "\u2765",
+    "\u2767",
+    "\u29be",
+    "\u29bf",
+    "\u002d",
+    "",
+    "\*",  # type: ignore
+    "\x95",
+    "·",
+]
+BULLETS_PATTERN = "|".join(UNICODE_BULLETS)
+UNICODE_BULLETS_RE_0W = re.compile(f"(?={BULLETS_PATTERN})(?<!{BULLETS_PATTERN})")
+UNICODE_BULLETS_RE = re.compile(f"(?:{BULLETS_PATTERN})(?!{BULLETS_PATTERN})")
+E_BULLET_PATTERN = re.compile(r"^e(?=\s)", re.MULTILINE)
+PARAGRAPH_PATTERN = r"\s*\n\s*"
+PARAGRAPH_PATTERN_RE = re.compile(
+    f"((?:{BULLETS_PATTERN})|{PARAGRAPH_PATTERN})(?!{BULLETS_PATTERN}|$)",
 )
+DOUBLE_PARAGRAPH_PATTERN_RE = re.compile("(" + PARAGRAPH_PATTERN + "){2}")
 
 
 def run_code(code, *args, **kwargs):
@@ -102,6 +129,169 @@ def deindent(text: str) -> str:
 
 def remove_digits(text: str) -> str:
     return re.sub(r"\d+", "", text)
+
+
+def format_encoding_str(encoding: str) -> str:
+    """Format input encoding string (e.g., `utf-8`, `iso-8859-1`, etc).
+    Parameters
+    ----------
+    encoding
+        The encoding string to be formatted (e.g., `UTF-8`, `utf_8`, `ISO-8859-1`, `iso_8859_1`,
+        etc).
+    """
+    formatted_encoding = encoding.lower().replace("_", "-")
+
+    # Special case for Arabic and Hebrew charsets with directional annotations
+    annotated_encodings = [
+        "iso-8859-6-i",
+        "iso-8859-6-e",
+        "iso-8859-8-i",
+        "iso-8859-8-e",
+    ]
+    if formatted_encoding in annotated_encodings:
+        formatted_encoding = formatted_encoding[:-2]  # remove the annotation
+
+    return formatted_encoding
+
+
+def bytes_string_to_string(text: str, encoding: str = "utf-8"):
+    """Converts a string representation of a byte string to a regular string using the
+    specified encoding."""
+    text_bytes = bytes([ord(char) for char in text])
+    formatted_encoding = format_encoding_str(encoding)
+    return text_bytes.decode(formatted_encoding)
+
+
+def clean_non_ascii_chars(text) -> str:
+    """Cleans non-ascii characters from unicode string.
+
+    Example
+    -------
+    \x88This text contains non-ascii characters!\x88
+        -> This text contains non-ascii characters!
+    """
+    en = text.encode("ascii", "ignore")
+    return en.decode()
+
+
+def group_bullet_paragraph(paragraph: str) -> list:
+    """Groups paragraphs with bullets that have line breaks for visual/formatting purposes.
+    For example:
+
+    '''○ The big red fox
+    is walking down the lane.
+
+    ○ At the end of the lane
+    the fox met a friendly bear.'''
+
+    Gets converted to
+
+    '''○ The big red fox is walking down the lane.
+    ○ At the end of the land the fox met a bear.'''
+    """
+    clean_paragraphs = []
+    # pytesseract converts some bullet points to standalone "e" characters.
+    # Substitute "e" with bullets since they are later used in partition_text
+    # to determine list element type.
+    paragraph = (re.sub(E_BULLET_PATTERN, "·", paragraph)).strip()
+
+    bullet_paras = re.split(UNICODE_BULLETS_RE_0W, paragraph)
+    for bullet in bullet_paras:
+        if bullet:
+            clean_paragraphs.append(re.sub(PARAGRAPH_PATTERN, " ", bullet))
+    return clean_paragraphs
+
+
+def group_broken_paragraphs(
+    text: str,
+    line_split: re.Pattern[str] = PARAGRAPH_PATTERN_RE,
+    paragraph_split: re.Pattern[str] = DOUBLE_PARAGRAPH_PATTERN_RE,
+) -> str:
+    """Groups paragraphs that have line breaks for visual/formatting purposes.
+    For example:
+
+    '''The big red fox
+    is walking down the lane.
+
+    At the end of the lane
+    the fox met a bear.'''
+
+    Gets converted to
+
+    '''The big red fox is walking down the lane.
+    At the end of the land the fox met a bear.'''
+    """
+    paragraphs = paragraph_split.split(text)
+    clean_paragraphs = []
+    for paragraph in paragraphs:
+        if not paragraph.strip():
+            continue
+        # NOTE(robinson) - This block is to account for lines like the following that shouldn't be
+        # grouped together, but aren't separated by a double line break.
+        #     Apache License
+        #     Version 2.0, January 2004
+        #     http://www.apache.org/licenses/
+        para_split = line_split.split(paragraph)
+        all_lines_short = all(len(line.strip().split(" ")) < 5 for line in para_split)
+        # pytesseract converts some bullet points to standalone "e" characters
+        if UNICODE_BULLETS_RE.match(paragraph.strip()) or E_BULLET_PATTERN.match(
+            paragraph.strip()
+        ):
+            clean_paragraphs.extend(group_bullet_paragraph(paragraph))
+        elif all_lines_short:
+            clean_paragraphs.extend([line for line in para_split if line.strip()])
+        else:
+            clean_paragraphs.append(re.sub(PARAGRAPH_PATTERN, " ", paragraph))
+
+    return "\n\n".join(clean_paragraphs)
+
+
+def replace_mime_encodings(text: str, encoding: str = "utf-8") -> str:
+    """Replaces MIME encodings with their equivalent characters in the specified encoding.
+
+    Example
+    -------
+    5 w=E2=80-99s -> 5 w’s
+    """
+    formatted_encoding = format_encoding_str(encoding)
+    return quopri.decodestring(text.encode(formatted_encoding)).decode(
+        formatted_encoding
+    )
+
+
+def replace_unicode_quotes(text: str) -> str:
+    """Replaces unicode bullets in text with the expected character
+
+    Example
+    -------
+    \x93What a lovely quote!\x94 -> “What a lovely quote!”
+    """
+    # NOTE(robinson) - We should probably make this something more sane like a regex
+    # instead of a whole big series of replaces
+    text = text.replace("\x91", "‘")
+    text = text.replace("\x92", "’")
+    text = text.replace("\x93", "“")
+    text = text.replace("\x94", "”")
+    text = text.replace("&apos;", "'")
+    text = text.replace("â\x80\x99", "'")
+    text = text.replace("â\x80“", "—")
+    text = text.replace("â\x80”", "–")
+    text = text.replace("â\x80˜", "‘")
+    text = text.replace("â\x80¦", "…")
+    text = text.replace("â\x80™", "’")
+    text = text.replace("â\x80œ", "“")
+    text = text.replace("â\x80?", "”")
+    text = text.replace("â\x80ť", "”")
+    text = text.replace("â\x80ś", "“")
+    text = text.replace("â\x80¨", "—")
+    text = text.replace("â\x80ł", "″")
+    text = text.replace("â\x80Ž", "")
+    text = text.replace("â\x80‚", "")
+    text = text.replace("â\x80‰", "")
+    text = text.replace("â\x80‹", "")
+    text = text.replace("â\x80", "")
+    text = text.replace("â\x80s'", "")
+    return text
 
 
 def clean_text(

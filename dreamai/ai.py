@@ -94,6 +94,24 @@ def assistant_message(content: str) -> dict[str, str]:
     return chat_message(role="assistant", content=content)
 
 
+def merge_same_role_messages(messages: list[dict]) -> list[dict]:
+    if not messages:
+        return []
+    new_messages = []
+    last_message = None
+    for message in messages:
+        if last_message is None:
+            last_message = message
+        elif last_message["role"] == message["role"]:
+            last_message["content"] += "\n\n" + message["content"]
+        else:
+            new_messages.append(last_message)
+            last_message = message
+    if last_message is not None:
+        new_messages.append(last_message)
+    return new_messages
+
+
 def oai_response(response) -> str:
     try:
         return response.choices[0].message.content

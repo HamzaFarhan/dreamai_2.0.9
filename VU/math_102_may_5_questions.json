@@ -1,0 +1,277 @@
+{
+  "754": {
+    "id": "754",
+    "problem": "Let $f(x)$ and $g(x)$ be two monic cubic polynomials, and let $r$ be a real number.  Two of the roots of $f(x)$ are $r + 1$ and $r + 7.$  Two of the roots of $g(x)$ are $r + 3$ and $r + 9,$ and\n\\[f(x) - g(x) = r\\]for all real numbers $x.$  Find $r.$",
+    "solution": "By Factor Theorem,\n\\[f(x) = (x - r - 1)(x - r - 7)(x - a)\\]and\n\\[g(x) = (x - r - 3)(x - r - 9)(x - b)\\]for some real numbers $a$ and $b.$\n\nThen\n\\[f(x) - g(x) = (x - r - 1)(x - r - 7)(x - a) - (x - r - 3)(x - r - 9)(x - b) = r\\]for all $x.$\n\nSetting $x = r + 3,$ we get\n\\[(2)(-4)(r + 3 - a) = r.\\]Setting $x = r + 9,$ we get\n\\[(8)(2)(r + 9 - a) = r.\\]Then $-8r - 24 + 8a = r$ and $16r + 144 - 16a = r,$ so\n\\begin{align*}\n8a - 9r &= 24, \\\\\n-16a + 15r &= -144.\n\\end{align*}Solving, we find $r = \\boxed{32}.$",
+    "_topic": "Quadratic Functions and Quadratic Formula",
+    "_subtopic": "Quadratic Formula",
+    "_concept": "Derivation of the quadratic formula",
+    "_subquestion_ids": [
+      "754_1",
+      "754_2"
+    ]
+  },
+  "754_1": {
+    "id": "754_1",
+    "problem": "Given a cubic polynomial $p(x) = (x - s)(x - t)(x - u)$ where $s, t, u$ are real numbers, find the polynomial expanded in the form $ax^3 + bx^2 + cx + d$.",
+    "solution": "Expanding the given cubic polynomial $p(x) = (x - s)(x - t)(x - u)$, we first multiply $(x - s)(x - t)$ to get $x^2 - (s + t)x + st$. Next, we multiply this result by $(x - u)$ to obtain: \n\n$$(x^2 - (s + t)x + st)(x - u) = x^3 - (s + t + u)x^2 + (st + su + tu)x - stu.$$ \n\nThus, the expanded form of the polynomial is $x^3 - (s + t + u)x^2 + (st + su + tu)x - stu$.",
+    "_topic": "Mathematical Functions",
+    "_subtopic": "Functions and Their Types",
+    "_concept": "Quadratic functions",
+    "_subquestion_ids": []
+  },
+  "754_2": {
+    "id": "754_2",
+    "problem": "Given two equations $8a - 9r = 24$ and $-16a + 15r = -144$, solve for the variables $a$ and $r$.",
+    "solution": "To solve the system of equations $8a - 9r = 24$ and $-16a + 15r = -144$, we can use the method of elimination or substitution. Here, we'll use elimination. \n\nFirst, multiply the first equation by 2 to align the coefficients of $a$:\n\n$$16a - 18r = 48.$$ \n\nNow, add this to the second equation:\n\n$$16a - 18r + (-16a + 15r) = 48 - 144,$$\n$$-3r = -96.$$ \n\nSolving for $r$, we get $r = 32$. Substituting $r = 32$ back into the first equation:\n\n$$8a - 9(32) = 24,$$\n$$8a - 288 = 24,$$\n$$8a = 312,$$\n$$a = 39.$$ \n\nThus, $a = 39$ and $r = 32$.",
+    "_topic": "Matrices",
+    "_subtopic": "Applications of Matrices",
+    "_concept": "Solving Systems of Linear Equations",
+    "_subquestion_ids": [
+      "754_2_1",
+      "754_2_2"
+    ]
+  },
+  "754_2_1": {
+    "id": "754_2_1",
+    "problem": "Given the equation $8a - 9r = 24$, find the value of $a$ in terms of $r$.",
+    "solution": "To express $a$ in terms of $r$ from the equation $8a - 9r = 24$, we can isolate $a$ on one side of the equation. Starting with:\n$$8a - 9r = 24,$$\nadd $9r$ to both sides to get:\n$$8a = 9r + 24.$$\nNow, divide both sides by 8:\n$$a = \\frac{9r + 24}{8}.$$\nThus, $a$ in terms of $r$ is $\\frac{9r + 24}{8}$.",
+    "_topic": "Mathematical Functions",
+    "_subtopic": "Functions and Their Types",
+    "_concept": "Definition of a function",
+    "_subquestion_ids": []
+  },
+  "754_2_2": {
+    "id": "754_2_2",
+    "problem": "Solve the equation $-3r = -96$ for $r$.",
+    "solution": "To solve the equation $-3r = -96$ for $r$, divide both sides by $-3$:\n$$r = \\frac{-96}{-3} = 32.$$\nTherefore, the solution for $r$ is $r = 32$.",
+    "_topic": "Mathematical Functions",
+    "_subtopic": "Functions and Their Types",
+    "_concept": "Definition of a function",
+    "_subquestion_ids": []
+  },
+  "525": {
+    "id": "525",
+    "problem": "Let $f(x)$ be a third-degree polynomial with real coefficients satisfying \\[|f(1)|=|f(2)|=|f(3)|=|f(5)|=|f(6)|=|f(7)|=12.\\]Find $|f(0)|$.",
+    "solution": "Each of the six values $f(1),$ $f(2),$ $f(3),$ $f(5),$ $f(6),$ $f(7)$ is equal to 12 or $-12.$  The equation $f(x) = 12$ has at most three roots, and the equation $f(x) = -12$ has at most three roots, so exactly three of the values are equal to 12, and the other three are equal to $-12.$\n\nFurthermore, let $s$ be the sum of the $x$ that such that $f(x) = 12.$  Then by Vieta's formulas, the sum of the $x$ such that $f(x) = -12$ is also equal to $s.$  (The polynomials $f(x) - 12$ and $f(x) + 12$ only differ in the constant term.)  Hence,\n\\[2s = 1 + 2 + 3 + 5 + 6 + 7 = 24,\\]so $s = 12.$\n\nThe only ways to get three numbers from $\\{1, 2, 3, 5, 6, 7\\}$ to add up to 12 are $1 + 5 + 6$ and $2 + 3 + 7.$  Without loss of generality, assume that $f(1) = f(5) = f(6) = -12$ and $f(2) = f(3) = f(7) = 12.$\n\nLet $g(x) = f(x) + 12.$  Then $g(x)$ is a cubic polynomial, and $g(1) = g(5) = g(6) = 0,$ so\n\\[g(x) = c(x - 1)(x - 5)(x - 6)\\]for some constant $c.$  Also, $g(2) = 24,$ so\n\\[24 = c(2 - 1)(2 - 5)(2 - 6).\\]This leads to $c = 2.$  Then $g(x) = 2(x - 1)(x - 5)(x - 6),$ so\n\\[f(x) = 2(x - 1)(x - 5)(x - 6) - 12.\\]In particular, $|f(0)| = \\boxed{72}.$",
+    "_topic": "Quadratic Functions and Quadratic Formula",
+    "_subtopic": "Quadratic Formula",
+    "_concept": "Derivation of the quadratic formula",
+    "_subquestion_ids": [
+      "525_1",
+      "525_2"
+    ]
+  },
+  "525_1": {
+    "id": "525_1",
+    "problem": "Given a cubic polynomial $g(x) = c(x - 1)(x - 5)(x - 6)$, find the value of $c$ if $g(2) = 24$.",
+    "solution": "Substitute $x = 2$ into the polynomial $g(x) = c(x - 1)(x - 5)(x - 6)$. This gives:\n\n$g(2) = c(2 - 1)(2 - 5)(2 - 6) = c(1)(-3)(-4) = 12c.$\n\nSince $g(2) = 24$, we have $12c = 24$. Solving for $c$ gives $c = 24 / 12 = 2$. Thus, the value of $c$ is $2$.",
+    "_topic": "Mathematical Functions",
+    "_subtopic": "Functions and Their Types",
+    "_concept": "Quadratic functions",
+    "_subquestion_ids": []
+  },
+  "525_2": {
+    "id": "525_2",
+    "problem": "Find the sum of the numbers in the set $\\\\[\\{1, 2, 3, 5, 6, 7\\}\\]$ and determine the possible combinations of three numbers from this set that add up to 12.",
+    "solution": "The sum of the numbers in the set $\\\\[\\{1, 2, 3, 5, 6, 7\\}\\]$ is $1 + 2 + 3 + 5 + 6 + 7 = 24$. To find combinations of three numbers that add up to 12, we consider possible groupings:\n\n1. $1 + 5 + 6 = 12$\n2. $2 + 3 + 7 = 12$\n\nThese are the only combinations from the set that sum to 12.",
+    "_topic": "Permutations and Combinations with their applications on some real life scenarios",
+    "_subtopic": "Applications of Permutations and Combinations",
+    "_concept": "Determining the number of possible committee formations from a group of people",
+    "_subquestion_ids": [
+      "525_2_1",
+      "525_2_2"
+    ]
+  },
+  "525_2_1": {
+    "id": "525_2_1",
+    "problem": "Calculate the sum of the numbers in the set \\{1, 2, 3, 5, 6, 7\\}.",
+    "solution": "To find the sum of the numbers in the set \\{1, 2, 3, 5, 6, 7\\}, we add each of the numbers together: 1 + 2 + 3 + 5 + 6 + 7 = 24. Therefore, the sum of the numbers in the set is 24.",
+    "_topic": "Sets and Set Operations",
+    "_subtopic": "Set Operations",
+    "_concept": "Cardinality of Sets",
+    "_subquestion_ids": []
+  },
+  "525_2_2": {
+    "id": "525_2_2",
+    "problem": "Determine all possible combinations of three numbers from the set \\{1, 2, 3, 5, 6, 7\\} that add up to 12.",
+    "solution": "To find combinations of three numbers from the set \\{1, 2, 3, 5, 6, 7\\} that sum to 12, we examine each possible grouping of three numbers: \n1. 1 + 5 + 6 = 12\n2. 2 + 3 + 7 = 12\nThese are the only combinations from the set that sum to 12.",
+    "_topic": "Permutations and Combinations with their applications on some real life scenarios",
+    "_subtopic": "Fundamentals of Combinations",
+    "_concept": "Formulas for calculating combinations",
+    "_subquestion_ids": []
+  },
+  "470": {
+    "id": "470",
+    "problem": "Let $x$ and $y$ be positive real numbers.  Find the minimum value of\n\\[\\frac{\\sqrt{(x^2 + y^2)(3x^2 + y^2)}}{xy}.\\]",
+    "solution": "By Cauchy-Schwarz,\n\\[(y^2 + x^2)(3x^2 + y^2) \\ge (xy \\sqrt{3} + xy)^2,\\]so\n\\[\\frac{\\sqrt{(x^2 + y^2)(3x^2 + y^2)}}{xy} \\ge 1 + \\sqrt{3}.\\]Equality occurs when $\\frac{y^2}{3x^2} = \\frac{x^2}{y^2},$ or $y = x \\sqrt[4]{3},$ so the minimum value is $\\boxed{1 + \\sqrt{3}}.$",
+    "_topic": "Trigonometric Functions and Identities",
+    "_subtopic": "Trigonometric Identities and Their Applications",
+    "_concept": "Fundamental trigonometric identities (Pythagorean, reciprocal, and quotient identities)",
+    "_subquestion_ids": [
+      "470_2"
+    ]
+  },
+  "470_2": {
+    "id": "470_2",
+    "problem": "Find the condition under which the equality $(y^2 + x^2)(3x^2 + y^2) = (xy \\\\sqrt{3} + xy)^2$ holds.",
+    "solution": "The equality condition in the Cauchy-Schwarz inequality holds when the sequences are proportional. Here, the sequences are $(y, x)$ and $(\\\\sqrt{3x^2}, y)$. Setting the ratios equal, we get: \\\\[\frac{y}{\\\\sqrt{3x^2}} = \frac{x}{y}.\\\\] Solving this equation, we find \\\\[\frac{y^2}{3x^2} = \frac{x^2}{y^2},\\\\] which simplifies to \\\\[\frac{y^4}{x^4} = 3,\\\\] or \\\\[\frac{y}{x} = \\\\sqrt[4]{3}.\\\\] Thus, the condition for equality is $y = x \\\\sqrt[4]{3}.$",
+    "_topic": "Permutations and Combinations with their applications on some real life scenarios",
+    "_subtopic": "Combinatorics and Probability",
+    "_concept": "Relationship between permutations/combinations and probability",
+    "_subquestion_ids": [
+      "470_2_1",
+      "470_2_2"
+    ]
+  },
+  "470_2_1": {
+    "id": "470_2_1",
+    "problem": "Find the ratio of $y$ to $x$ if $y^4 = 3x^4$.",
+    "solution": "To find the ratio of $y$ to $x$ when $y^4 = 3x^4$, we can take the fourth root of both sides of the equation. This gives: \n$$\n\\sqrt[4]{y^4} = \\sqrt[4]{3x^4}\n$$\n$$\ny = x\\sqrt[4]{3}\n$$\nThus, the ratio of $y$ to $x$ is $\\sqrt[4]{3}$. This means $y$ is $\\sqrt[4]{3}$ times $x$.",
+    "_topic": "Complex Numbers",
+    "_subtopic": "Addition and Subtraction of Complex Numbers",
+    "_concept": "Definition of complex numbers",
+    "_subquestion_ids": []
+  },
+  "470_2_2": {
+    "id": "470_2_2",
+    "problem": "Verify if the sequences $(y, x)$ and $(\\sqrt{3x^2}, y)$ are proportional.",
+    "solution": "To check if the sequences $(y, x)$ and $(\\sqrt{3x^2}, y)$ are proportional, we compare the ratios of corresponding elements. The ratio of the first sequence is $\\frac{y}{x}$, and for the second sequence, it is $\\frac{\\sqrt{3x^2}}{y}$. Setting these ratios equal gives:\n$$\n\\frac{y}{x} = \\frac{\\sqrt{3x^2}}{y}\n$$\nCross-multiplying yields:\n$$\ny^2 = 3x^2\n$$\nThis equation shows that the sequences are proportional when $y^2 = 3x^2$, confirming their proportionality under this condition.",
+    "_topic": "Arithmetic and Geometric Sequence with their nth Terms and Series Sum",
+    "_subtopic": "Applications of Sequences and Series",
+    "_concept": "Real-world applications of arithmetic and geometric sequences",
+    "_subquestion_ids": []
+  },
+  "518": {
+    "id": "518",
+    "problem": "A line whose $y$-intercept is $(0,5)$ intersects the ellipse $9x^2 + 16y^2 = 144.$  Find all possible slopes of this line.",
+    "solution": "The line is of the form $y = mx + 5.$  Substituting, we get\n\\[9x^2 + 16(mx + 5)^2 = 144.\\]Expanding, we get\n\\[(16m^2 + 9) x^2 + 160mx + 256 = 0.\\]For the line and ellipse to intersect, this quadratic must have a real root, which means that its discriminant is nonnegative:\n\\[(160m)^2 - 4(16m^2 + 9)(256) \\ge 0.\\]This reduces to $m^2 \\ge 1.$  Thus, the possible slopes are $m \\in \\boxed{(-\\infty,-1] \\cup [1,\\infty)}.$",
+    "_topic": "Coordinate Geometry",
+    "_subtopic": "Slope of a line",
+    "_concept": "Definition of slope as the rate of change between two points on a line",
+    "_subquestion_ids": [
+      "518_1",
+      "518_2"
+    ]
+  },
+  "518_1": {
+    "id": "518_1",
+    "problem": "Given a quadratic equation in the form ax^2 + bx + c = 0, how do you determine if it has real roots?",
+    "solution": "To determine if a quadratic equation has real roots, calculate the discriminant, which is given by the formula \u0394 = b^2 - 4ac. If \u0394 is greater than or equal to zero, the equation has real roots. If \u0394 is negative, the equation has no real roots.",
+    "_topic": "Quadratic Functions and Quadratic Formula",
+    "_subtopic": "Types of Solutions",
+    "_concept": "Discriminant and its role in determining the nature of solutions",
+    "_subquestion_ids": []
+  },
+  "518_2": {
+    "id": "518_2",
+    "problem": "What is the general form of the equation of a line with a given y-intercept b?",
+    "solution": "The general form of the equation of a line with a y-intercept b is y = mx + b, where m is the slope of the line and b is the y-intercept. This form is derived from the slope-intercept form of a linear equation.",
+    "_topic": "Mathematical Functions",
+    "_subtopic": "Functions and Their Types",
+    "_concept": "Linear functions",
+    "_subquestion_ids": []
+  },
+  "804": {
+    "id": "804",
+    "problem": "Let $a,$ $b,$ and $c$ be nonnegative real numbers such that $a + b + c = 1.$  Find the maximum value of\n\\[a + \\sqrt{ab} + \\sqrt[3]{abc}.\\]",
+    "solution": "Our strategy is to add a number of inequalities like\n\\[a + b \\ge 2 \\sqrt{ab},\\]so that when we add them up, we get an inequality of the form\n\\[t(a + b + c) \\ge a + \\sqrt{ab} + \\sqrt[3]{abc}.\\]To do so, we will use some variables, to make sure we use the most general forms of AM-GM.\n\nIf we apply AM-GM to two terms, one of which is $pb,$ then to obtain $\\sqrt{ab}$ on the right-hand side, the other term must be $\\frac{1}{4p} a,$ as in\n\\[\\frac{1}{4p} a + pb \\ge 2 \\sqrt{\\frac{1}{4p} a \\cdot pb} = \\sqrt{ab}. \\quad (*)\\]Note that equality holds when $\\frac{1}{4p} a = pb,$ or $\\frac{a}{b} = 4p^2.$  Thus,\n\nWe then want an inequality of the form\n\\[xa + yb + zc \\ge \\sqrt[3]{abc},\\]where $x,$ $y,$ and $z$ are coefficients that we want to fill in.  We want equality to hold here for the same values of $a$ and $b$ as in $(*)$.  This means we want $xa = yb,$ or $\\frac{x}{y} = \\frac{b}{a} = \\frac{1}{4p^2}.$  So, let $x = \\frac{1}{4pk}$ and $y = \\frac{p}{k}$:\n\\[\\frac{1}{4pk} a + \\frac{p}{k} b + zc \\ge \\sqrt[3]{abc}.\\]Finally, $z$ should be $\\frac{4k^2}{27},$ so that we obtain $\\sqrt[3]{abc}$ on the right-hand side:\n\\[\\frac{1}{4pk} a + \\frac{p}{k} b + \\frac{4k^2}{27} c \\ge 3 \\sqrt[3]{\\frac{1}{4pk} a \\cdot \\frac{p}{k} b \\cdot \\frac{4k^2}{27} c} = \\sqrt[3]{abc}. \\quad (**)\\]Thus, we have the inequalities\n\\begin{align*}\na &\\ge a, \\\\\n\\frac{1}{4p} a + pb &\\ge \\sqrt{ab}, \\\\\n\\frac{1}{4pk} a + \\frac{p}{k} b + \\frac{4k^2}{27} c &\\ge \\sqrt[3]{abc}.\n\\end{align*}When we add these up, we want the coefficients of $a,$ $b,$ and $c$ to be equal.  Thus,\n\\[1 + \\frac{1}{4p} + \\frac{1}{4pk} = p + \\frac{p}{k} = \\frac{4k^2}{27}.\\]Isolating $p$ in $p + \\frac{p}{k} = \\frac{4k^2}{27},$ we find\n\\[p = \\frac{4k^3}{27(k + 1)}.\\]Then\n\\[1 + \\frac{1}{4p} + \\frac{1}{4pk} = \\frac{4pk + k + 1}{4pk} = \\frac{4k^2}{27}.\\]Cross-multiplying, we get\n\\[27(4pk + k + 1) = 16pk^3.\\]Substituting $p = \\frac{4k^3}{27(k + 1)},$ we get\n\\[27 \\left( 4k \\cdot \\frac{4k^3}{27(k + 1)} + k + 1 \\right) = 16k^3 \\cdot \\frac{4k^3}{27(k + 1)}.\\]Then\n\\[27(16k^4 + 27(k + 1)^2) = 64k^3.\\]This simplifies to $64k^6 - 432k^4 - 729k^2 - 1458k - 729 = 0.$  Fortunately, this polynomial has $k = 3$ as a root.\n\nThen $p = 1,$ and we get\n\\[\\frac{4}{3} a + \\frac{4}{3} b + \\frac{4}{3} c \\ge a + \\sqrt{ab} + \\sqrt[3]{abc}.\\]Therefore,\n\\[a + \\sqrt{ab} + \\sqrt[3]{abc} \\le \\frac{4}{3}.\\]Equality occurs when $a = \\frac{16}{21},$ $b = \\frac{4}{21},$ and $c = \\frac{1}{21},$ so the maximum value is $\\boxed{\\frac{4}{3}}.$",
+    "_topic": "Sets and Set Operations",
+    "_subtopic": "Applications of Sets",
+    "_concept": "Set Theory in Probability and Logic",
+    "_subquestion_ids": [
+      "804_1",
+      "804_2"
+    ]
+  },
+  "804_1": {
+    "id": "804_1",
+    "problem": "Given two nonnegative real numbers $x$ and $y$ such that $x + y = 1$, find the maximum value of $x + \frac{1}{2}\times \text{min}(x, y).$",
+    "solution": "To maximize $x + \frac{1}{2}\times \text{min}(x, y)$, we consider two cases: when $x \\\\<= y$ and when $x \\\\> y$. In the first case, $x + \frac{1}{2}\times \text{min}(x, y) = x + \frac{1}{2}x = 1.5x$. Since $x \\\\<= y$, $x \\\\<= 0.5$, and the maximum value of $1.5x$ is $0.75$ when $x = 0.5$. In the second case, $x + \frac{1}{2}\times \text{min}(x, y) = x + \frac{1}{2}(1-x) = 1 - 0.5x$. The maximum value of $1 - 0.5x$ is $1$ when $x = 0$. However, since $x \\\\> y$, $x \\\\> 0.5$, and the maximum value of $1 - 0.5x$ in this range is $0.75$ when $x = 0.5$. Therefore, the maximum value of $x + \frac{1}{2}\times \text{min}(x, y)$ is $0.75$.",
+    "_topic": "Sets and Set Operations",
+    "_subtopic": "Applications of Sets",
+    "_concept": "Set Theory in Probability and Logic",
+    "_subquestion_ids": [
+      "804_1_1",
+      "804_1_2"
+    ]
+  },
+  "804_1_1": {
+    "id": "804_1_1",
+    "problem": "Given a real number $x$ such that $0 \\leq x \\leq 1$, find the maximum value of the expression $1.5x$.",
+    "solution": "To find the maximum value of $1.5x$ under the constraint $0 \\leq x \\leq 1$, we observe that the function $1.5x$ is a linear function increasing with $x$. Therefore, the maximum value occurs at the upper limit of $x$, which is $1$. Calculating $1.5 \\times 1$ gives $1.5$. Hence, the maximum value of $1.5x$ is $1.5$.",
+    "_topic": "Mathematical Functions",
+    "_subtopic": "Functions and Their Types",
+    "_concept": "Exponential functions",
+    "_subquestion_ids": []
+  },
+  "804_1_2": {
+    "id": "804_1_2",
+    "problem": "Given a real number $x$ such that $0.5 \\leq x \\leq 1$, find the maximum value of the expression $1 - 0.5x$.",
+    "solution": "To find the maximum value of $1 - 0.5x$ under the constraint $0.5 \\leq x \\leq 1$, we note that the function $1 - 0.5x$ is a linear function decreasing with $x$. The maximum value occurs at the lower limit of $x$, which is $0.5$. Calculating $1 - 0.5 \\times 0.5$ gives $1 - 0.25 = 0.75$. Hence, the maximum value of $1 - 0.5x$ is $0.75.",
+    "_topic": "Mathematical Functions",
+    "_subtopic": "Functions and Their Types",
+    "_concept": "Exponential functions",
+    "_subquestion_ids": []
+  },
+  "804_2": {
+    "id": "804_2",
+    "problem": "Given three nonnegative real numbers $u, v, w$ such that $u + v + w = 1$, find the maximum value of $u + \frac{1}{3}\times \text{min}(u, v, w).$",
+    "solution": "To maximize $u + \frac{1}{3}\times \text{min}(u, v, w)$, we consider the case where $u, v, w$ are equal, as this will maximize the minimum value. When $u = v = w = \frac{1}{3}$, then $\text{min}(u, v, w) = \frac{1}{3}$. Thus, $u + \frac{1}{3}\times \text{min}(u, v, w) = \frac{1}{3} + \frac{1}{3}\times \frac{1}{3} = \frac{1}{3} + \frac{1}{9} = \frac{4}{9}$. Therefore, the maximum value of $u + \frac{1}{3}\times \text{min}(u, v, w)$ is $\frac{4}{9}$.",
+    "_topic": "Sets and Set Operations",
+    "_subtopic": "Applications of Sets",
+    "_concept": "Set Theory in Probability and Logic",
+    "_subquestion_ids": [
+      "804_2_1",
+      "804_2_2"
+    ]
+  },
+  "804_2_1": {
+    "id": "804_2_1",
+    "problem": "Given three nonnegative real numbers $a, b, c$ such that $a + b + c = 1$, find the value of $a$ when $a = b = c$.",
+    "solution": "Since $a, b, c$ are equal and their sum is 1, we have $a + a + a = 1$. This simplifies to $3a = 1$. Solving for $a$, we get $a = \\frac{1}{3}$. Therefore, the value of $a$ when $a = b = c$ is $\\frac{1}{3}$.",
+    "_topic": "Sets and Set Operations",
+    "_subtopic": "Set Representation",
+    "_concept": "Set Notation: Roster Form (Enumeration) and Set-Builder Notation",
+    "_subquestion_ids": []
+  },
+  "804_2_2": {
+    "id": "804_2_2",
+    "problem": "Given three numbers $x, y, z$, find the minimum value among them.",
+    "solution": "To find the minimum value among $x, y, z$, we compare the three numbers. The minimum value, denoted as $\\min(x, y, z)$, is the smallest number among $x, y, z$. This can be determined by evaluating $\\min(x, y, z) = \\min(\\min(x, y), z)$, where $\\min(x, y)$ is the smaller of $x$ and $y$, and then comparing it with $z$.",
+    "_topic": "Mathematical Functions",
+    "_subtopic": "Functions and Their Types",
+    "_concept": "Definition of a function",
+    "_subquestion_ids": []
+  },
+  "467": {
+    "id": "467",
+    "problem": "Let $f$ be a function taking the integers to the integers such that\n\\[f(m + n) + f(mn - 1) = f(m) f(n) + 2\\]for all integers $m$ and $n.$\n\nLet $n$ be the number of possible values of $f(2),$ and let $s$ be the sum of all possible values of $f(2).$  Find $n \\times s.$",
+    "solution": "Setting $n = 0,$ we get\n\\[f(m) + f(-1) = f(m) f(0) + 2.\\]If $f(0) \\neq 1,$ then $f(m)$ is equal to some constant, say $c.$  Then\n\\[2c = c^2 + 2,\\]which has no integer solutions.  Therefore, $f(0) = 1,$ and then $f(-1) = 2.$\n\nSetting $n = 1,$ we get\n\\[f(m + 1) + f(m - 1) = f(1) f(m) + 2.\\]Let $a = f(1)$; then\n\\[f(m + 1) = af(m) - f(m - 1) + 2.\\]Since $f(0) = 1$ and $f(1) = a,$\n\\begin{align*}\nf(2) &= af(1) - f(0) + 2 = a^2 + 1, \\\\\nf(3) &= af(2) - f(1) + 2 = a^3 + 2, \\\\\nf(4) &= af(3) - f(2) + 2 = a^4 - a^2 + 2a + 1, \\\\\nf(5) &= af(4) - f(3) + 2 = a^5 - 2a^3 + 2a^2 + a.\n\\end{align*}Setting $m = n = 2,$ we get\n\\[f(4) + f(3) = f(2)^2 + 2.\\]Then $(a^4 - a^2 + 2a + 1) + (a^3 + 2) = (a^2 + 1)^2 + 2,$ which simplifies to\n\\[a^3 - 3a^2 + 2a = 0.\\]This factors as $a(a - 1)(a - 2) = 0.$  Hence, $a \\in \\{0, 1, 2\\}.$\n\nSetting $m = 2$ and $n = 3,$ we get\n\\[f(5) + f(5) = f(2) f(3) + 2.\\]Then $2(a^5 - 2a^3 + 2a^2 + a) = (a^2 + 1)(a^3 + 2) + 2.$  Checking $a = 0,$ $a = 1,$ and $a = 2,$ we find that the only value that works is $a = 2.$\n\nHence,\n\\[f(m + 1) = 2f(m) - f(m - 1) + 2.\\]The first few values are\n\\begin{align*}\nf(2) &= 2f(1) - f(0) + 2 = 5, \\\\\nf(3) &= 2f(2) - f(1) + 2 = 10, \\\\\nf(4) &= 2f(3) - f(2) + 2 = 17,\n\\end{align*}and so on.  By a straight-forward induction argument,\n\\[f(n) = n^2 + 1\\]for all integers $n.$\n\nWe can check that this function works.  Therefore, $n = 1$ and $s = 5,$ so $n \\times s = \\boxed{5}.$",
+    "_topic": "Quadratic Functions and Quadratic Formula",
+    "_subtopic": "Quadratic Formula",
+    "_concept": "Using the quadratic formula to solve quadratic equations",
+    "_subquestion_ids": [
+      "467_1",
+      "467_2"
+    ]
+  },
+  "467_1": {
+    "id": "467_1",
+    "problem": "Given a quadratic equation $x^2 - x - 2 = 0$, solve for $x$.",
+    "solution": "To solve the quadratic equation $x^2 - x - 2 = 0$, we can use the quadratic formula, which is $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$. Here, $a = 1$, $b = -1$, and $c = -2$. Plugging these values into the formula gives:\n\n$x = \\frac{-(-1) \\pm \\sqrt{(-1)^2 - 4 \\cdot 1 \\cdot (-2)}}{2 \\cdot 1} = \\frac{1 \\pm \\sqrt{1 + 8}}{2} = \\frac{1 \\pm 3}{2}$.\n\nThis results in two solutions: $x = \\frac{4}{2} = 2$ and $x = \\frac{-2}{2} = -1$. Thus, the solutions are $x = 2$ and $x = -1$.",
+    "_topic": "Quadratic Functions and Quadratic Formula",
+    "_subtopic": "Quadratic Formula",
+    "_concept": "Using the quadratic formula to solve quadratic equations",
+    "_subquestion_ids": []
+  },
+  "467_2": {
+    "id": "467_2",
+    "problem": "Find the sum of the roots of the quadratic equation $x^2 - 3x + 2 = 0$.",
+    "solution": "The sum of the roots of a quadratic equation $ax^2 + bx + c = 0$ is given by $-b/a$. For the equation $x^2 - 3x + 2 = 0$, where $a = 1$ and $b = 3$, the sum of the roots is $-(-3)/1 = 3$. This can be verified by factoring the equation as $(x-1)(x-2) = 0$, which gives roots $x = 1$ and $x = 2$. The sum of these roots is indeed $1 + 2 = 3$.",
+    "_topic": "Quadratic Functions and Quadratic Formula",
+    "_subtopic": "Quadratic Formula",
+    "_concept": "Using the quadratic formula to solve quadratic equations",
+    "_subquestion_ids": []
+  }
+}

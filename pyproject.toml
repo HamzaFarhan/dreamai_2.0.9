@@ -15,7 +15,6 @@ instructor = "^1.0.0"
 langchain = "^0.1.14"
 fastapi = "^0.110.1"
 demoji = "^1.1.0"
-unstructured = "^0.13.0"
 litellm = "^1.34.22"
 dspy-ai = "^2.4.0"
 pypdf = "^4.1.0"
@@ -42,6 +41,8 @@ accelerate = "^0.29.3"
 faster-whisper = {git = "https://github.com/SYSTRAN/faster-whisper.git"}
 pyannote-audio = "^3.1.1"
 cython = "^3.0.10"
+logfire = "^0.28.0"
+streamlit-agraph = "^0.0.45"
 
 [tool.poetry.group.dev.dependencies]
 notebook = "^7.1.2"
