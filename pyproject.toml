@@ -43,6 +43,12 @@ pyannote-audio = "^3.1.1"
 cython = "^3.0.10"
 logfire = "^0.28.0"
 streamlit-agraph = "^0.0.45"
+networkx = "^3.3"
+pygraphviz = "^1.13"
+hvplot = "^0.10.0"
+watchfiles = "^0.21.0"
+pygments = "^2.18.0"
+jupyter-bokeh = "^4.0.4"
 
 [tool.poetry.group.dev.dependencies]
 notebook = "^7.1.2"

@@ -1,0 +1,902 @@
+{
+  "topics": {
+    "Sets and Set Operations": {
+      "name": "Sets and Set Operations",
+      "subtopics": {
+        "Set Representation": {
+          "name": "Set Representation",
+          "concepts": {
+            "Set Notation: Roster Form (Enumeration) and Set-Builder Notation": {
+              "concept": "Set Notation: Roster Form (Enumeration) and Set-Builder Notation",
+              "question_ids": [
+                "470_1_1"
+              ]
+            },
+            "Set Diagrams: Venn Diagrams": {
+              "concept": "Set Diagrams: Venn Diagrams",
+              "question_ids": [
+                "470_1_1_1"
+              ]
+            }
+          }
+        },
+        "Types of Sets": {
+          "name": "Types of Sets",
+          "concepts": {
+            "Finite and Infinite Sets": {
+              "concept": "Finite and Infinite Sets",
+              "question_ids": []
+            },
+            "Empty Set and Universal Set": {
+              "concept": "Empty Set and Universal Set",
+              "question_ids": []
+            },
+            "Singleton Set and Equivalent Sets": {
+              "concept": "Singleton Set and Equivalent Sets",
+              "question_ids": []
+            }
+          }
+        },
+        "Set Operations": {
+          "name": "Set Operations",
+          "concepts": {
+            "Union, Intersection, and Complement of Sets": {
+              "concept": "Union, Intersection, and Complement of Sets",
+              "question_ids": []
+            },
+            "Disjoint Sets and Overlapping Sets": {
+              "concept": "Disjoint Sets and Overlapping Sets",
+              "question_ids": []
+            },
+            "Cardinality of Sets": {
+              "concept": "Cardinality of Sets",
+              "question_ids": []
+            }
+          }
+        },
+        "Set Properties": {
+          "name": "Set Properties",
+          "concepts": {
+            "Commutative, Associative, and Distributive Properties of Set Operations": {
+              "concept": "Commutative, Associative, and Distributive Properties of Set Operations",
+              "question_ids": []
+            },
+            "Idempotent, Identity, and Complement Properties of Set Operations": {
+              "concept": "Idempotent, Identity, and Complement Properties of Set Operations",
+              "question_ids": []
+            }
+          }
+        },
+        "Applications of Sets": {
+          "name": "Applications of Sets",
+          "concepts": {
+            "Set Theory in Probability and Logic": {
+              "concept": "Set Theory in Probability and Logic",
+              "question_ids": [
+                "470_2_2",
+                "804"
+              ]
+            },
+            "Set Theory in Computer Science and Data Structures": {
+              "concept": "Set Theory in Computer Science and Data Structures",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Complex Numbers": {
+      "name": "Complex Numbers",
+      "subtopics": {
+        "Addition and Subtraction of Complex Numbers": {
+          "name": "Addition and Subtraction of Complex Numbers",
+          "concepts": {
+            "Definition of complex numbers": {
+              "concept": "Definition of complex numbers",
+              "question_ids": [
+                "804_2"
+              ]
+            },
+            "Real and imaginary parts of a complex number": {
+              "concept": "Real and imaginary parts of a complex number",
+              "question_ids": []
+            },
+            "Adding and subtracting complex numbers by adding/subtracting the real and imaginary parts": {
+              "concept": "Adding and subtracting complex numbers by adding/subtracting the real and imaginary parts",
+              "question_ids": []
+            }
+          }
+        },
+        "Multiplication of Complex Numbers": {
+          "name": "Multiplication of Complex Numbers",
+          "concepts": {
+            "Multiplying complex numbers using the distributive property": {
+              "concept": "Multiplying complex numbers using the distributive property",
+              "question_ids": []
+            },
+            "Simplifying products of complex numbers": {
+              "concept": "Simplifying products of complex numbers",
+              "question_ids": []
+            },
+            "Applications of complex number multiplication": {
+              "concept": "Applications of complex number multiplication",
+              "question_ids": []
+            }
+          }
+        },
+        "Division of Complex Numbers": {
+          "name": "Division of Complex Numbers",
+          "concepts": {
+            "Dividing complex numbers using the conjugate": {
+              "concept": "Dividing complex numbers using the conjugate",
+              "question_ids": []
+            },
+            "Rationalizing the denominator of a complex fraction": {
+              "concept": "Rationalizing the denominator of a complex fraction",
+              "question_ids": []
+            },
+            "Solving complex number division problems": {
+              "concept": "Solving complex number division problems",
+              "question_ids": []
+            }
+          }
+        },
+        "Modulus and Argument of a Complex Number": {
+          "name": "Modulus and Argument of a Complex Number",
+          "concepts": {
+            "Definition of modulus (magnitude) of a complex number": {
+              "concept": "Definition of modulus (magnitude) of a complex number",
+              "question_ids": []
+            },
+            "Calculating the modulus using the Pythagorean Theorem": {
+              "concept": "Calculating the modulus using the Pythagorean Theorem",
+              "question_ids": [
+                "470_1_1_2"
+              ]
+            },
+            "Definition of argument (phase) of a complex number": {
+              "concept": "Definition of argument (phase) of a complex number",
+              "question_ids": []
+            },
+            "Finding the argument of a complex number": {
+              "concept": "Finding the argument of a complex number",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Mathematical Functions": {
+      "name": "Mathematical Functions",
+      "subtopics": {
+        "Mapping and Their Types": {
+          "name": "Mapping and Their Types",
+          "concepts": {
+            "Definition of mapping": {
+              "concept": "Definition of mapping",
+              "question_ids": [
+                "804_1"
+              ]
+            },
+            "One-to-one mapping": {
+              "concept": "One-to-one mapping",
+              "question_ids": []
+            },
+            "Onto mapping": {
+              "concept": "Onto mapping",
+              "question_ids": []
+            },
+            "Bijective mapping": {
+              "concept": "Bijective mapping",
+              "question_ids": []
+            }
+          }
+        },
+        "Functions and Their Types": {
+          "name": "Functions and Their Types",
+          "concepts": {
+            "Definition of a function": {
+              "concept": "Definition of a function",
+              "question_ids": [
+                "804_1_2",
+                "804_2_1",
+                "804_2_2"
+              ]
+            },
+            "Constant functions": {
+              "concept": "Constant functions",
+              "question_ids": []
+            },
+            "Linear functions": {
+              "concept": "Linear functions",
+              "question_ids": []
+            },
+            "Quadratic functions": {
+              "concept": "Quadratic functions",
+              "question_ids": [
+                "754_1"
+              ]
+            },
+            "Exponential functions": {
+              "concept": "Exponential functions",
+              "question_ids": [
+                "525_1"
+              ]
+            }
+          }
+        },
+        "Composite and Inverse of a Function": {
+          "name": "Composite and Inverse of a Function",
+          "concepts": {
+            "Composition of functions": {
+              "concept": "Composition of functions",
+              "question_ids": [
+                "754"
+              ]
+            },
+            "Inverse of a function": {
+              "concept": "Inverse of a function",
+              "question_ids": []
+            },
+            "Properties of composite and inverse functions": {
+              "concept": "Properties of composite and inverse functions",
+              "question_ids": []
+            }
+          }
+        },
+        "Arithmetic Operations on Functions": {
+          "name": "Arithmetic Operations on Functions",
+          "concepts": {
+            "Addition of functions": {
+              "concept": "Addition of functions",
+              "question_ids": [
+                "804_1_1"
+              ]
+            },
+            "Subtraction of functions": {
+              "concept": "Subtraction of functions",
+              "question_ids": []
+            },
+            "Multiplication of functions": {
+              "concept": "Multiplication of functions",
+              "question_ids": []
+            },
+            "Division of functions": {
+              "concept": "Division of functions",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Quadratic Functions and Quadratic Formula": {
+      "name": "Quadratic Functions and Quadratic Formula",
+      "subtopics": {
+        "Quadratic Functions": {
+          "name": "Quadratic Functions",
+          "concepts": {
+            "Definition of a quadratic function": {
+              "concept": "Definition of a quadratic function",
+              "question_ids": [
+                "518_2_2"
+              ]
+            },
+            "Standard form of a quadratic function": {
+              "concept": "Standard form of a quadratic function",
+              "question_ids": []
+            },
+            "Graphing quadratic functions": {
+              "concept": "Graphing quadratic functions",
+              "question_ids": []
+            }
+          }
+        },
+        "Quadratic Formula": {
+          "name": "Quadratic Formula",
+          "concepts": {
+            "Derivation of the quadratic formula": {
+              "concept": "Derivation of the quadratic formula",
+              "question_ids": []
+            },
+            "Using the quadratic formula to solve quadratic equations": {
+              "concept": "Using the quadratic formula to solve quadratic equations",
+              "question_ids": []
+            }
+          }
+        },
+        "Types of Solutions": {
+          "name": "Types of Solutions",
+          "concepts": {
+            "Real and complex solutions": {
+              "concept": "Real and complex solutions",
+              "question_ids": []
+            },
+            "Discriminant and its role in determining the nature of solutions": {
+              "concept": "Discriminant and its role in determining the nature of solutions",
+              "question_ids": [
+                "518_1"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Matrices": {
+      "name": "Matrices",
+      "subtopics": {
+        "Matrix Operations": {
+          "name": "Matrix Operations",
+          "concepts": {
+            "Matrix Addition": {
+              "concept": "Matrix Addition",
+              "question_ids": []
+            },
+            "Matrix Subtraction": {
+              "concept": "Matrix Subtraction",
+              "question_ids": []
+            },
+            "Matrix Multiplication": {
+              "concept": "Matrix Multiplication",
+              "question_ids": []
+            }
+          }
+        },
+        "Matrix Inverse": {
+          "name": "Matrix Inverse",
+          "concepts": {
+            "Augmented Matrix": {
+              "concept": "Augmented Matrix",
+              "question_ids": []
+            },
+            "Co-factors": {
+              "concept": "Co-factors",
+              "question_ids": []
+            }
+          }
+        },
+        "Applications of Matrices": {
+          "name": "Applications of Matrices",
+          "concepts": {
+            "Solving Systems of Linear Equations": {
+              "concept": "Solving Systems of Linear Equations",
+              "question_ids": [
+                "754_2"
+              ]
+            },
+            "Cramer's Rule": {
+              "concept": "Cramer's Rule",
+              "question_ids": []
+            },
+            "Determinants": {
+              "concept": "Determinants",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Arithmetic and Geometric Sequence with their nth Terms and Series Sum": {
+      "name": "Arithmetic and Geometric Sequence with their nth Terms and Series Sum",
+      "subtopics": {
+        "Arithmetic Sequence": {
+          "name": "Arithmetic Sequence",
+          "concepts": {
+            "Definition of an arithmetic sequence": {
+              "concept": "Definition of an arithmetic sequence",
+              "question_ids": []
+            },
+            "nth term formula for an arithmetic sequence": {
+              "concept": "nth term formula for an arithmetic sequence",
+              "question_ids": []
+            },
+            "Sum of the first n terms of an arithmetic sequence": {
+              "concept": "Sum of the first n terms of an arithmetic sequence",
+              "question_ids": []
+            }
+          }
+        },
+        "Geometric Sequence": {
+          "name": "Geometric Sequence",
+          "concepts": {
+            "Definition of a geometric sequence": {
+              "concept": "Definition of a geometric sequence",
+              "question_ids": []
+            },
+            "nth term formula for a geometric sequence": {
+              "concept": "nth term formula for a geometric sequence",
+              "question_ids": []
+            },
+            "Sum of the first n terms of a geometric sequence": {
+              "concept": "Sum of the first n terms of a geometric sequence",
+              "question_ids": []
+            },
+            "Infinite geometric series": {
+              "concept": "Infinite geometric series",
+              "question_ids": []
+            }
+          }
+        },
+        "Applications of Sequences and Series": {
+          "name": "Applications of Sequences and Series",
+          "concepts": {
+            "Real-world applications of arithmetic and geometric sequences": {
+              "concept": "Real-world applications of arithmetic and geometric sequences",
+              "question_ids": []
+            },
+            "Modeling and problem-solving using sequences and series": {
+              "concept": "Modeling and problem-solving using sequences and series",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Permutations and Combinations with their applications on some real life scenarios": {
+      "name": "Permutations and Combinations with their applications on some real life scenarios",
+      "subtopics": {
+        "Fundamentals of Permutations": {
+          "name": "Fundamentals of Permutations",
+          "concepts": {
+            "Definition of permutation": {
+              "concept": "Definition of permutation",
+              "question_ids": [
+                "525_2"
+              ]
+            },
+            "Formulas for calculating permutations": {
+              "concept": "Formulas for calculating permutations",
+              "question_ids": []
+            },
+            "Permutations with repetition": {
+              "concept": "Permutations with repetition",
+              "question_ids": []
+            }
+          }
+        },
+        "Fundamentals of Combinations": {
+          "name": "Fundamentals of Combinations",
+          "concepts": {
+            "Definition of combination": {
+              "concept": "Definition of combination",
+              "question_ids": []
+            },
+            "Formulas for calculating combinations": {
+              "concept": "Formulas for calculating combinations",
+              "question_ids": []
+            },
+            "Relationship between permutations and combinations": {
+              "concept": "Relationship between permutations and combinations",
+              "question_ids": []
+            }
+          }
+        },
+        "Applications of Permutations and Combinations": {
+          "name": "Applications of Permutations and Combinations",
+          "concepts": {
+            "Counting the number of ways to arrange people in a line": {
+              "concept": "Counting the number of ways to arrange people in a line",
+              "question_ids": []
+            },
+            "Calculating the number of possible outcomes in a lottery or a game": {
+              "concept": "Calculating the number of possible outcomes in a lottery or a game",
+              "question_ids": []
+            },
+            "Determining the number of possible committee formations from a group of people": {
+              "concept": "Determining the number of possible committee formations from a group of people",
+              "question_ids": []
+            }
+          }
+        },
+        "Permutations and Combinations in Real Life Scenarios": {
+          "name": "Permutations and Combinations in Real Life Scenarios",
+          "concepts": {
+            "Selecting team members for a sports tournament": {
+              "concept": "Selecting team members for a sports tournament",
+              "question_ids": []
+            },
+            "Planning the seating arrangement for a dinner party": {
+              "concept": "Planning the seating arrangement for a dinner party",
+              "question_ids": []
+            },
+            "Determining the number of possible password combinations": {
+              "concept": "Determining the number of possible password combinations",
+              "question_ids": []
+            }
+          }
+        },
+        "Combinatorics and Probability": {
+          "name": "Combinatorics and Probability",
+          "concepts": {
+            "Relationship between permutations/combinations and probability": {
+              "concept": "Relationship between permutations/combinations and probability",
+              "question_ids": []
+            },
+            "Calculating the probability of specific outcomes using permutations and combinations": {
+              "concept": "Calculating the probability of specific outcomes using permutations and combinations",
+              "question_ids": []
+            },
+            "Applications in decision-making and risk analysis": {
+              "concept": "Applications in decision-making and risk analysis",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Binomial Theorem and its Applications": {
+      "name": "Binomial Theorem and its Applications",
+      "subtopics": {
+        "Binomial Theorem": {
+          "name": "Binomial Theorem",
+          "concepts": {
+            "Binomial expansion": {
+              "concept": "Binomial expansion",
+              "question_ids": [
+                "525"
+              ]
+            },
+            "Binomial coefficients": {
+              "concept": "Binomial coefficients",
+              "question_ids": []
+            },
+            "Pascal's triangle": {
+              "concept": "Pascal's triangle",
+              "question_ids": []
+            }
+          }
+        },
+        "Generalizing Formulas for Higher Powers": {
+          "name": "Generalizing Formulas for Higher Powers",
+          "concepts": {
+            "Expanding binomial expressions": {
+              "concept": "Expanding binomial expressions",
+              "question_ids": [
+                "470_1_2",
+                "470_2"
+              ]
+            },
+            "Multinomial coefficients": {
+              "concept": "Multinomial coefficients",
+              "question_ids": []
+            },
+            "Generalized binomial theorem": {
+              "concept": "Generalized binomial theorem",
+              "question_ids": []
+            }
+          }
+        },
+        "Applications of Binomial Theorem": {
+          "name": "Applications of Binomial Theorem",
+          "concepts": {
+            "Approximation of binomial expressions": {
+              "concept": "Approximation of binomial expressions",
+              "question_ids": [
+                "470"
+              ]
+            },
+            "Probability calculations": {
+              "concept": "Probability calculations",
+              "question_ids": [
+                "470_2_1"
+              ]
+            },
+            "Combinatorics problems": {
+              "concept": "Combinatorics problems",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Coordinate Geometry": {
+      "name": "Coordinate Geometry",
+      "subtopics": {
+        "Distance between two points": {
+          "name": "Distance between two points",
+          "concepts": {
+            "Pythagorean theorem to find the distance between two points on a coordinate plane": {
+              "concept": "Pythagorean theorem to find the distance between two points on a coordinate plane",
+              "question_ids": [
+                "518"
+              ]
+            },
+            "Formula to calculate the distance between two points (x1, y1) and (x2, y2)": {
+              "concept": "Formula to calculate the distance between two points (x1, y1) and (x2, y2)",
+              "question_ids": []
+            }
+          }
+        },
+        "Slope of a line": {
+          "name": "Slope of a line",
+          "concepts": {
+            "Definition of slope as the rate of change between two points on a line": {
+              "concept": "Definition of slope as the rate of change between two points on a line",
+              "question_ids": []
+            },
+            "Formula to calculate the slope of a line passing through two points (x1, y1) and (x2, y2)": {
+              "concept": "Formula to calculate the slope of a line passing through two points (x1, y1) and (x2, y2)",
+              "question_ids": []
+            },
+            "Interpretation of positive, negative, zero, and undefined slopes": {
+              "concept": "Interpretation of positive, negative, zero, and undefined slopes",
+              "question_ids": []
+            }
+          }
+        },
+        "Parallel and Perpendicular Lines": {
+          "name": "Parallel and Perpendicular Lines",
+          "concepts": {
+            "Condition for parallel lines: lines with the same slope": {
+              "concept": "Condition for parallel lines: lines with the same slope",
+              "question_ids": []
+            },
+            "Condition for perpendicular lines: the product of their slopes is -1": {
+              "concept": "Condition for perpendicular lines: the product of their slopes is -1",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Circle and Equation of Circle": {
+      "name": "Circle and Equation of Circle",
+      "subtopics": {
+        "Introduction to Circle": {
+          "name": "Introduction to Circle",
+          "concepts": {
+            "Definition of a circle": {
+              "concept": "Definition of a circle",
+              "question_ids": []
+            },
+            "Center and radius of a circle": {
+              "concept": "Center and radius of a circle",
+              "question_ids": []
+            }
+          }
+        },
+        "Equation of a Circle": {
+          "name": "Equation of a Circle",
+          "concepts": {
+            "Standard form of the equation of a circle": {
+              "concept": "Standard form of the equation of a circle",
+              "question_ids": [
+                "518_2"
+              ]
+            },
+            "Expanded form of the equation of a circle": {
+              "concept": "Expanded form of the equation of a circle",
+              "question_ids": []
+            },
+            "Identifying the center and radius from the equation": {
+              "concept": "Identifying the center and radius from the equation",
+              "question_ids": []
+            }
+          }
+        },
+        "Graph of a Circle": {
+          "name": "Graph of a Circle",
+          "concepts": {
+            "Plotting a circle on the coordinate plane": {
+              "concept": "Plotting a circle on the coordinate plane",
+              "question_ids": []
+            },
+            "Identifying the key features of a circle's graph": {
+              "concept": "Identifying the key features of a circle's graph",
+              "question_ids": []
+            }
+          }
+        },
+        "Circle Transformations": {
+          "name": "Circle Transformations",
+          "concepts": {
+            "Translating a circle": {
+              "concept": "Translating a circle",
+              "question_ids": []
+            },
+            "Reflecting a circle": {
+              "concept": "Reflecting a circle",
+              "question_ids": []
+            },
+            "Scaling a circle": {
+              "concept": "Scaling a circle",
+              "question_ids": []
+            }
+          }
+        },
+        "Applications of Circles": {
+          "name": "Applications of Circles",
+          "concepts": {
+            "Circles in real-world situations": {
+              "concept": "Circles in real-world situations",
+              "question_ids": []
+            },
+            "Solving problems involving circles": {
+              "concept": "Solving problems involving circles",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Trigonometric Functions and Identities": {
+      "name": "Trigonometric Functions and Identities",
+      "subtopics": {
+        "Graphs of Basic Trigonometric Functions": {
+          "name": "Graphs of Basic Trigonometric Functions",
+          "concepts": {
+            "Graphing sine, cosine, tangent, cotangent, secant, and cosecant functions": {
+              "concept": "Graphing sine, cosine, tangent, cotangent, secant, and cosecant functions",
+              "question_ids": []
+            },
+            "Understanding the properties of each function such as amplitude, period, and phase shift": {
+              "concept": "Understanding the properties of each function such as amplitude, period, and phase shift",
+              "question_ids": []
+            }
+          }
+        },
+        "Periodicity of Sine and Cosine Functions": {
+          "name": "Periodicity of Sine and Cosine Functions",
+          "concepts": {
+            "Understanding the period and frequency of sine and cosine functions": {
+              "concept": "Understanding the period and frequency of sine and cosine functions",
+              "question_ids": []
+            },
+            "Identifying the periodicity of trigonometric functions": {
+              "concept": "Identifying the periodicity of trigonometric functions",
+              "question_ids": []
+            }
+          }
+        },
+        "Trigonometric Identities and Their Applications": {
+          "name": "Trigonometric Identities and Their Applications",
+          "concepts": {
+            "Fundamental trigonometric identities (Pythagorean, reciprocal, and quotient identities)": {
+              "concept": "Fundamental trigonometric identities (Pythagorean, reciprocal, and quotient identities)",
+              "question_ids": [
+                "470_1"
+              ]
+            },
+            "Using trigonometric identities to simplify and solve trigonometric equations": {
+              "concept": "Using trigonometric identities to simplify and solve trigonometric equations",
+              "question_ids": []
+            }
+          }
+        },
+        "Sum and Difference Formulas": {
+          "name": "Sum and Difference Formulas",
+          "concepts": {
+            "Deriving and applying the sum and difference formulas for sine, cosine, and tangent": {
+              "concept": "Deriving and applying the sum and difference formulas for sine, cosine, and tangent",
+              "question_ids": []
+            },
+            "Using the sum and difference formulas to evaluate trigonometric expressions and solve problems": {
+              "concept": "Using the sum and difference formulas to evaluate trigonometric expressions and solve problems",
+              "question_ids": []
+            }
+          }
+        },
+        "Double Angle Formulas": {
+          "name": "Double Angle Formulas",
+          "concepts": {
+            "Deriving and applying the double angle formulas for sine, cosine, and tangent": {
+              "concept": "Deriving and applying the double angle formulas for sine, cosine, and tangent",
+              "question_ids": []
+            },
+            "Using the double angle formulas to evaluate trigonometric expressions and solve problems": {
+              "concept": "Using the double angle formulas to evaluate trigonometric expressions and solve problems",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Statistics and its Contribution to Life": {
+      "name": "Statistics and its Contribution to Life",
+      "subtopics": {
+        "Types of Statistics": {
+          "name": "Types of Statistics",
+          "concepts": {
+            "Descriptive Statistics": {
+              "concept": "Descriptive Statistics",
+              "question_ids": []
+            },
+            "Inferential Statistics": {
+              "concept": "Inferential Statistics",
+              "question_ids": []
+            }
+          }
+        },
+        "Measurement Scales": {
+          "name": "Measurement Scales",
+          "concepts": {
+            "Nominal Scale": {
+              "concept": "Nominal Scale",
+              "question_ids": []
+            },
+            "Ordinal Scale": {
+              "concept": "Ordinal Scale",
+              "question_ids": []
+            },
+            "Interval Scale": {
+              "concept": "Interval Scale",
+              "question_ids": []
+            },
+            "Ratio Scale": {
+              "concept": "Ratio Scale",
+              "question_ids": []
+            }
+          }
+        },
+        "The Importance of Statistics in Daily Life": {
+          "name": "The Importance of Statistics in Daily Life",
+          "concepts": {
+            "Data-driven decision making": {
+              "concept": "Data-driven decision making",
+              "question_ids": []
+            },
+            "Risk assessment and management": {
+              "concept": "Risk assessment and management",
+              "question_ids": []
+            },
+            "Informed policy decisions": {
+              "concept": "Informed policy decisions",
+              "question_ids": []
+            },
+            "Understanding trends and patterns": {
+              "concept": "Understanding trends and patterns",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    },
+    "Data Representation, Measures of Central Tendency, Measures of Dispersion, Partial Fractions, and Trigonometric Identities": {
+      "name": "Data Representation, Measures of Central Tendency, Measures of Dispersion, Partial Fractions, and Trigonometric Identities",
+      "subtopics": {
+        "Data Representation": {
+          "name": "Data Representation",
+          "concepts": {
+            "Measures of Central Tendency (Mean, Median, Mode)": {
+              "concept": "Measures of Central Tendency (Mean, Median, Mode)",
+              "question_ids": []
+            },
+            "Measures of Dispersion (Range, Variance, Standard Deviation)": {
+              "concept": "Measures of Dispersion (Range, Variance, Standard Deviation)",
+              "question_ids": []
+            }
+          }
+        },
+        "Partial Fractions": {
+          "name": "Partial Fractions",
+          "concepts": {
+            "Decomposition of Rational Functions": {
+              "concept": "Decomposition of Rational Functions",
+              "question_ids": []
+            },
+            "Finding Constants in Partial Fraction Expansion": {
+              "concept": "Finding Constants in Partial Fraction Expansion",
+              "question_ids": []
+            }
+          }
+        },
+        "Trigonometric Identities": {
+          "name": "Trigonometric Identities",
+          "concepts": {
+            "Fundamental Trigonometric Identities": {
+              "concept": "Fundamental Trigonometric Identities",
+              "question_ids": []
+            },
+            "Proving Trigonometric Identities": {
+              "concept": "Proving Trigonometric Identities",
+              "question_ids": []
+            },
+            "Applying Trigonometric Identities to Solve Problems": {
+              "concept": "Applying Trigonometric Identities to Solve Problems",
+              "question_ids": []
+            }
+          }
+        }
+      }
+    }
+  }
+}

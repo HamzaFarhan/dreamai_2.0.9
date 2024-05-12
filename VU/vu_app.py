@@ -1,23 +1,19 @@
 import json
+
 import streamlit as st
 from vu_models import Question, Topics
 
-DAY = 5
+DAY = 8
 
 st.set_page_config(page_title="🎓🏫")
 st.title("Math 102 ➗✖️➕➖")
 
-questions_file = f"math_102_may_{DAY}_questions.json"
-questions = {}
-for id, q in json.load(open(questions_file, "r")).items():
-    question = Question.model_construct(**q)
-    question._topic = q["_topic"]
-    question._subtopic = q["_subtopic"]
-    question._concept = q["_concept"]
-    question._subquestion_ids = q["_subquestion_ids"]
-    questions[id] = question
+questions_file = f"math_102_created_questions_may_{DAY}.json"
+questions = {
+    id: Question(**q) for id, q in json.load(open(questions_file, "r")).items()
+}
 
-topics = Topics(**json.load(open(f"math_102_may_{DAY}_topics.json", "r")))
+topics = Topics(**json.load(open(f"math_102_final_topics_may_{DAY}.json", "r")))
 topic_names = list(topics.topics.keys())
 print(f"\n\nSESSION STATE\n{st.session_state}\n\n")
 
@@ -88,35 +84,46 @@ if st.session_state.get("selected_topic", None) is not None:
                 )
                 for i, id in enumerate(concept.question_ids, start=1):
                     question = questions[id]
-                    st.header(f"{i}: {question.problem}")
-                    if question._subquestion_ids:
+                    st.subheader(f"{i}: {question.problem}")
+                    prerequisite_question_ids = question.get_prerequisite_question_ids(
+                        topics=topics
+                    )
+                    if prerequisite_question_ids:
                         with st.expander("Prerequisites 📝"):
                             pre_col1, pre_col2 = st.columns(2)
                             with pre_col1:
                                 st.subheader("Questions")
                             with pre_col2:
                                 st.subheader("Concepts")
-                            for j, subq_id in enumerate(
-                                question._subquestion_ids, start=1
+                            for j, preq_id in enumerate(
+                                prerequisite_question_ids, start=1
                             ):
-                                subquestion = questions[subq_id]
+                                prerequisite_question = questions[preq_id]
                                 with pre_col1:
-                                    st.write(f"{j}: {subquestion.problem}")
+                                    st.write(f"{j}: {prerequisite_question.problem}")
                                 with pre_col2:
                                     if st.button(
-                                        f"{subquestion._concept}", key=subq_id
+                                        f"{prerequisite_question.concept}",
+                                        key=f"prereq_{i}_{j}",
                                     ):
                                         set_previous()
                                         st.session_state["selected_topic"] = (
-                                            subquestion._topic
+                                            prerequisite_question.topic
                                         )
                                         st.session_state["selected_subtopic"] = (
-                                            subquestion._subtopic
+                                            prerequisite_question.subtopic
                                         )
                                         st.session_state["selected_concept"] = (
-                                            subquestion._concept
+                                            prerequisite_question.concept
                                         )
                                         st.rerun()
+                    if question.subquestions:
+                        with st.expander("Subquestions 📝"):
+                            for k, subquestion in enumerate(
+                                question.subquestions, start=1
+                            ):
+                                st.write(f"Step {k}: {subquestion.problem}")
+                                # st.write(f"Solution: {subquestion.solution}")
 
 
 if (

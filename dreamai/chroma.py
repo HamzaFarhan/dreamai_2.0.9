@@ -62,7 +62,7 @@ def json_files_to_collection(
                 }
             )
             docs.append(json.dumps(data))
-    print(colored(f"Adding {i} files to collection", "cyan"))
+    # print(colored(f"Adding {i} files to collection", "cyan"))
     chroma_collection.add(ids=ids, documents=docs, metadatas=metas)
 
 
