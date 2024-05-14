@@ -10,7 +10,7 @@ litellm.drop_params = True
 
 class ModelName(str, Enum):
     GPT_3 = "gpt-3.5-turbo"
-    GPT_4 = "gpt-4-turbo"
+    GPT_4 = "gpt-4o"
     HAIKU = "claude-3-haiku-20240307"
     SONNET = "claude-3-sonnet-20240229"
     OPUS = "claude-3-opus-20240229"
