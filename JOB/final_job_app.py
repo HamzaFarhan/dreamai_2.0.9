@@ -1,5 +1,5 @@
 import json
-
+from uuid import uuid4
 import streamlit as st
 from job_code import (
     JOBS_COLLECTION_NAME,
@@ -10,6 +10,7 @@ from job_code import (
     UserProfile,
     create_job_post,
     create_models_and_collection,
+    create_reasoning,
     create_user_profile,
     extract_text,
 )
@@ -19,7 +20,9 @@ from dreamai.chroma import chroma_collection
 N_RESULTS = 2
 
 
-def display_user_profile(user_profile: UserProfile | None):
+def display_user_profile(
+    user_profile: UserProfile | None, reasoning: str | None = None
+):
     if user_profile is not None:
         user_dfs = user_profile.create_dfs()
         st.header(f":blue[{user_profile.name}]", divider=True)
@@ -27,6 +30,9 @@ def display_user_profile(user_profile: UserProfile | None):
         st.write(user_profile.email)
         if user_profile.years_of_experience:
             st.write(f"Years of Experience: :blue[{user_profile.years_of_experience}]")
+        if reasoning:
+            with st.expander(":rainbow[Reasoning] 🧠"):
+                st.write(reasoning)
         with st.expander("Summary 📝"):
             st.write(user_profile.summary)
         if user_profile.experiences:
@@ -47,7 +53,7 @@ def display_user_profile(user_profile: UserProfile | None):
                     st.write(title)
 
 
-def display_job_post(job_post: JobPost | None):
+def display_job_post(job_post: JobPost | None, reasoning: str | None = None):
     if job_post is not None:
         job_dfs = job_post.create_dfs()
         st.header(f":red[{job_post.job_description.title}]", divider=True)
@@ -56,6 +62,9 @@ def display_job_post(job_post: JobPost | None):
         st.write(
             f"Minimum Years of Experience: :orange[{job_post.years_of_experience}]"
         )
+        if reasoning:
+            with st.expander(":rainbow[Reasoning] 🧠"):
+                st.write(reasoning)
         # st.write(f"Minimum Education Level: :orange[{job_post.min_education}]")
         with st.expander("Job Description 📝"):
             st.write(job_post.job_description.description)
@@ -68,36 +77,33 @@ def display_job_post(job_post: JobPost | None):
 
 
 def filter_profiles(
-    job_post: JobPost, top_profiles: list[UserProfile]
-) -> list[UserProfile]:
+    job_post: JobPost, top_profiles: dict[str, UserProfile]
+) -> dict[str, UserProfile]:
     filters = st.popover(":rainbow[Filters]")
     years_of_experience = filters.checkbox(
         "Years of Experience", True, key="profiles_years"
     )
-    # min_education = filters.checkbox(
-    #     "Minimum Education", True, key="profiles_education"
-    # )
-    filtered_profiles = []
-    for profile in top_profiles:
+    filtered_profiles = {}
+    for profile_id, profile in top_profiles.items():
         if (
             years_of_experience
             and profile.years_of_experience < job_post.years_of_experience
         ):
             continue
-        # if min_education and profile.max_education < job_post.min_education:
-        #     continue
-        filtered_profiles.append(profile)
+        filtered_profiles[profile_id] = profile
     return filtered_profiles
 
 
-def filter_jobs(user_profile: UserProfile, top_jobs: list[JobPost]) -> list[JobPost]:
+def filter_jobs(
+    user_profile: UserProfile, top_jobs: dict[str, JobPost]
+) -> dict[str, JobPost]:
     filters = st.popover(":rainbow[Filters]")
     years_of_experience = filters.checkbox(
         "Years of Experience", True, key="jobs_years"
     )
     # min_education = filters.checkbox("Minimum Education", True, key="jobs_education")
-    filtered_jobs = []
-    for job in top_jobs:
+    filtered_jobs = {}
+    for job_id, job in top_jobs.items():
         if (
             years_of_experience
             and user_profile.years_of_experience < job.years_of_experience
@@ -105,7 +111,7 @@ def filter_jobs(user_profile: UserProfile, top_jobs: list[JobPost]) -> list[JobP
             continue
         # if min_education and user_profile.max_education < job.min_education:
         #     continue
-        filtered_jobs.append(job)
+        filtered_jobs[job_id] = job
     return filtered_jobs
 
 
@@ -142,7 +148,7 @@ with tab1:
                 models_dir=PROFILES_DIR,
                 collection=profiles_collection,
             )
-    job_description = st.text_area("Enter the job description", height=150)
+    job_description = st.text_area("Enter the job description", height=180)
     job_file = st.file_uploader("Or upload a job description", type=["pdf", "txt"])
     job_description = job_description or ""
     if job_file:
@@ -173,6 +179,7 @@ with tab1:
                         collection=jobs_collection,
                     )
                     st.session_state["job_post"] = job_post_
+                    st.session_state["job_post_id"] = f"job_{uuid4()}"
     if st.session_state.get("job_post", None) is not None:
         n_results = st.session_state.get("n_results", N_RESULTS)
         job_post: JobPost = st.session_state["job_post"]
@@ -183,10 +190,19 @@ with tab1:
                 query_texts=str(job_post), n_results=n_results
             )
             st.session_state["top_profile_docs"] = top_profile_docs
-        top_profiles = [
-            UserProfile(**json.load(open(PROFILES_DIR / f"{id}.json", "r")))
+        top_profiles = {
+            id: UserProfile(**json.load(open(PROFILES_DIR / f"{id}.json", "r")))
             for id in top_profile_docs["ids"][0]
-        ]
+        }
+        for profile_id, top_profile in top_profiles.items():
+            reasoning_dict = st.session_state.get("reasoning_dict", {})
+            reasoning_id = f"{st.session_state['job_post_id']}_{profile_id}"
+            if reasoning_dict.get(reasoning_id, None) is None:
+                reasoning_dict[reasoning_id] = create_reasoning(
+                    user_profile=top_profile, job_post=job_post
+                )
+            st.session_state["reasoning_dict"] = reasoning_dict
+
         filtered_profiles = filter_profiles(
             job_post=job_post, top_profiles=top_profiles
         )
@@ -197,16 +213,22 @@ with tab1:
                 f":green[Top :orange[{len(filtered_profiles)}] Candidate(s) 🏆]",
                 divider=True,
             )
-            for i, profile in enumerate(filtered_profiles, start=1):
+            for i, (profile_id, profile) in enumerate(
+                filtered_profiles.items(), start=1
+            ):
                 button_name = f":yellow[Candidate {i}]"
-                if i == 1:
-                    button_name += " 🥇"
-                if i == 2:
-                    button_name += " 🥈"
-                if i == 3:
-                    button_name += " 🥉"
+                # if i == 1:
+                #     button_name += " 🥇"
+                # if i == 2:
+                #     button_name += " 🥈"
+                # if i == 3:
+                #     button_name += " 🥉"
+                reasoning_id = f"{st.session_state['job_post_id']}_{profile_id}"
+                reasoning = st.session_state.get("reasoning_dict", {}).get(
+                    reasoning_id, None
+                )
                 if st.button(button_name):
-                    display_user_profile(profile)
+                    display_user_profile(user_profile=profile, reasoning=reasoning)
 
 with tab2:
     st.title(":green[Find Jobs]")
@@ -227,13 +249,7 @@ with tab2:
                     models_dir=JOBS_DIR,
                     collection=jobs_collection,
                 )
-            # create_models_and_collection(
-            #     data=job_files,
-            #     creator_fn=create_job_post,
-            #     models_dir=JOBS_DIR,
-            #     collection=jobs_collection,
-            # )
-    info = st.text_area("Information about the candidate", height=150)
+    info = st.text_area("Information about the candidate", height=180)
     resume_file = st.file_uploader("Upload a resume for better results", type=["pdf"])
     st.session_state["n_results"] = st.number_input(
         "Number of Jobs",
@@ -257,6 +273,7 @@ with tab2:
                 print(f"\n\nUSER PROFILE\n{user_profile_}\n\n")
                 if user_profile_ is not None:
                     st.session_state["user_profile"] = user_profile_
+                    st.session_state["user_profile_id"] = f"user_{uuid4()}"
                     create_models_and_collection(
                         data=[user_profile_],
                         creator_fn=create_user_profile,
@@ -273,10 +290,18 @@ with tab2:
                 query_texts=str(user_profile), n_results=n_results
             )
             st.session_state["top_job_docs"] = top_job_docs
-        top_jobs = [
-            JobPost(**json.load(open(JOBS_DIR / f"{id}.json", "r")))
+        top_jobs = {
+            id: JobPost(**json.load(open(JOBS_DIR / f"{id}.json", "r")))
             for id in top_job_docs["ids"][0]
-        ]
+        }
+        for job_id, top_job in top_jobs.items():
+            reasoning_dict = st.session_state.get("reasoning_dict", {})
+            reasoning_id = f"{st.session_state['user_profile_id']}_{job_id}"
+            if reasoning_dict.get(reasoning_id, None) is None:
+                reasoning_dict[reasoning_id] = create_reasoning(
+                    user_profile=user_profile, job_post=top_job
+                )
+            st.session_state["reasoning_dict"] = reasoning_dict
         filtered_jobs = filter_jobs(user_profile=user_profile, top_jobs=top_jobs)
         if len(filtered_jobs) == 0:
             st.error("No jobs found for the given resume + filters 🤷‍♂️")
@@ -284,13 +309,17 @@ with tab2:
             st.header(
                 f":orange[Top :green[{len(filtered_jobs)}] Job(s) 🏆]", divider=True
             )
-            for i, job in enumerate(filtered_jobs, start=1):
+            for i, (job_id, job) in enumerate(filtered_jobs.items(), start=1):
                 button_name = f":yellow[Job {i}]"
-                if i == 1:
-                    button_name += " 🥇"
-                if i == 2:
-                    button_name += " 🥈"
-                if i == 3:
-                    button_name += " 🥉"
+                # if i == 1:
+                #     button_name += " 🥇"
+                # if i == 2:
+                #     button_name += " 🥈"
+                # if i == 3:
+                #     button_name += " 🥉"
+                reasoning_id = f"{st.session_state['user_profile_id']}_{job_id}"
+                reasoning = st.session_state.get("reasoning_dict", {}).get(
+                    reasoning_id, None
+                )
                 if st.button(button_name):
-                    display_job_post(job)
+                    display_job_post(job_post=job, reasoning=reasoning)

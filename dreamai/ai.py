@@ -119,6 +119,13 @@ def oai_response(response) -> str:
         return response
 
 
+def claude_response(response) -> str:
+    try:
+        return response.content[0].text
+    except Exception:
+        return response
+
+
 def ai_retry_attempts(attempts: int = 3):
     return (
         Retrying(wait=wait_random(min=1, max=40), stop=stop_after_attempt(attempts))

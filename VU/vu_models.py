@@ -29,7 +29,7 @@ MAX_TOKENS = 2048
 TEMPERATURE = 0.15
 ATTEMPTS = 3
 
-QUESTIONS_PER_FOLDER = 50
+QUESTIONS_PER_FOLDER = 20
 CONCEPT_WORD_COUNT = 3
 MIN_SUBQUESTIONS = 2
 MAX_SUBQUESTIONS = 3
@@ -324,6 +324,7 @@ def create_topic(
         f"""
             You are a world class math course instructor. Extract the topic, subtopics, and concepts. Feel free to use your knowledge of the subject.
             {MIN_SUBTOPICS}-{MAX_SUBTOPICS} subtopics and {MIN_CONCEPTS}-{MAX_CONCEPTS} concepts each.
+            The topics, subtopics, and concepts should be ordered and no longer than 5 words each.
             """
     )
     created_topic = ask_cld_or_oai(

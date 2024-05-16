@@ -4,7 +4,7 @@ from collections import defaultdict
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Protocol, Sequence, Optional
+from typing import Optional, Protocol, Sequence
 from uuid import uuid4
 
 import anthropic
@@ -17,7 +17,15 @@ from pydantic import BaseModel, Field
 from pypdf import PdfReader
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
-from dreamai.ai import ModelName, user_message, merge_same_role_messages, system_message
+from dreamai.ai import (
+    ModelName,
+    assistant_message,
+    claude_response,
+    merge_same_role_messages,
+    oai_response,
+    system_message,
+    user_message,
+)
 from dreamai.chroma import chroma_collection
 
 load_dotenv()
@@ -25,8 +33,8 @@ load_dotenv()
 ask_oai = instructor.from_openai(openai.OpenAI())
 ask_cld = instructor.from_anthropic(anthropic.Anthropic())
 
-
-MODEL = ModelName.HAIKU
+GPT_MODEL = ModelName.GPT_4
+MODEL = ModelName.GPT_4
 TEMPERATURE = 0.3
 MAX_TOKENS = 3_000
 ATTEMPTS = 3
@@ -278,17 +286,18 @@ class Creator(Protocol):
         model: ModelName,
         attempts: int,
         max_tokens: int,
-    ) -> UserProfile | JobPost | None: ...
+    ) -> UserProfile | JobPost | str | None: ...
 
 
 def ask_cld_or_oai(
-    user_messages: list[dict[str, str]],
+    messages: list[dict[str, str]],
     system: str = "",
     model: ModelName = MODEL,
     response_model: Optional[type] = None,
     attempts: int = ATTEMPTS,
     max_tokens: int = MAX_TOKENS,
     temperature: float = TEMPERATURE,
+    stop: list[str] | str | None = None,
 ):
     ask_kwargs = {
         "model": model,
@@ -300,21 +309,84 @@ def ask_cld_or_oai(
     # try:
     if "gpt" in ask_kwargs["model"].lower():
         if system:
-            user_messages.insert(0, system_message(system))
-        return ask_oai.create(
-            messages=user_messages,  # type: ignore
+            messages.insert(0, system_message(system))
+        res = ask_oai.create(
+            messages=messages,  # type: ignore
+            stop=stop,
             **ask_kwargs,
         )
+        return oai_response(res) if response_model is None else res
     else:
-        return ask_cld.create(
+        res = ask_cld.create(
             system=system,
-            messages=merge_same_role_messages(user_messages),  # type: ignore
+            messages=merge_same_role_messages(messages),  # type: ignore
+            stop_sequences=stop,
             **ask_kwargs,
         )
+        return claude_response(res) if response_model is None else res
     # except Exception as e:
-    #     print(f"Error in ask_cld_or_oai. User messages: {user_messages}")
+    #     print(f"Error in ask_cld_or_oai. User messages: {messages}")
     #     print(e)
     #     return None
+
+
+def create_reasoning(
+    user_profile: UserProfile,
+    job_post: JobPost,
+    model: ModelName = MODEL,
+    attempts: int = ATTEMPTS,
+    max_tokens: int = MAX_TOKENS,
+    temperature: float = TEMPERATURE,
+):
+    system = """
+You are a world class recruiter.
+You'll be given a job post and a candidate that has been shortlisted for the job.
+Give a brief reasoning for why the candidate is a good fit for the job.
+Try to also mention which specific sections of the candidate's profile make them a good fit and why.
+Make it brief but detailed with bullet points.
+"""
+    messages = [
+        user_message(
+            f"<Job Post>\n{job_post}\n</Job Post>\n\n<Candidate>\n{user_profile}\n</Candidate>"[
+                :GPT_MAX_TEXT_LEN
+            ]
+        ),
+        assistant_message("<Reasoning>"),
+    ]
+
+    try:
+        if "gpt" not in model.lower():
+            messages[0] = user_message(
+                f"<Job Post>\n{job_post}\n</Job Post>\n\n<Candidate>\n{user_profile}\n</Candidate>"[
+                    :CLAUDE_MAX_TEXT_LEN
+                ]
+            )
+        res = ask_cld_or_oai(
+            messages=messages,
+            system=system,
+            model=model,
+            attempts=attempts,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            stop="</Reasoning>",
+        )
+        return res.split("</Reasoning>")[0].split("<Reasoning>")[-1].strip()
+    except Exception as e:
+        print(f"Error in create_reasoning: {e}")
+        try:
+            res = ask_cld_or_oai(
+                messages=messages,
+                system=system,
+                model=GPT_MODEL,
+                attempts=attempts,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                stop="</Reasoning>",
+            )
+            return res.split("</Reasoning>")[0].split("<Reasoning>")[-1].strip()
+        except Exception as e:
+            print(f"Error in crerate_reasoning: {e}")
+            return None
 
 
 def create_user_profile(
@@ -323,7 +395,7 @@ def create_user_profile(
     attempts: int = ATTEMPTS,
     max_tokens: int = MAX_TOKENS,
     temperature: float = TEMPERATURE,
-) -> UserProfile | None:
+) -> UserProfile | str | None:
     system = """
 You are a world class recruiter.
 From the given resume, extract:
@@ -349,7 +421,7 @@ Then, create a user profile with the extracted information.
                 f"<Resume>\n{data[:CLAUDE_MAX_TEXT_LEN]}\n</Resume>"
             )
         return ask_cld_or_oai(
-            user_messages=[data_message],
+            messages=[data_message],
             system=system,
             model=model,
             response_model=UserProfile,
@@ -361,9 +433,9 @@ Then, create a user profile with the extracted information.
         print(f"Error when asking claude in create_user_profile: {e}")
         try:
             return ask_cld_or_oai(
-                user_messages=[data_message],
+                messages=[data_message],
                 system=system,
-                model=ModelName.GPT_3,
+                model=GPT_MODEL,
                 response_model=UserProfile,
                 attempts=attempts,
                 max_tokens=max_tokens,
@@ -379,7 +451,7 @@ def create_job_post(
     model: ModelName = ModelName.HAIKU,
     attempts: int = ATTEMPTS,
     max_tokens: int = MAX_TOKENS,
-) -> JobPost | None:
+) -> JobPost | str | None:
     system = """
 You are a world class recruiter.
 From the given job description, extract:
@@ -404,7 +476,7 @@ Then, create a job post with the extracted information.
                 f"<Job Description>\n{data[:CLAUDE_MAX_TEXT_LEN]}\n</Job Description>"
             )
         return ask_cld_or_oai(
-            user_messages=[data_message],
+            messages=[data_message],
             system=system,
             model=model,
             response_model=JobPost,
@@ -415,9 +487,9 @@ Then, create a job post with the extracted information.
         print(f"Error when asking claude in create_job_post: {e}")
         try:
             return ask_cld_or_oai(
-                user_messages=[data_message],
+                messages=[data_message],
                 system=system,
-                model=ModelName.GPT_3,
+                model=GPT_MODEL,
                 response_model=JobPost,
                 attempts=attempts,
                 max_tokens=max_tokens,
@@ -428,7 +500,7 @@ Then, create a job post with the extracted information.
 
 
 def ask_cld_then_oai(
-    user_messages: list[dict[str, str]],
+    messages: list[dict[str, str]],
     system: str = "",
     model: ModelName = MODEL,
     response_model: Optional[type] = None,
@@ -446,15 +518,15 @@ def ask_cld_then_oai(
     try:
         return ask_cld.create(
             system=system,
-            messages=merge_same_role_messages(user_messages),  # type: ignore
+            messages=merge_same_role_messages(messages),  # type: ignore
             **ask_kwargs,
         )
     except Exception as e:
-        print(f"Error in ask_cld_then_oai. User messages: {user_messages}")
+        print(f"Error in ask_cld_then_oai. User messages: {messages}")
         print(e)
         try:
             return ask_oai.create(
-                messages=user_messages,  # type: ignore
+                messages=messages,  # type: ignore
                 **ask_kwargs,
             )
         except Exception as e:
@@ -491,13 +563,13 @@ def create_models_and_collection(
             model_id = str(uuid4())
             try:
                 model_docs["ids"].append(model_id)
-                model_docs["documents"].append(model_instance.to_doc())
+                model_docs["documents"].append(model_instance.to_doc())  # type: ignore
             except Exception as e:
                 print(e)
                 continue
             model_file = models_dir / f"{model_id}.json"
             with open(model_file, "w") as f:
-                json.dump(model_instance.model_dump(), f, indent=2)
+                json.dump(model_instance.model_dump(), f, indent=2)  # type: ignore
     if len(model_docs["documents"]) == 0:
         return
     collection = collection or chroma_collection(
