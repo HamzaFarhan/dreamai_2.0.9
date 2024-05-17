@@ -227,6 +227,10 @@ class Group(BaseModel):
     prerequisite_ids: list[str] = Field(
         description="List of prerequisite group IDs.", default_factory=list
     )
+    prerequisite_of_ids: list[str] = Field(
+        description="List of group IDs that have this group as a prerequisite.",
+        default_factory=list,
+    )
 
     def __str__(self) -> str:
         return f"""
@@ -267,6 +271,8 @@ class Group(BaseModel):
         self.prerequisite_ids = sorted(
             list(set(self.prerequisite_ids)), key=int, reverse=True
         )
+        for prerequisite_id in self.prerequisite_ids:
+            previous_groups[prerequisite_id].prerequisite_of_ids.append(self.id)
 
 
 class Topics(BaseModel):
@@ -291,11 +297,12 @@ class Topics(BaseModel):
                         subtopic=subtopic_name,
                         concept=concept_name,
                     )
+                    previous_groups = {
+                        k: self.groups[k]
+                        for k in list(self.groups.keys())[-NUM_PREVIOUS_GROUPS:]
+                    }
                     group.add_prequisite_ids(
-                        previous_groups={
-                            k: self.groups[k]
-                            for k in list(self.groups.keys())[-NUM_PREVIOUS_GROUPS:]
-                        },
+                        previous_groups=previous_groups,
                         model=model,
                         attempts=attempts,
                         max_tokens=max_tokens,
