@@ -6,7 +6,7 @@ from vu_models import Question, Topics
 
 pn.extension("floatpanel", "gridstack")  # type: ignore
 
-
+NCOLS = 3
 DAY = 16
 
 questions_file = f"math_102_created_questions_may_{DAY}.json"
@@ -16,9 +16,23 @@ for q in json.load(open(questions_file, "r")).values():
 
 topics = Topics(**json.load(open(f"math_102_final_topics_may_{DAY}.json", "r")))
 
+flex_mode = pn.rx(False)
+flex_mode_button_name = {False: "Full View", True: "Compact View"}
+sidebar_toggle = pn.rx(True)
 sidebar = pn.rx("")
 buttons = {}
 triggered_buttons = []
+
+
+def toggle_flex_mode(event):
+    flex_mode.rx.value = not flex_mode.rx.value  # type: ignore
+    event.obj.name = flex_mode_button_name[flex_mode.rx.value]  # type: ignore
+
+
+flex_mode_button = pn.widgets.Button(
+    name=flex_mode_button_name[flex_mode.rx.value],  # type: ignore
+    on_click=toggle_flex_mode,
+)
 
 
 def clear_triggered_buttons():
@@ -37,12 +51,14 @@ def update_button_args(event):
     group_id = button_id.split("_")[0]
     button_type = buttons[button_id].button_type
     if button_type == "success":
+        sidebar_toggle.rx.value = False  # type: ignore
         clear_triggered_buttons()
         return
     clear_triggered_buttons()
     buttons[button_id].button_style = "solid"
     buttons[button_id].button_type = "success"
     if button_id.count("_") == 2:
+        sidebar_toggle.rx.value = False
         sidebar.rx.value = (
             "# <span style='color:lightgreen'>QUESTIONS</span>  \n\n\n"
             + (
@@ -55,6 +71,7 @@ def update_button_args(event):
             )
         )
     else:
+        sidebar_toggle.rx.value = True  # type: ignore
         sidebar.rx.value = ""
     triggered_buttons.append(button_id)
     for prereq_id in topics.groups[group_id].prerequisite_ids:
@@ -94,12 +111,17 @@ def make_button(
     return button
 
 
-def make_boxes():
+def make_boxes(flex_mode):
+    # print(f"\n\nflex_mode: {flex_mode}")
+    gstack = pn.GridStack(sizing_mode="stretch_width", height=2000)
     topic_boxes = {}
+    concepts_row = pn.Row()
     for group in topics.groups.values():
         topic_box = topic_boxes.get(
             group.topic,
-            pn.WidgetBox(f"## <span style='color:lightgreen'>{group.topic}</span>"),
+            # pn.WidgetBox(f"## <span style='color:lightgreen'>{group.topic}</span>"),
+            [],
+            # pn.WidgetBox(),
         )
         topic_box_button_names = [button.name for button in topic_box]
         # subtopic_box = subtopic_boxes.get(group.subtopic, pn.WidgetBox())
@@ -112,27 +134,83 @@ def make_boxes():
         )
         buttons[subtopic_button_id] = subtopic_button
         if group.subtopic not in topic_box_button_names:
-            topic_box.append(subtopic_button)
+            if concepts_row:
+                topic_box.append(concepts_row)
+                concepts_row = pn.Row()
+            if len(topic_box) == 1:
+                topic_box.insert(0, subtopic_button)
+            else:
+                topic_box.append(subtopic_button)
         concept_button_id = f"{group.id}_{group.subtopic}_{group.concept}"
         concept_button = make_button(
             id=concept_button_id,
             name=group.concept,
-            icon="list-check",
+            # icon="list-check",
         )
+        if questions.get(group.id):
+            concept_question_buttons_ncols = 2
+            concept_question_buttons = [
+                make_button(
+                    id=f"{group.id}_{group.subtopic}_{group.concept}_{i}",
+                    name=f"Q{i}",
+                )
+                for i in range(1, len(questions[group.id]) + 1)
+            ]
+
+            # concept_question_button_chunks = [
+            #     concept_question_buttons[i : i + concept_question_buttons_ncols]
+            #     for i in range(
+            #         0, len(concept_question_buttons), concept_question_buttons_ncols
+            #     )
+            # ]
+            # concept_question_buttons_stack = pn.GridStack(
+            #     ncols=concept_question_buttons_ncols
+            # )
+            # for i, chunk in enumerate(concept_question_button_chunks):
+            #     for j, button in enumerate(chunk):
+            #         concept_question_buttons_stack[i, j] = button
+
+            concepts_row.append(
+                pn.Column(
+                    concept_button,
+                    # concept_question_buttons_stack,
+                    *concept_question_buttons,
+                    scroll=True,
+                    min_height=50,
+                    max_height=200,
+                )
+            )
+        else:
+            concepts_row.append(concept_button)
         buttons[concept_button_id] = concept_button
-        topic_box.append(concept_button)
+        # topic_box.append(concept_button)
         topic_boxes[group.topic] = topic_box
-    return pn.FlexBox(*topic_boxes.values())
+    if flex_mode:
+        return pn.FlexBox(
+            *[
+                pn.WidgetBox(*topic_box, scroll=True)
+                for topic_box in topic_boxes.values()
+            ]
+        )
+    topic_boxes = list(topic_boxes.values())
+    topic_box_chunks = [
+        topic_boxes[i : i + NCOLS] for i in range(0, len(topic_boxes), NCOLS)
+    ]
+    for i, chunk in enumerate(topic_box_chunks):
+        for j, topic_box in enumerate(chunk):
+            gstack[i, j] = pn.WidgetBox(*topic_box, scroll=True)
+    return gstack
 
 
-flex_box = make_boxes()
-
+# grid = make_boxes()
+grid = pn.bind(make_boxes, flex_mode)
 template_params = {
+    "theme": "dark",
     "site": "VU",
     "title": "MATH 102",
-    "main": [flex_box],
+    "main": [flex_mode_button, grid],
     "sidebar": pn.pane.Markdown(sidebar),
-    "theme": "dark",
     "sidebar_width": 450,
+    "collapsed_sidebar": True,
 }
 template = pn.template.MaterialTemplate(**template_params).servable()
