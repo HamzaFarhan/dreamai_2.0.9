@@ -49,6 +49,11 @@ hvplot = "^0.10.0"
 watchfiles = "^0.21.0"
 pygments = "^2.18.0"
 jupyter-bokeh = "^4.0.4"
+dash = "^2.17.0"
+dash-bootstrap-components = "^1.6.0"
+fastui = "^0.6.0"
+python-multipart = "^0.0.9"
+dash-cytoscape = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 notebook = "^7.1.2"

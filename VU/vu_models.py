@@ -1,10 +1,12 @@
+import json
+import random
 from collections import OrderedDict
+from pathlib import Path
 from typing import Annotated, Literal, Optional
 
 import anthropic
 import instructor
 import openai
-import random
 from dotenv import load_dotenv
 from langsmith import traceable
 from langsmith.wrappers import wrap_openai
@@ -343,6 +345,25 @@ def create_topic(
         max_tokens=MAX_TOKENS,
     )
     return Topic.from_created_topic(created_topic) if created_topic else None
+
+
+def create_topics(
+    outline_file: Path | str,
+    topics_file: Path | str,
+    model: ModelName = ModelName.GPT_4,
+    attempts: int = ATTEMPTS,
+    max_tokens: int = MAX_TOKENS,
+) -> Topics:
+    outline = Path(outline_file).read_text()
+    created_topics = [
+        create_topic(topic, model=model, attempts=attempts)
+        for topic in outline.splitlines()
+    ]
+    topics = Topics(topics={topic.name: topic for topic in created_topics if topic})
+    topics.create_groups(model=model, attempts=attempts, max_tokens=max_tokens)
+    with open(str(topics_file), "w") as f:
+        json.dump(topics.model_dump(), f, indent=2)
+    return topics
 
 
 def create_question_group_id(
