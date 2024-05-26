@@ -1,0 +1,1327 @@
+{
+  "topics": {
+    "Set Theory Basics": {
+      "topic": "Set Theory Basics",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Set Theory Basics_Set Representations": {
+          "topic": "Set Theory Basics",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Set Representations",
+          "concepts": {
+            "Set Theory Basics_Set Representations_Roster Method": {
+              "topic": "Set Theory Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Set Representations",
+              "concept": "Roster Method",
+              "questions": {}
+            },
+            "Set Theory Basics_Set Representations_Set-Builder Notation": {
+              "topic": "Set Theory Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Set Representations",
+              "concept": "Set-Builder Notation",
+              "questions": {}
+            },
+            "Set Theory Basics_Set Representations_Venn Diagrams": {
+              "topic": "Set Theory Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Set Representations",
+              "concept": "Venn Diagrams",
+              "questions": {}
+            }
+          }
+        },
+        "Set Theory Basics_Types Of Sets": {
+          "topic": "Set Theory Basics",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Types Of Sets",
+          "concepts": {
+            "Set Theory Basics_Types Of Sets_Finite And Infinite Sets": {
+              "topic": "Set Theory Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Sets",
+              "concept": "Finite And Infinite Sets",
+              "questions": {}
+            },
+            "Set Theory Basics_Types Of Sets_Equal Sets": {
+              "topic": "Set Theory Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Sets",
+              "concept": "Equal Sets",
+              "questions": {}
+            },
+            "Set Theory Basics_Types Of Sets_Subset And Superset": {
+              "topic": "Set Theory Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Sets",
+              "concept": "Subset And Superset",
+              "questions": {}
+            },
+            "Set Theory Basics_Types Of Sets_Universal Set": {
+              "topic": "Set Theory Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Sets",
+              "concept": "Universal Set",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Complex Numbers": {
+      "topic": "Complex Numbers",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Complex Numbers_Basic Operations": {
+          "topic": "Complex Numbers",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Basic Operations",
+          "concepts": {
+            "Complex Numbers_Basic Operations_Addition": {
+              "topic": "Complex Numbers",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Operations",
+              "concept": "Addition",
+              "questions": {}
+            },
+            "Complex Numbers_Basic Operations_Subtraction": {
+              "topic": "Complex Numbers",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Operations",
+              "concept": "Subtraction",
+              "questions": {}
+            },
+            "Complex Numbers_Basic Operations_Multiplication": {
+              "topic": "Complex Numbers",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Operations",
+              "concept": "Multiplication",
+              "questions": {}
+            },
+            "Complex Numbers_Basic Operations_Division": {
+              "topic": "Complex Numbers",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Operations",
+              "concept": "Division",
+              "questions": {}
+            }
+          }
+        },
+        "Complex Numbers_Modulus Of Complex Number": {
+          "topic": "Complex Numbers",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Modulus Of Complex Number",
+          "concepts": {
+            "Complex Numbers_Modulus Of Complex Number_Definition Of Modulus": {
+              "topic": "Complex Numbers",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Modulus Of Complex Number",
+              "concept": "Definition Of Modulus",
+              "questions": {}
+            },
+            "Complex Numbers_Modulus Of Complex Number_Calculating Modulus": {
+              "topic": "Complex Numbers",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Modulus Of Complex Number",
+              "concept": "Calculating Modulus",
+              "questions": {}
+            },
+            "Complex Numbers_Modulus Of Complex Number_Properties Of Modulus": {
+              "topic": "Complex Numbers",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Modulus Of Complex Number",
+              "concept": "Properties Of Modulus",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Functions And Mappings": {
+      "topic": "Functions And Mappings",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Functions And Mappings_Types Of Functions": {
+          "topic": "Functions And Mappings",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Types Of Functions",
+          "concepts": {
+            "Functions And Mappings_Types Of Functions_One-To-One Functions": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Functions",
+              "concept": "One-To-One Functions",
+              "questions": {}
+            },
+            "Functions And Mappings_Types Of Functions_Onto Functions": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Functions",
+              "concept": "Onto Functions",
+              "questions": {}
+            },
+            "Functions And Mappings_Types Of Functions_Bijective Functions": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Functions",
+              "concept": "Bijective Functions",
+              "questions": {}
+            }
+          }
+        },
+        "Functions And Mappings_Composite And Inverse Functions": {
+          "topic": "Functions And Mappings",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Composite And Inverse Functions",
+          "concepts": {
+            "Functions And Mappings_Composite And Inverse Functions_Composite Functions": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Composite And Inverse Functions",
+              "concept": "Composite Functions",
+              "questions": {}
+            },
+            "Functions And Mappings_Composite And Inverse Functions_Inverse Functions": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Composite And Inverse Functions",
+              "concept": "Inverse Functions",
+              "questions": {}
+            },
+            "Functions And Mappings_Composite And Inverse Functions_Properties Of Inverses": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Composite And Inverse Functions",
+              "concept": "Properties Of Inverses",
+              "questions": {}
+            }
+          }
+        },
+        "Functions And Mappings_Operations On Functions": {
+          "topic": "Functions And Mappings",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Operations On Functions",
+          "concepts": {
+            "Functions And Mappings_Operations On Functions_Addition Of Functions": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Operations On Functions",
+              "concept": "Addition Of Functions",
+              "questions": {}
+            },
+            "Functions And Mappings_Operations On Functions_Subtraction Of Functions": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Operations On Functions",
+              "concept": "Subtraction Of Functions",
+              "questions": {}
+            },
+            "Functions And Mappings_Operations On Functions_Multiplication Of Functions": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Operations On Functions",
+              "concept": "Multiplication Of Functions",
+              "questions": {}
+            },
+            "Functions And Mappings_Operations On Functions_Division Of Functions": {
+              "topic": "Functions And Mappings",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Operations On Functions",
+              "concept": "Division Of Functions",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Quadratic Functions": {
+      "topic": "Quadratic Functions",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Quadratic Functions_Quadratic Functions Basics": {
+          "topic": "Quadratic Functions",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Quadratic Functions Basics",
+          "concepts": {
+            "Quadratic Functions_Quadratic Functions Basics_Standard Form": {
+              "topic": "Quadratic Functions",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Quadratic Functions Basics",
+              "concept": "Standard Form",
+              "questions": {}
+            },
+            "Quadratic Functions_Quadratic Functions Basics_Vertex Form": {
+              "topic": "Quadratic Functions",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Quadratic Functions Basics",
+              "concept": "Vertex Form",
+              "questions": {}
+            },
+            "Quadratic Functions_Quadratic Functions Basics_Factored Form": {
+              "topic": "Quadratic Functions",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Quadratic Functions Basics",
+              "concept": "Factored Form",
+              "questions": {}
+            }
+          }
+        },
+        "Quadratic Functions_Quadratic Formula": {
+          "topic": "Quadratic Functions",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Quadratic Formula",
+          "concepts": {
+            "Quadratic Functions_Quadratic Formula_Derivation": {
+              "topic": "Quadratic Functions",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Quadratic Formula",
+              "concept": "Derivation",
+              "questions": {}
+            },
+            "Quadratic Functions_Quadratic Formula_Application": {
+              "topic": "Quadratic Functions",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Quadratic Formula",
+              "concept": "Application",
+              "questions": {}
+            },
+            "Quadratic Functions_Quadratic Formula_Discriminant": {
+              "topic": "Quadratic Functions",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Quadratic Formula",
+              "concept": "Discriminant",
+              "questions": {}
+            }
+          }
+        },
+        "Quadratic Functions_Types Of Solutions": {
+          "topic": "Quadratic Functions",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Types Of Solutions",
+          "concepts": {
+            "Quadratic Functions_Types Of Solutions_Real Solutions": {
+              "topic": "Quadratic Functions",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Solutions",
+              "concept": "Real Solutions",
+              "questions": {}
+            },
+            "Quadratic Functions_Types Of Solutions_Complex Solutions": {
+              "topic": "Quadratic Functions",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Solutions",
+              "concept": "Complex Solutions",
+              "questions": {}
+            },
+            "Quadratic Functions_Types Of Solutions_Repeated Roots": {
+              "topic": "Quadratic Functions",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Solutions",
+              "concept": "Repeated Roots",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Matrices And Determinants": {
+      "topic": "Matrices And Determinants",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Matrices And Determinants_Matrix Operations": {
+          "topic": "Matrices And Determinants",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Matrix Operations",
+          "concepts": {
+            "Matrices And Determinants_Matrix Operations_Matrix Addition": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Matrix Operations",
+              "concept": "Matrix Addition",
+              "questions": {}
+            },
+            "Matrices And Determinants_Matrix Operations_Matrix Subtraction": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Matrix Operations",
+              "concept": "Matrix Subtraction",
+              "questions": {}
+            },
+            "Matrices And Determinants_Matrix Operations_Matrix Multiplication": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Matrix Operations",
+              "concept": "Matrix Multiplication",
+              "questions": {}
+            }
+          }
+        },
+        "Matrices And Determinants_Matrix Inversion": {
+          "topic": "Matrices And Determinants",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Matrix Inversion",
+          "concepts": {
+            "Matrices And Determinants_Matrix Inversion_Augmented Matrix": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Matrix Inversion",
+              "concept": "Augmented Matrix",
+              "questions": {}
+            },
+            "Matrices And Determinants_Matrix Inversion_Co-Factors Method": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Matrix Inversion",
+              "concept": "Co-Factors Method",
+              "questions": {}
+            },
+            "Matrices And Determinants_Matrix Inversion_Inverse Properties": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Matrix Inversion",
+              "concept": "Inverse Properties",
+              "questions": {}
+            }
+          }
+        },
+        "Matrices And Determinants_Solving Linear Equations": {
+          "topic": "Matrices And Determinants",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Solving Linear Equations",
+          "concepts": {
+            "Matrices And Determinants_Solving Linear Equations_System Of Equations": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Solving Linear Equations",
+              "concept": "System Of Equations",
+              "questions": {}
+            },
+            "Matrices And Determinants_Solving Linear Equations_Cramer'S Rule": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Solving Linear Equations",
+              "concept": "Cramer'S Rule",
+              "questions": {}
+            },
+            "Matrices And Determinants_Solving Linear Equations_Matrix Methods": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Solving Linear Equations",
+              "concept": "Matrix Methods",
+              "questions": {}
+            }
+          }
+        },
+        "Matrices And Determinants_Determinants": {
+          "topic": "Matrices And Determinants",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Determinants",
+          "concepts": {
+            "Matrices And Determinants_Determinants_Determinant Properties": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Determinants",
+              "concept": "Determinant Properties",
+              "questions": {}
+            },
+            "Matrices And Determinants_Determinants_Determinant Calculation": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Determinants",
+              "concept": "Determinant Calculation",
+              "questions": {}
+            },
+            "Matrices And Determinants_Determinants_Applications Of Determinants": {
+              "topic": "Matrices And Determinants",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Determinants",
+              "concept": "Applications Of Determinants",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Sequences And Series": {
+      "topic": "Sequences And Series",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Sequences And Series_Arithmetic Sequences": {
+          "topic": "Sequences And Series",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Arithmetic Sequences",
+          "concepts": {
+            "Sequences And Series_Arithmetic Sequences_Common Difference": {
+              "topic": "Sequences And Series",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Arithmetic Sequences",
+              "concept": "Common Difference",
+              "questions": {}
+            },
+            "Sequences And Series_Arithmetic Sequences_Nth Term Formula": {
+              "topic": "Sequences And Series",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Arithmetic Sequences",
+              "concept": "Nth Term Formula",
+              "questions": {}
+            },
+            "Sequences And Series_Arithmetic Sequences_Sum Of Series": {
+              "topic": "Sequences And Series",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Arithmetic Sequences",
+              "concept": "Sum Of Series",
+              "questions": {}
+            }
+          }
+        },
+        "Sequences And Series_Geometric Sequences": {
+          "topic": "Sequences And Series",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Geometric Sequences",
+          "concepts": {
+            "Sequences And Series_Geometric Sequences_Common Ratio": {
+              "topic": "Sequences And Series",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Geometric Sequences",
+              "concept": "Common Ratio",
+              "questions": {}
+            },
+            "Sequences And Series_Geometric Sequences_Nth Term Formula": {
+              "topic": "Sequences And Series",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Geometric Sequences",
+              "concept": "Nth Term Formula",
+              "questions": {}
+            },
+            "Sequences And Series_Geometric Sequences_Sum Of Series": {
+              "topic": "Sequences And Series",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Geometric Sequences",
+              "concept": "Sum Of Series",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Permutations And Combinations": {
+      "topic": "Permutations And Combinations",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Permutations And Combinations_Basic Concepts": {
+          "topic": "Permutations And Combinations",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Basic Concepts",
+          "concepts": {
+            "Permutations And Combinations_Basic Concepts_Definition Of Permutations": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Concepts",
+              "concept": "Definition Of Permutations",
+              "questions": {}
+            },
+            "Permutations And Combinations_Basic Concepts_Definition Of Combinations": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Concepts",
+              "concept": "Definition Of Combinations",
+              "questions": {}
+            },
+            "Permutations And Combinations_Basic Concepts_Factorial Notation": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Concepts",
+              "concept": "Factorial Notation",
+              "questions": {}
+            }
+          }
+        },
+        "Permutations And Combinations_Permutations": {
+          "topic": "Permutations And Combinations",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Permutations",
+          "concepts": {
+            "Permutations And Combinations_Permutations_Permutations Formula": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Permutations",
+              "concept": "Permutations Formula",
+              "questions": {}
+            },
+            "Permutations And Combinations_Permutations_Permutations With Repetition": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Permutations",
+              "concept": "Permutations With Repetition",
+              "questions": {}
+            },
+            "Permutations And Combinations_Permutations_Circular Permutations": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Permutations",
+              "concept": "Circular Permutations",
+              "questions": {}
+            }
+          }
+        },
+        "Permutations And Combinations_Combinations": {
+          "topic": "Permutations And Combinations",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Combinations",
+          "concepts": {
+            "Permutations And Combinations_Combinations_Combinations Formula": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Combinations",
+              "concept": "Combinations Formula",
+              "questions": {}
+            },
+            "Permutations And Combinations_Combinations_Combinations With Repetition": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Combinations",
+              "concept": "Combinations With Repetition",
+              "questions": {}
+            },
+            "Permutations And Combinations_Combinations_Binomial Coefficient": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Combinations",
+              "concept": "Binomial Coefficient",
+              "questions": {}
+            }
+          }
+        },
+        "Permutations And Combinations_Applications": {
+          "topic": "Permutations And Combinations",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Applications",
+          "concepts": {
+            "Permutations And Combinations_Applications_Probability Applications": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Applications",
+              "concept": "Probability Applications",
+              "questions": {}
+            },
+            "Permutations And Combinations_Applications_Real-Life Scenarios": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Applications",
+              "concept": "Real-Life Scenarios",
+              "questions": {}
+            },
+            "Permutations And Combinations_Applications_Optimization Problems": {
+              "topic": "Permutations And Combinations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Applications",
+              "concept": "Optimization Problems",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Binomial Theorem": {
+      "topic": "Binomial Theorem",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Binomial Theorem_Binomial Expansion": {
+          "topic": "Binomial Theorem",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Binomial Expansion",
+          "concepts": {
+            "Binomial Theorem_Binomial Expansion_Binomial Coefficients": {
+              "topic": "Binomial Theorem",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Binomial Expansion",
+              "concept": "Binomial Coefficients",
+              "questions": {}
+            },
+            "Binomial Theorem_Binomial Expansion_Pascal'S Triangle": {
+              "topic": "Binomial Theorem",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Binomial Expansion",
+              "concept": "Pascal'S Triangle",
+              "questions": {}
+            },
+            "Binomial Theorem_Binomial Expansion_General Term Formula": {
+              "topic": "Binomial Theorem",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Binomial Expansion",
+              "concept": "General Term Formula",
+              "questions": {}
+            }
+          }
+        },
+        "Binomial Theorem_Applications": {
+          "topic": "Binomial Theorem",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Applications",
+          "concepts": {
+            "Binomial Theorem_Applications_Polynomial Expansion": {
+              "topic": "Binomial Theorem",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Applications",
+              "concept": "Polynomial Expansion",
+              "questions": {}
+            },
+            "Binomial Theorem_Applications_Combinatorial Proofs": {
+              "topic": "Binomial Theorem",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Applications",
+              "concept": "Combinatorial Proofs",
+              "questions": {}
+            },
+            "Binomial Theorem_Applications_Probability Calculations": {
+              "topic": "Binomial Theorem",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Applications",
+              "concept": "Probability Calculations",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Coordinate Geometry Basics": {
+      "topic": "Coordinate Geometry Basics",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Coordinate Geometry Basics_Distance Between Points": {
+          "topic": "Coordinate Geometry Basics",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Distance Between Points",
+          "concepts": {
+            "Coordinate Geometry Basics_Distance Between Points_Distance Formula": {
+              "topic": "Coordinate Geometry Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Distance Between Points",
+              "concept": "Distance Formula",
+              "questions": {}
+            },
+            "Coordinate Geometry Basics_Distance Between Points_Pythagorean Theorem": {
+              "topic": "Coordinate Geometry Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Distance Between Points",
+              "concept": "Pythagorean Theorem",
+              "questions": {}
+            },
+            "Coordinate Geometry Basics_Distance Between Points_Coordinate Pairs": {
+              "topic": "Coordinate Geometry Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Distance Between Points",
+              "concept": "Coordinate Pairs",
+              "questions": {}
+            }
+          }
+        },
+        "Coordinate Geometry Basics_Slope Of A Line": {
+          "topic": "Coordinate Geometry Basics",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Slope Of A Line",
+          "concepts": {
+            "Coordinate Geometry Basics_Slope Of A Line_Slope Formula": {
+              "topic": "Coordinate Geometry Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Slope Of A Line",
+              "concept": "Slope Formula",
+              "questions": {}
+            },
+            "Coordinate Geometry Basics_Slope Of A Line_Positive And Negative Slope": {
+              "topic": "Coordinate Geometry Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Slope Of A Line",
+              "concept": "Positive And Negative Slope",
+              "questions": {}
+            },
+            "Coordinate Geometry Basics_Slope Of A Line_Undefined Slope": {
+              "topic": "Coordinate Geometry Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Slope Of A Line",
+              "concept": "Undefined Slope",
+              "questions": {}
+            }
+          }
+        },
+        "Coordinate Geometry Basics_Parallel And Perpendicular Lines": {
+          "topic": "Coordinate Geometry Basics",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Parallel And Perpendicular Lines",
+          "concepts": {
+            "Coordinate Geometry Basics_Parallel And Perpendicular Lines_Parallel Lines Condition": {
+              "topic": "Coordinate Geometry Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Parallel And Perpendicular Lines",
+              "concept": "Parallel Lines Condition",
+              "questions": {}
+            },
+            "Coordinate Geometry Basics_Parallel And Perpendicular Lines_Perpendicular Lines Condition": {
+              "topic": "Coordinate Geometry Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Parallel And Perpendicular Lines",
+              "concept": "Perpendicular Lines Condition",
+              "questions": {}
+            },
+            "Coordinate Geometry Basics_Parallel And Perpendicular Lines_Slopes Relationship": {
+              "topic": "Coordinate Geometry Basics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Parallel And Perpendicular Lines",
+              "concept": "Slopes Relationship",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Circle Equations": {
+      "topic": "Circle Equations",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Circle Equations_Basic Properties": {
+          "topic": "Circle Equations",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Basic Properties",
+          "concepts": {
+            "Circle Equations_Basic Properties_Radius And Diameter": {
+              "topic": "Circle Equations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Properties",
+              "concept": "Radius And Diameter",
+              "questions": {}
+            },
+            "Circle Equations_Basic Properties_Circumference": {
+              "topic": "Circle Equations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Properties",
+              "concept": "Circumference",
+              "questions": {}
+            },
+            "Circle Equations_Basic Properties_Area Of Circle": {
+              "topic": "Circle Equations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Basic Properties",
+              "concept": "Area Of Circle",
+              "questions": {}
+            }
+          }
+        },
+        "Circle Equations_Equation Forms": {
+          "topic": "Circle Equations",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Equation Forms",
+          "concepts": {
+            "Circle Equations_Equation Forms_Standard Form": {
+              "topic": "Circle Equations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Equation Forms",
+              "concept": "Standard Form",
+              "questions": {}
+            },
+            "Circle Equations_Equation Forms_General Form": {
+              "topic": "Circle Equations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Equation Forms",
+              "concept": "General Form",
+              "questions": {}
+            },
+            "Circle Equations_Equation Forms_Center-Radius Form": {
+              "topic": "Circle Equations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Equation Forms",
+              "concept": "Center-Radius Form",
+              "questions": {}
+            }
+          }
+        },
+        "Circle Equations_Applications": {
+          "topic": "Circle Equations",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Applications",
+          "concepts": {
+            "Circle Equations_Applications_Geometry Problems": {
+              "topic": "Circle Equations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Applications",
+              "concept": "Geometry Problems",
+              "questions": {}
+            },
+            "Circle Equations_Applications_Real-World Examples": {
+              "topic": "Circle Equations",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Applications",
+              "concept": "Real-World Examples",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Trigonometric Functions And Identities": {
+      "topic": "Trigonometric Functions And Identities",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Trigonometric Functions And Identities_Graphs Of Trigonometric Functions": {
+          "topic": "Trigonometric Functions And Identities",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Graphs Of Trigonometric Functions",
+          "concepts": {
+            "Trigonometric Functions And Identities_Graphs Of Trigonometric Functions_Sine And Cosine Graphs": {
+              "topic": "Trigonometric Functions And Identities",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Graphs Of Trigonometric Functions",
+              "concept": "Sine And Cosine Graphs",
+              "questions": {}
+            },
+            "Trigonometric Functions And Identities_Graphs Of Trigonometric Functions_Periodicity Of Functions": {
+              "topic": "Trigonometric Functions And Identities",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Graphs Of Trigonometric Functions",
+              "concept": "Periodicity Of Functions",
+              "questions": {}
+            },
+            "Trigonometric Functions And Identities_Graphs Of Trigonometric Functions_Amplitude And Phase Shift": {
+              "topic": "Trigonometric Functions And Identities",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Graphs Of Trigonometric Functions",
+              "concept": "Amplitude And Phase Shift",
+              "questions": {}
+            }
+          }
+        },
+        "Trigonometric Functions And Identities_Trigonometric Identities": {
+          "topic": "Trigonometric Functions And Identities",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Trigonometric Identities",
+          "concepts": {
+            "Trigonometric Functions And Identities_Trigonometric Identities_Basic Identities": {
+              "topic": "Trigonometric Functions And Identities",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Trigonometric Identities",
+              "concept": "Basic Identities",
+              "questions": {}
+            },
+            "Trigonometric Functions And Identities_Trigonometric Identities_Sum And Difference Formulas": {
+              "topic": "Trigonometric Functions And Identities",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Trigonometric Identities",
+              "concept": "Sum And Difference Formulas",
+              "questions": {}
+            },
+            "Trigonometric Functions And Identities_Trigonometric Identities_Double Angle Formulas": {
+              "topic": "Trigonometric Functions And Identities",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Trigonometric Identities",
+              "concept": "Double Angle Formulas",
+              "questions": {}
+            }
+          }
+        },
+        "Trigonometric Functions And Identities_Solving Trigonometric Equations": {
+          "topic": "Trigonometric Functions And Identities",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Solving Trigonometric Equations",
+          "concepts": {
+            "Trigonometric Functions And Identities_Solving Trigonometric Equations_Using Identities": {
+              "topic": "Trigonometric Functions And Identities",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Solving Trigonometric Equations",
+              "concept": "Using Identities",
+              "questions": {}
+            },
+            "Trigonometric Functions And Identities_Solving Trigonometric Equations_Inverse Trigonometric Functions": {
+              "topic": "Trigonometric Functions And Identities",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Solving Trigonometric Equations",
+              "concept": "Inverse Trigonometric Functions",
+              "questions": {}
+            },
+            "Trigonometric Functions And Identities_Solving Trigonometric Equations_General Solutions": {
+              "topic": "Trigonometric Functions And Identities",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Solving Trigonometric Equations",
+              "concept": "General Solutions",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Introduction To Statistics": {
+      "topic": "Introduction To Statistics",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Introduction To Statistics_Role Of Statistics": {
+          "topic": "Introduction To Statistics",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Role Of Statistics",
+          "concepts": {
+            "Introduction To Statistics_Role Of Statistics_Everyday Applications": {
+              "topic": "Introduction To Statistics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Role Of Statistics",
+              "concept": "Everyday Applications",
+              "questions": {}
+            },
+            "Introduction To Statistics_Role Of Statistics_Decision Making": {
+              "topic": "Introduction To Statistics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Role Of Statistics",
+              "concept": "Decision Making",
+              "questions": {}
+            },
+            "Introduction To Statistics_Role Of Statistics_Data Interpretation": {
+              "topic": "Introduction To Statistics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Role Of Statistics",
+              "concept": "Data Interpretation",
+              "questions": {}
+            }
+          }
+        },
+        "Introduction To Statistics_Types Of Statistics": {
+          "topic": "Introduction To Statistics",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Types Of Statistics",
+          "concepts": {
+            "Introduction To Statistics_Types Of Statistics_Descriptive Statistics": {
+              "topic": "Introduction To Statistics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Statistics",
+              "concept": "Descriptive Statistics",
+              "questions": {}
+            },
+            "Introduction To Statistics_Types Of Statistics_Inferential Statistics": {
+              "topic": "Introduction To Statistics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Types Of Statistics",
+              "concept": "Inferential Statistics",
+              "questions": {}
+            }
+          }
+        },
+        "Introduction To Statistics_Measurement Scales": {
+          "topic": "Introduction To Statistics",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Measurement Scales",
+          "concepts": {
+            "Introduction To Statistics_Measurement Scales_Nominal Scale": {
+              "topic": "Introduction To Statistics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measurement Scales",
+              "concept": "Nominal Scale",
+              "questions": {}
+            },
+            "Introduction To Statistics_Measurement Scales_Ordinal Scale": {
+              "topic": "Introduction To Statistics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measurement Scales",
+              "concept": "Ordinal Scale",
+              "questions": {}
+            },
+            "Introduction To Statistics_Measurement Scales_Interval Scale": {
+              "topic": "Introduction To Statistics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measurement Scales",
+              "concept": "Interval Scale",
+              "questions": {}
+            },
+            "Introduction To Statistics_Measurement Scales_Ratio Scale": {
+              "topic": "Introduction To Statistics",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measurement Scales",
+              "concept": "Ratio Scale",
+              "questions": {}
+            }
+          }
+        }
+      }
+    },
+    "Data Analysis & Representation": {
+      "topic": "Data Analysis & Representation",
+      "prerequisite_ids": [],
+      "postrequisite_ids": [],
+      "subtopics": {
+        "Data Analysis & Representation_Measures Of Central Tendency": {
+          "topic": "Data Analysis & Representation",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Measures Of Central Tendency",
+          "concepts": {
+            "Data Analysis & Representation_Measures Of Central Tendency_Mean Calculation": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measures Of Central Tendency",
+              "concept": "Mean Calculation",
+              "questions": {}
+            },
+            "Data Analysis & Representation_Measures Of Central Tendency_Median Determination": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measures Of Central Tendency",
+              "concept": "Median Determination",
+              "questions": {}
+            },
+            "Data Analysis & Representation_Measures Of Central Tendency_Mode Identification": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measures Of Central Tendency",
+              "concept": "Mode Identification",
+              "questions": {}
+            }
+          }
+        },
+        "Data Analysis & Representation_Measures Of Dispersion": {
+          "topic": "Data Analysis & Representation",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Measures Of Dispersion",
+          "concepts": {
+            "Data Analysis & Representation_Measures Of Dispersion_Range Calculation": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measures Of Dispersion",
+              "concept": "Range Calculation",
+              "questions": {}
+            },
+            "Data Analysis & Representation_Measures Of Dispersion_Variance Analysis": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measures Of Dispersion",
+              "concept": "Variance Analysis",
+              "questions": {}
+            },
+            "Data Analysis & Representation_Measures Of Dispersion_Standard Deviation": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Measures Of Dispersion",
+              "concept": "Standard Deviation",
+              "questions": {}
+            }
+          }
+        },
+        "Data Analysis & Representation_Partial Fractions": {
+          "topic": "Data Analysis & Representation",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Partial Fractions",
+          "concepts": {
+            "Data Analysis & Representation_Partial Fractions_Fraction Decomposition": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Partial Fractions",
+              "concept": "Fraction Decomposition",
+              "questions": {}
+            },
+            "Data Analysis & Representation_Partial Fractions_Linear Factors": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Partial Fractions",
+              "concept": "Linear Factors",
+              "questions": {}
+            },
+            "Data Analysis & Representation_Partial Fractions_Quadratic Factors": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Partial Fractions",
+              "concept": "Quadratic Factors",
+              "questions": {}
+            }
+          }
+        },
+        "Data Analysis & Representation_Trigonometric Identities": {
+          "topic": "Data Analysis & Representation",
+          "prerequisite_ids": [],
+          "postrequisite_ids": [],
+          "subtopic": "Trigonometric Identities",
+          "concepts": {
+            "Data Analysis & Representation_Trigonometric Identities_Basic Identities": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Trigonometric Identities",
+              "concept": "Basic Identities",
+              "questions": {}
+            },
+            "Data Analysis & Representation_Trigonometric Identities_Pythagorean Identities": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Trigonometric Identities",
+              "concept": "Pythagorean Identities",
+              "questions": {}
+            },
+            "Data Analysis & Representation_Trigonometric Identities_Angle Sum Formulas": {
+              "topic": "Data Analysis & Representation",
+              "prerequisite_ids": [],
+              "postrequisite_ids": [],
+              "subtopic": "Trigonometric Identities",
+              "concept": "Angle Sum Formulas",
+              "questions": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

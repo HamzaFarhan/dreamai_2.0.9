@@ -1,9 +1,44 @@
 from collections import OrderedDict
-from typing import Literal, Union
+from typing import Annotated, Literal, Union
 
-from pydantic import BaseModel, Field
+from pydantic import AfterValidator, BaseModel, Field
 
+MIN_SUBTOPICS = 2
+MAX_SUBTOPICS = 4
+MIN_CONCEPTS = 2
+MAX_CONCEPTS = 4
 STR_ATTRS = ["topic", "subtopic", "concept", "question_number"]
+
+
+def dict_to_ordereddict(d: dict | OrderedDict) -> OrderedDict:
+    return OrderedDict(d)
+
+
+def dict_to_xml(d: dict) -> str:
+    xml_str = ""
+    for key, value in d.items():
+        xml_str += f"<{key}>\n{value}\n</{key}>\n"
+    return xml_str.strip()
+
+
+class CreatedSubtopic(BaseModel):
+    name: Annotated[str, AfterValidator(str.title)]
+    concepts: Annotated[
+        list[str], AfterValidator(lambda concepts: [x.title() for x in concepts])
+    ] = Field(
+        f"{MIN_CONCEPTS}-{MAX_CONCEPTS} concepts covered in the subtopic.",
+        min_length=MIN_CONCEPTS,
+        max_length=MAX_CONCEPTS,
+    )
+
+
+class CreatedTopic(BaseModel):
+    name: Annotated[str, AfterValidator(str.title)]
+    subtopics: list[CreatedSubtopic] = Field(
+        f"{MIN_SUBTOPICS}-{MAX_SUBTOPICS} ordered subtopics with concepts.",
+        min_length=MIN_SUBTOPICS,
+        max_length=MAX_SUBTOPICS,
+    )
 
 
 class Node(BaseModel):
@@ -26,7 +61,8 @@ class Node(BaseModel):
         node_str = f"<id>\n{self.id}\n</id>"
         for attr in STR_ATTRS:
             if hasattr(self, attr):
-                node_str += f"\n\n<{attr}>\n{getattr(self, attr).title()}\n</{attr}>"
+                # node_str += f"\n\n<{attr}>\n{getattr(self, attr)}\n</{attr}>"
+                node_str += f"\n\n{dict_to_xml({attr: getattr(self, attr)})}"
         return node_str.strip()
 
     def add_prerequisite_id(self, id: str):
@@ -45,7 +81,10 @@ class Node(BaseModel):
 
 
 class Topic(Node):
-    subtopics: dict[str, "Subtopic"] = Field(default_factory=OrderedDict)
+    # subtopics: dict[str, "Subtopic"] = Field(default_factory=OrderedDict)
+    subtopics: Annotated[dict[str, "Subtopic"], AfterValidator(dict_to_ordereddict)] = (
+        Field(default_factory=OrderedDict)
+    )
 
     def get(self, id: str) -> Node | None:
         split_id = id.split("_")
@@ -66,7 +105,7 @@ class Topic(Node):
 
     def add_subtopics(
         self,
-        subtopics: Union[list[Union["Subtopic", str]], "Subtopic", str] | None = None,
+        subtopics: Union[list[Union["Subtopic", str]], "Subtopic", str, None] = None,
     ):
         if subtopics is None or subtopics == [] or subtopics == "":
             return
@@ -76,6 +115,36 @@ class Topic(Node):
             if isinstance(subtopic, str):
                 subtopic = Subtopic(topic=self.topic, subtopic=subtopic)
             subtopic.topic = self.topic
+            self.subtopics[subtopic.id] = subtopic
+
+    def add_concepts(self, concepts: Union[list["Concept"], "Concept", None] = None):
+        if concepts is None or concepts == []:
+            return
+        if not isinstance(concepts, list):
+            concepts = [concepts]
+        for concept in concepts:
+            concept.topic = self.topic
+            subtopic = self.subtopics.get(
+                f"{concept.topic}_{concept.subtopic}",
+                Subtopic(topic=concept.topic, subtopic=concept.subtopic),
+            )
+            subtopic.add_concepts(concept)
+            self.subtopics[subtopic.id] = subtopic
+
+    def add_questions(
+        self, questions: Union[list["Question"], "Question", None] = None
+    ):
+        if questions is None or questions == []:
+            return
+        if not isinstance(questions, list):
+            questions = [questions]
+        for question in questions:
+            question.topic = self.topic
+            subtopic = self.subtopics.get(
+                f"{question.topic}_{question.subtopic}",
+                Subtopic(topic=question.topic, subtopic=question.subtopic),
+            )
+            subtopic.add_qestions(question)
             self.subtopics[subtopic.id] = subtopic
 
     def add_dependancies(
@@ -146,7 +215,30 @@ class Topic(Node):
 
 
 class Topics(BaseModel):
-    topics: dict[str, Topic] = Field(default_factory=OrderedDict)
+    topics: Annotated[dict[str, Topic], AfterValidator(dict_to_ordereddict)] = Field(
+        default_factory=OrderedDict
+    )
+
+    @property
+    def subtopics(self) -> dict[str, "Subtopic"]:
+        subtopics = OrderedDict()
+        for topic in self.topics.values():
+            subtopics.update(topic.subtopics)
+        return subtopics
+
+    @property
+    def concepts(self) -> dict[str, "Concept"]:
+        concepts = OrderedDict()
+        for subtopic in self.subtopics.values():
+            concepts.update(subtopic.concepts)
+        return concepts
+
+    @property
+    def questions(self) -> dict[str, "Question"]:
+        questions = OrderedDict()
+        for concept in self.concepts.values():
+            questions.update(concept.questions)
+        return questions
 
     def get(self, id: str) -> Node | None:
         split_id = id.split("_")
@@ -154,7 +246,7 @@ class Topics(BaseModel):
 
     def add_topics(
         self,
-        topics: Union[list[Union["Topic", str]], "Topic", str] | None = None,
+        topics: list[Topic | str] | Topic | str | None = None,
     ):
         if topics is None or topics == [] or topics == "":
             return
@@ -164,6 +256,45 @@ class Topics(BaseModel):
             if isinstance(topic, str):
                 topic = Topic(topic=topic)
             self.topics[topic.id] = topic
+
+    def add_subtopics(
+        self,
+        subtopics: Union[list["Subtopic"], "Subtopic", None] = None,
+    ):
+        if subtopics is None or subtopics == [] or subtopics == "":
+            return
+        if not isinstance(subtopics, list):
+            subtopics = [subtopics]
+        for subtopic in subtopics:
+            topic_key = subtopic.topic
+            topic = self.topics.get(topic_key, Topic(topic=topic_key))
+            topic.add_subtopics(subtopic)
+            self.topics[topic_key] = topic
+
+    def add_concepts(self, concepts: Union[list["Concept"], "Concept", None] = None):
+        if concepts is None or concepts == [] or concepts == "":
+            return
+        if not isinstance(concepts, list):
+            concepts = [concepts]
+        for concept in concepts:
+            topic_key = concept.topic
+            topic = self.topics.get(topic_key, Topic(topic=topic_key))
+            topic.add_concepts(concept)
+            self.topics[topic_key] = topic
+
+    def add_questions(
+        self,
+        questions: Union[list["Question"], "Question", None] = None,
+    ):
+        if questions is None or questions == []:
+            return
+        if not isinstance(questions, list):
+            questions = [questions]
+        for question in questions:
+            topic_key = question.topic
+            topic = self.topics.get(topic_key, Topic(topic=topic_key))
+            topic.add_questions(question)
+            self.topics[topic_key] = topic
 
     def add_prerequisites(
         self, id: str, prerequisites: list[Node | str] | Node | str | None = None
@@ -191,11 +322,13 @@ class Topics(BaseModel):
 
 class Subtopic(Node):
     subtopic: str
-    concepts: dict[str, "Concept"] = Field(default_factory=OrderedDict)
+    concepts: Annotated[dict[str, "Concept"], AfterValidator(dict_to_ordereddict)] = (
+        Field(default_factory=OrderedDict)
+    )
 
     def add_concepts(
         self,
-        concepts: Union[list[Union["Concept", str]], "Concept", str] | None = None,
+        concepts: Union[list[Union["Concept", str]], "Concept", str, None] = None,
     ):
         if concepts is None or concepts == [] or concepts == "":
             return
@@ -210,15 +343,9 @@ class Subtopic(Node):
             concept.subtopic = self.subtopic
             self.concepts[concept.id] = concept
 
-
-class Concept(Node):
-    subtopic: str
-    concept: str
-    questions: dict[str, "Question"] = Field(default_factory=OrderedDict)
-
-    def add_questions(
+    def add_qestions(
         self,
-        questions: Union[list["Question"], "Question"] | None = None,
+        questions: Union[list["Question"], "Question", None] = None,
     ):
         if questions is None or questions == []:
             return
@@ -227,8 +354,48 @@ class Concept(Node):
         for question in questions:
             question.topic = self.topic
             question.subtopic = self.subtopic
-            question.concept = self.concept
-            question.question_number = len(self.questions) + 1
+            concept = self.concepts.get(
+                f"{question.topic}_{question.subtopic}_{question.concept}",
+                Concept(
+                    topic=question.topic,
+                    subtopic=question.subtopic,
+                    concept=question.concept,
+                ),
+            )
+            concept.add_questions(question)
+            self.concepts[concept.id] = concept
+
+
+class Concept(Node):
+    subtopic: str
+    concept: str
+    questions: Annotated[dict[str, "Question"], AfterValidator(dict_to_ordereddict)] = (
+        Field(default_factory=OrderedDict)
+    )
+
+    def add_questions(
+        self,
+        questions: Union[
+            list[Union["BaseQuestion", "Question"]], "BaseQuestion", "Question", None
+        ] = None,
+    ):
+        if questions is None or questions == []:
+            return
+        if not isinstance(questions, list):
+            questions = [questions]
+        for question in questions:
+            subquestions = (
+                question.subquestions if isinstance(question, Question) else []
+            )
+            question = Question(
+                topic=self.topic,
+                subtopic=self.subtopic,
+                concept=self.concept,
+                problem=question.problem,
+                solution=question.solution,
+                question_number=len(self.questions) + 1,
+            )
+            question.subquestions = subquestions
             self.questions[question.id] = question
 
 
@@ -236,8 +403,9 @@ class BaseQuestion(BaseModel):
     problem: str
     solution: str
 
-    def problem_solution(self) -> str:
-        return f"<problem>\n{self.problem}\n</problem>\n\n<solution>\n{self.solution}\n</solution>"
+    def __str__(self) -> str:
+        # return f"<problem>\n{self.problem}\n</problem>\n\n<solution>\n{self.solution}\n</solution>"
+        return f"{dict_to_xml({'problem': self.problem})}\n\n{dict_to_xml({'solution': self.solution})}"
 
 
 class Question(Node, BaseQuestion):
@@ -247,10 +415,7 @@ class Question(Node, BaseQuestion):
     subquestions: list[BaseQuestion] = Field(default_factory=list)
 
     def __str__(self) -> str:
-        return f"""
-<id>
-{self.id}
-</id>
-
-{self.problem_solution()}
-""".strip()
+        question_str = super().__str__()
+        for i, subquestion in enumerate(self.subquestions, start=1):
+            question_str += f"\n\n{dict_to_xml({f'subquestion_{i}': subquestion})}"
+        return question_str.strip()

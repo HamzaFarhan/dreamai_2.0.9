@@ -1,11 +1,9 @@
 from enum import Enum
+from typing import Optional
 
-import litellm
+import instructor
 import tiktoken
-from dsp.modules.lm import LM as DSPyLM
 from tenacity import Retrying, stop_after_attempt, wait_random
-
-litellm.drop_params = True
 
 
 class ModelName(str, Enum):
@@ -14,63 +12,16 @@ class ModelName(str, Enum):
     HAIKU = "claude-3-haiku-20240307"
     SONNET = "claude-3-sonnet-20240229"
     OPUS = "claude-3-opus-20240229"
-    GEMINI = "gemini/gemini-pro"
+    GEMINI = "models/gemini-1.5-latest"
+    GEMINI_FLASH = "models/gemini-1.5-flash-latest"
     MISTRAL = "anyscale/mistralai/Mistral-7B-Instruct-v0.1"
     MIXTRAL = "anyscale/mistralai/Mixtral-8x7B-Instruct-v0.1"
 
 
 MODEL = ModelName.GPT_3
-
-
-def dspy_prompt(lm: DSPyLM) -> str:
-    n = 1
-    skip = 0
-    provider: str = lm.provider
-    last_prompt = None
-    printed = []
-    n = n + skip
-    for x in reversed(lm.history[-100:]):
-        prompt = x["prompt"]
-        if prompt != last_prompt:
-            if provider == "clarifai" or provider == "google":
-                printed.append(
-                    (
-                        prompt,
-                        x["response"],
-                    ),
-                )
-            else:
-                printed.append(
-                    (
-                        prompt,
-                        x["response"].generations
-                        if provider == "cohere"
-                        else x["response"]["choices"],
-                    ),
-                )
-        last_prompt = prompt
-        if len(printed) >= n:
-            break
-    history_str = ""
-    for idx, (prompt, choices) in enumerate(reversed(printed)):
-        if (n - idx - 1) < skip:
-            continue
-        history_str += prompt
-        text = ""
-        if provider == "cohere":
-            text = choices[0].text
-        elif provider == "openai" or provider == "ollama":
-            text = " " + lm._get_choice_text(choices[0]).strip()  # type: ignore
-        elif provider == "clarifai":
-            text = choices
-        elif provider == "google":
-            text = choices[0].parts[0].text
-        else:
-            text = choices[0]["text"]
-        history_str += text
-        if len(choices) > 1:
-            history_str += f" \t (and {len(choices)-1} other completions)"
-    return history_str
+ATTEMPTS = 2
+MAX_TOKENS = 2048
+TEMPERATURE = 0.3
 
 
 def count_gpt_tokens(text: str, model: ModelName = MODEL) -> int:
@@ -132,3 +83,49 @@ def ai_retry_attempts(attempts: int = 3):
         if attempts > 1
         else 1
     )
+
+
+def ask_cld_or_oai(
+    ask_cld: instructor.Instructor,
+    ask_oai: instructor.Instructor,
+    messages: list[dict[str, str]],
+    system: str = "",
+    model: ModelName = MODEL,
+    response_model: Optional[type] = None,
+    attempts: int = ATTEMPTS,
+    max_tokens: int = MAX_TOKENS,
+    temperature: float = TEMPERATURE,
+    validation_context: dict = {},
+    ask_kwargs: dict = {},
+):
+    ask_kwargs["model"] = model
+    ask_kwargs["max_retries"] = attempts
+    ask_kwargs["max_tokens"] = max_tokens
+    ask_kwargs["temperature"] = temperature
+    ask_kwargs["response_model"] = response_model
+    ask_kwargs["validation_context"] = validation_context
+    # print(f"ASK_KWARGS:\n{ask_kwargs}")
+    try:
+        if "gpt" in ask_kwargs["model"].lower():
+            if system:
+                messages.insert(0, system_message(system))
+            res = ask_oai.create(
+                messages=messages,  # type: ignore
+                **ask_kwargs,
+            )
+            if response_model is None:
+                return oai_response(res)
+            return res
+        else:
+            res = ask_cld.create(
+                system=system,
+                messages=merge_same_role_messages(messages),  # type: ignore
+                **ask_kwargs,
+            )
+            if response_model is None:
+                return claude_response(res)
+            return res
+    except Exception as e:
+        print(f"Error in ask_cld_or_oai. Messages: {messages}")
+        print(e)
+        return None
