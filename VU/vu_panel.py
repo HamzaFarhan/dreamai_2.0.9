@@ -1,6 +1,8 @@
 from collections import OrderedDict
+from pathlib import Path
 from typing import Annotated, Literal, Union
-
+from enum import Enum
+import pandas as pd
 from pydantic import AfterValidator, BaseModel, Field
 
 MIN_SUBTOPICS = 2
@@ -87,7 +89,12 @@ class Topic(Node):
     )
 
     def get(self, id: str) -> Node | None:
+        # if id.count("_") == 0 and id.count(".") > 0:
+        # return self.get_numbered(id)
         split_id = id.split("_")
+        if split_id[0] != self.id:
+            print(f"ID {id} does not match topic {self.id}")
+            return
         if len(split_id) == 1:
             return self
         elif len(split_id) == 2:
@@ -240,9 +247,53 @@ class Topics(BaseModel):
             questions.update(concept.questions)
         return questions
 
+    def get_numbered(self, id: str) -> Node | None:
+        split_id = id.split(".")
+        if len(split_id) == 1:
+            try:
+                return list(self.topics.values())[int(split_id[0]) - 1]
+            except IndexError:
+                print(f"No topic found with ID {split_id[0]}")
+                return
+        elif len(split_id) == 2:
+            try:
+                topic = list(self.topics.values())[int(split_id[0]) - 1]
+                return list(topic.subtopics.values())[int(split_id[1]) - 1]
+            except IndexError:
+                print(f"No subtopic found with ID {split_id[1]}")
+                return
+        elif len(split_id) == 3:
+            try:
+                topic = list(self.topics.values())[int(split_id[0]) - 1]
+                subtopic = list(topic.subtopics.values())[int(split_id[1]) - 1]
+                return list(subtopic.concepts.values())[int(split_id[2]) - 1]
+            except IndexError:
+                print(f"No concept found with ID {split_id[2]}")
+                return
+        elif len(split_id) == 4:
+            try:
+                topic = list(self.topics.values())[int(split_id[0]) - 1]
+                subtopic = list(topic.subtopics.values())[int(split_id[1]) - 1]
+                concept = list(subtopic.concepts.values())[int(split_id[2]) - 1]
+                return list(concept.questions.values())[int(split_id[3]) - 1]
+            except IndexError:
+                print(f"No question found with ID {split_id[3]}")
+                return
+        print(f"ID {id} not found")
+        return None
+
     def get(self, id: str) -> Node | None:
-        split_id = id.split("_")
-        return self.topics[split_id[0]].get(id)
+        if id.count("_") == 0 and id.count(".") == 0:
+            topic_id = id
+        elif id.count("_") > 0:
+            topic_id = id.split("_")[0]
+        elif id.count(".") > 0:
+            return self.get_numbered(id)
+        topic = self.topics.get(topic_id)
+        if topic is None:
+            print(f"No topic found with ID {topic_id}")
+            return
+        return topic.get(id)
 
     def add_topics(
         self,
@@ -408,10 +459,17 @@ class BaseQuestion(BaseModel):
         return f"{dict_to_xml({'problem': self.problem})}\n\n{dict_to_xml({'solution': self.solution})}"
 
 
+class QuestionDifficulty(str, Enum):
+    EASY = "easy"
+    MEDIUM = "medium"
+    HARD = "hard"
+
+
 class Question(Node, BaseQuestion):
     subtopic: str
     concept: str
     question_number: int = 1
+    difficulty: QuestionDifficulty = QuestionDifficulty.EASY
     subquestions: list[BaseQuestion] = Field(default_factory=list)
 
     def __str__(self) -> str:
@@ -419,3 +477,83 @@ class Question(Node, BaseQuestion):
         for i, subquestion in enumerate(self.subquestions, start=1):
             question_str += f"\n\n{dict_to_xml({f'subquestion_{i}': subquestion})}"
         return question_str.strip()
+
+
+def topics_to_df(topics: Topics, df_path: str | Path = "") -> pd.DataFrame:
+    def append_data(
+        topic: Topic,
+        subtopic: Subtopic | None = None,
+        concept: Concept | None = None,
+        question: Question | None = None,
+    ):
+        df_data["Topic"].append(topic.topic)
+        df_data["Subtopic"].append(subtopic.subtopic if subtopic else "")
+        df_data["Concept"].append(concept.concept if concept else "")
+        df_data["Problem"].append(question.problem if question else "")
+        df_data["Solution"].append(question.solution if question else "")
+        df_data["Difficulty"].append(question.difficulty if question else "")
+
+    df_data = OrderedDict(
+        {
+            "Topic": [],
+            "Subtopic": [],
+            "Concept": [],
+            "Problem": [],
+            "Solution": [],
+            "Difficulty": [],
+        }
+    )
+    for topic in topics.topics.values():
+        if not topic.subtopics:
+            append_data(topic=topic)
+        for subtopic in topic.subtopics.values():
+            if not subtopic.concepts:
+                append_data(topic=topic, subtopic=subtopic)
+            for concept in subtopic.concepts.values():
+                if not concept.questions:
+                    append_data(topic=topic, subtopic=subtopic, concept=concept)
+                for question in concept.questions.values():
+                    append_data(
+                        topic=topic,
+                        subtopic=subtopic,
+                        concept=concept,
+                        question=question,
+                    )
+
+    topics_df = pd.DataFrame(df_data)
+    if df_path:
+        topics_df.to_csv(df_path, index=False)
+    return topics_df
+
+
+def df_to_topics(df: pd.DataFrame | None = None, df_path: str | Path = "") -> Topics:
+    df = pd.read_csv(df_path) if df_path else df
+    assert df is not None, "Dataframe is required"
+    topics_from_df = Topics()
+    for _, row in df.iterrows():
+        topic = row["Topic"]
+        subtopic = row["Subtopic"]
+        concept = row["Concept"]
+        problem = row["Problem"]
+        solution = row["Solution"]
+        difficulty = row["Difficulty"]
+        if not subtopic or not isinstance(subtopic, str):
+            topics_from_df.add_topics(topic)
+        elif not concept or not isinstance(concept, str):
+            topics_from_df.add_subtopics(Subtopic(topic=topic, subtopic=subtopic))
+        elif not problem or not isinstance(problem, str):
+            topics_from_df.add_concepts(
+                Concept(topic=topic, subtopic=subtopic, concept=concept)
+            )
+        else:
+            topics_from_df.add_questions(
+                Question(
+                    topic=topic,
+                    subtopic=subtopic,
+                    concept=concept,
+                    problem=problem,
+                    solution=solution,
+                    difficulty=difficulty,
+                )
+            )
+    return topics_from_df
