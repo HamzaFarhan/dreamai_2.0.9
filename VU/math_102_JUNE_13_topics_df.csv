@@ -1,0 +1,194 @@
+Topic,Subtopic,Concept,Problem,Solution,Difficulty
+Types Of Sets,Representation Of Sets,List The Elements,,,
+Types Of Sets,Representation Of Sets,Use Set Notation,,,
+Types Of Sets,Finite And Infinite Sets,Differentiate Based On Size,,,
+Types Of Sets,Finite And Infinite Sets,Identify Countable Sets,,,
+Types Of Sets,Empty And Universal Sets,Define Empty Set,,,
+Types Of Sets,Empty And Universal Sets,Explain Universal Set,,,
+Complex Numbers Operations,Addition And Subtraction,Perform Addition Of Complex Numbers,,,
+Complex Numbers Operations,Addition And Subtraction,Perform Subtraction Of Complex Numbers,,,
+Complex Numbers Operations,Multiplication And Division,Multiply Complex Numbers,"Let $x = \cos \frac{2 \pi}{7} + i \sin \frac{2 \pi}{7}.$  Compute the value of
+\[(2x + x^2)(2x^2 + x^4)(2x^3 + x^6)(2x^4 + x^8)(2x^5 + x^{10})(2x^6 + x^{12}).\]","Note that $x^7 = \cos 2 \pi + i \sin 2 \pi = 1,$ so $x^7 - 1 = 0,$ which factors as
+\[(x - 1)(x^6 + x^5 + x^4 + x^3 + x^2 + x + 1) = 0.\]Since $x \neq 1,$
+\[x^6 + x^5 + x^4 + x^3 + x^2 + x + 1 = 0.\]Then
+\begin{align*}
+(2x + x^2)(2x^6 + x^{12}) &= 4x^7 + 2x^8 + 2x^{13} + x^{14} = 4 + 2x + 2x^6 + 1 = 5 + 2x + 2x^6, \\
+(2x^2 + x^4)(2x^5 + x^{10}) &= 4x^7 + 2x^9 + 2x^{12} + x^{14} = 4 + 2x^2 + 2x^5 + 1 = 5 + 2x^2 + 2x^5, \\
+(2x^3 + x^6)(2x^4 + x^8) &= 4x^7 + 2x^{10} + 2x^{11} + x^{14} = 4 + 2x^3 + 2x^4 + 1 = 5 + 2x^3 + 2x^4.
+\end{align*}Let $\alpha = x + x^6,$ $\beta = x^2 + x^5,$ and $\gamma = x^3 + x^4,$ so we want to compute
+\[(5 + 2 \alpha)(5 + 2 \beta)(5 + 2 \gamma).\]Then
+\[\alpha + \beta + \gamma = x + x^6 + x^2 + x^5 + x^3 + x^4 = -1.\]Also,
+\begin{align*}
+\alpha \beta + \alpha \gamma + \beta \gamma &= (x + x^6)(x^2 + x^5) + (x + x^6)(x^3 + x^4) + (x^2 + x^5)(x^3 + x^4) \\
+&= x^3 + x^6 + x^8 + x^{11} + x^4 + x^5 + x^9 + x^{10} + x^5 + x^6 + x^8 + x^9 \\
+&= x^3 + x^6 + x + x^4 + x^4 + x^5 + x^2 + x^3 + x^5 + x^6 + x + x^2 \\
+&= 2x + 2x^2 + 2x^3 + 2x^4 + 2x^5 + 2x^6 \\
+&= -2
+\end{align*}and
+\begin{align*}
+\alpha \beta \gamma &= (x + x^6)(x^2 + x^5)(x^3 + x^4) \\
+&= (x^3 + x^6 + x^8 + x^{11})(x^3 + x^4) \\
+&= (x^3 + x^6 + x + x^4)(x^3 + x^4) \\
+&= x^6 + x^9 + x^4 + x^7 + x^7 + x^{10} + x^5 + x^8 \\
+&= x^6 + x^2 + x^4 + 1 + 1 + x^3 + x^5 + x \\
+&= 1.
+\end{align*}Therefore,
+\begin{align*}
+(5 + 2 \alpha)(5 + 2 \beta)(5 + 2 \gamma) &= 125 + 50 (\alpha + \beta + \gamma) + 20 (\alpha \beta + \alpha \gamma + \beta \gamma) + 8 \alpha \beta \gamma \\
+&= 125 + 50(-1) + 20(-2) + 8(1) \\
+&= \boxed{43}.
+\end{align*}",easy
+Complex Numbers Operations,Multiplication And Division,Divide Complex Numbers,,,
+Complex Numbers Operations,Modulus Of A Complex Number,Calculate Modulus Of A Complex Number,,,
+Complex Numbers Operations,Modulus Of A Complex Number,Understand Absolute Value,,,
+Functions And Operations,Types Of Functions,Identify,,,
+Functions And Operations,Types Of Functions,Define,,,
+Functions And Operations,Types Of Functions,Classify,,,
+Functions And Operations,Composite Functions,Compose,,,
+Functions And Operations,Composite Functions,Evaluate,,,
+Functions And Operations,Composite Functions,Simplify,,,
+Functions And Operations,Inverse Functions,Find,,,
+Functions And Operations,Inverse Functions,Verify,,,
+Functions And Operations,Inverse Functions,Graph,,,
+Functions And Operations,Function Operations,Add,,,
+Functions And Operations,Function Operations,Subtract,,,
+Functions And Operations,Function Operations,Multiply,,,
+Functions And Operations,Function Operations,Divide,,,
+Quadratic Equations,Quadratic Functions,Graph Parabolas,"Let $ABCDEF$ be a regular hexagon, and let $G,H,I$ be the midpoints of sides $AB,CD,EF$ respectively. If the area of $\triangle GHI$ is $225$, what is the area of hexagon $ABCDEF$?","We begin with a diagram of the given information: [asy]
+size(4cm);
+real x=sqrt(3);
+pair d=(2,0); pair c=(1,x); pair b=(-1,x); pair a=-d; pair f=-c; pair e=-b;
+pair g=(a+b)/2; pair h=(c+d)/2; pair i=(e+f)/2;
+draw(a--b--c--d--e--f--a);
+dot(a); dot(b); dot(c); dot(d); dot(e); dot(f); dot(g); dot(h); dot(i);
+draw(g--h--i--g);
+label(""$A$"",a,W);
+label(""$B$"",b,NNW);
+label(""$C$"",c,NNE);
+label(""$D$"",d,E);
+label(""$E$"",e,SSE);
+label(""$F$"",f,SSW);
+label(""$G$"",g,WNW);
+label(""$H$"",h,ENE);
+label(""$I$"",i,S);
+[/asy]
+
+To increase the symmetry in the diagram, we can draw in the long diagonals of $ABCDEF$ as well as the mirror image of $\triangle GHI$ across these diagonals:
+
+[asy]
+size(4cm);
+real x=sqrt(3);
+pair d=(2,0); pair c=(1,x); pair b=(-1,x); pair a=-d; pair f=-c; pair e=-b;
+pair g=(a+b)/2; pair h=(c+d)/2; pair i=(e+f)/2;
+fill(g--h--i--cycle,gray);
+draw(a--b--c--d--e--f--a);
+dot(a); dot(b); dot(c); dot(d); dot(e); dot(f); dot(g); dot(h); dot(i);
+draw(g--h--i--g);
+draw(a--d, dashed);
+draw(b--e, dashed);
+draw(c--f, dashed);
+draw((-g)--(-h)--(-i)--(-g), dashed);
+label(""$A$"",a,W);
+label(""$B$"",b,NNW);
+label(""$C$"",c,NNE);
+label(""$D$"",d,E);
+label(""$E$"",e,SSE);
+label(""$F$"",f,SSW);
+label(""$G$"",g,WNW);
+label(""$H$"",h,ENE);
+label(""$I$"",i,S);
+[/asy]
+
+These additional lines divide $ABCDEF$ into $24$ congruent equilateral triangles, of which $\triangle GHI$ covers exactly $9$. Thus each of the triangles has area $\frac{225}{9}=25$, and hexagon $ABCDEF$ has area $24\cdot 25=\boxed{600}$.",easy
+Quadratic Equations,Quadratic Functions,Solve Using Vertex Form,,,
+Quadratic Equations,Quadratic Formula,Find Discriminant,"A real number $a$ is chosen randomly and uniformly from the interval $[-20, 18]$. Find the probability that the roots of the polynomial
+\[x^4 + 2ax^3 + (2a - 2)x^2 + (-4a + 3)x - 2\]are all real.","Let $p(x)$ be the given polynomial. Notice that \[p(1) = 1 + (2a) + (2a-2) - (4a+3) - 2 = 0,\]so $1$ is a root of $p(x).$ Performing polynomial division, we then have \[p(x) = (x-1)(x^3+(2a+1)x^2+(4a-1)x+2).\]Notice that \[p(-2) = 1 \cdot (-8 + 4(2a+1) - 2(4a-1) + 2) = 0,\]so $-2$ is a root of $p(x)$ as well. Dividing the cubic term by $x+2,$ we then have \[p(x) = (x-1)(x+2)(x^2+(2a-1)x+1).\]Therefore, we want to find the probability that the roots of $x^2 + (2a-1)x + 1$ are all real. This occurs if and only if the discriminant is nonnegative: \[(2a-1)^2 - 4 \ge 0,\]or $(2a-1)^2 \ge 4.$ Thus, either $2a-1 \ge 2$ or $2a-1 \le -2.$ The first inequality is equivalent to $a \ge \tfrac{3}{2},$ and the second is equivalent to $a \le -\tfrac{1}{2}.$ This shows that all values of $a$ except those in the interval $\left(-\tfrac12, \tfrac32\right)$ satisfy the condition. This interval has length $2,$ and the given interval $[-20, 18],$ which contains it completely, has length $18 - (-20) = 38,$ so the probability is \[1 - \frac{2}{38} = \boxed{\frac{18}{19}}.\]",easy
+Quadratic Equations,Quadratic Formula,Solve For Roots,,,
+Matrix Operations,Basic Matrix Operations,Add Matrices,,,
+Matrix Operations,Basic Matrix Operations,Subtract Matrices,,,
+Matrix Operations,Basic Matrix Operations,Multiply Matrices,,,
+Matrix Operations,Matrix Inverse,Find Inverse Using Augmented Matrix,,,
+Matrix Operations,Matrix Inverse,Calculate Inverse With Co-Factors,,,
+Matrix Operations,Applications Of Matrices,Solve Linear Equations,,,
+Matrix Operations,Applications Of Matrices,Apply Cramer'S Rule,,,
+Matrix Operations,Applications Of Matrices,Evaluate Determinants,,,
+Sequences And Series,Arithmetic Sequence,Calculate Nth Term,,,
+Sequences And Series,Arithmetic Sequence,Find Sum Of Series,,,
+Sequences And Series,Arithmetic Sequence,Identify Common Difference,,,
+Sequences And Series,Geometric Sequence,Calculate Nth Term,,,
+Sequences And Series,Geometric Sequence,Find Sum Of Series,,,
+Sequences And Series,Geometric Sequence,Identify Common Ratio,,,
+Permutations And Combinations,Fundamentals Of Permutations,Calculate Permutations With Repetition,,,
+Permutations And Combinations,Fundamentals Of Permutations,Determine Permutations Without Repetition,,,
+Permutations And Combinations,Fundamentals Of Combinations,Calculate Combinations,,,
+Permutations And Combinations,Fundamentals Of Combinations,Apply Combinations In Probability Problems,,,
+Binomial Theorem,Generalizing Formulas,Expand Binomial,,,
+Binomial Theorem,Generalizing Formulas,Apply Pascal'S Triangle,,,
+Binomial Theorem,Applications,Calculate Coefficients,,,
+Binomial Theorem,Applications,Find Specific Terms,,,
+Coordinate Geometry Basics,Distance Between Two Points,Calculate Distance Formula,A regular hexagon is inscribed in a circle and another regular hexagon is circumscribed about the same circle. What is the ratio of the area of the larger hexagon to the area of the smaller hexagon? Express your answer as a common fraction.,"Form a triangle whose first vertex is the center of the circle and whose other two vertices are the midpoint and one of the endpoints of a side of the larger hexagon, as shown in the diagram.  Since each interior angle of a regular hexagon is 120 degrees, this triangle is a 30-60-90 right triangle.  Let $r$ be the radius of the circle.  The length of the longer leg of the triangle is $r$, so the length of the shorter leg is $r/\sqrt{3}$ and the length of the hypotenuse is $2r/\sqrt{3}$.  Since for the smaller hexagon the length of the segment connecting a vertex to the center is $r$, the dimensions of the larger hexagon are $2/\sqrt{3}$ times larger than the dimensions of the smaller hexagon.  Therefore, the area of the larger triangle is $(2/\sqrt{3})^2=\boxed{\frac{4}{3}}$ times greater than the area of the smaller triangle.
+
+[asy]
+size(5cm);
+defaultpen(linewidth(.7pt)+fontsize(8pt));
+dotfactor=4;
+int i;
+draw(circle((0,0),1));
+for(i=0;i<=5;++i)
+
+{
+
+draw(dir(60*i)--dir(60*(i+1)));
+
+draw(2/sqrt(3)*dir(60*i)--2/sqrt(3)*dir(60*(i+1)));
+
+}
+draw(2/sqrt(3)*dir(0)--(0,0)--dir(30));
+draw(0.93*dir(30)--dir(30)+0.07*dir(-60)+0.07*dir(210)--dir(30)+0.07*dir(-60));[/asy]",easy
+Coordinate Geometry Basics,Distance Between Two Points,Apply Pythagorean Theorem,,,
+Coordinate Geometry Basics,Slope Of A Line,Determine Rise Over Run,,,
+Coordinate Geometry Basics,Slope Of A Line,Calculate Using Two Points,,,
+Coordinate Geometry Basics,Parallel And Perpendicular Lines,Identify Parallel Lines Condition,,,
+Coordinate Geometry Basics,Parallel And Perpendicular Lines,Determine Perpendicular Lines Condition,,,
+Circle And Equation Of Circle,Definition Of Circle,Identify Circle,,,
+Circle And Equation Of Circle,Definition Of Circle,Understand Radius,,,
+Circle And Equation Of Circle,Definition Of Circle,Calculate Circumference,,,
+Circle And Equation Of Circle,Equation Of Circle,Derive Circle Equation,,,
+Circle And Equation Of Circle,Equation Of Circle,Use Center And Radius,,,
+Circle And Equation Of Circle,Equation Of Circle,Apply Completing The Square,,,
+Trigonometric Functions,Periodicity Of Sine And Cosine,Identify Period Of Functions,,,
+Trigonometric Functions,Periodicity Of Sine And Cosine,Graph Sine And Cosine Functions,,,
+Trigonometric Functions,Trigonometric Identities,Apply Pythagorean Identities,,,
+Trigonometric Functions,Trigonometric Identities,Use Cofunction Identities,,,
+Trigonometric Functions,Trigonometric Equations,Solve Equations Algebraically,"Find the number of solutions to
+\[\cos 4x + \cos^2 3x + \cos^3 2x + \cos^4 x = 0\]for $-\pi \le x \le \pi.$","We can express all the terms in terms of $\cos 2x$:
+\begin{align*}
+\cos 4x &= 2 \cos^2 2x - 1, \\
+\cos^2 3x &= \frac{\cos 6x + 1}{2} = \frac{4 \cos^3 2x - 3 \cos 2x + 1}{2}, \\
+\cos^3 2x &= \cos^3 2x, \\
+\cos^4 x &= (\cos^2 x)^2 = \left( \frac{\cos 2x + 1}{2} \right)^2 = \frac{\cos^2 2x + 2 \cos 2x + 1}{4}.
+\end{align*}Thus,
+\[2 \cos^2 2x - 1 + \frac{4 \cos^3 2x - 3 \cos 2x + 1}{2} + \cos^3 2x + \frac{\cos^2 2x + 2 \cos 2x + 1}{4} = 0.\]This simplifies to
+\[12 \cos^3 2x + 9 \cos^2 2x - 4 \cos 2x - 1 = 0.\]We can factor this as
+\[(\cos 2x + 1)(12 \cos^2 2x - 3 \cos 2x - 1) = 0.\]If $\cos 2x + 1 = 0,$ then $\cos 2x = -1.$  There are 2 solutions, namely $\pm \frac{\pi}{2}.$  Otherwise,
+\[12 \cos^2 2x - 3 \cos 2x - 1 = 0.\]By the quadratic formula,
+\[\cos 2x = \frac{3 \pm \sqrt{57}}{12}.\]Both values lie between $-1$ and $1,$ so for each value, there are 4 solutions.  This gives us a total of $2 + 4 + 4 = \boxed{10}$ solutions.",easy
+Trigonometric Functions,Trigonometric Equations,Apply Trigonometric Identities,,,
+Introduction To Statistics,Types Of Statistics,Descriptive Statistics,,,
+Introduction To Statistics,Types Of Statistics,Inferential Statistics,,,
+Introduction To Statistics,Measurement Scales,Nominal Scale,,,
+Introduction To Statistics,Measurement Scales,Ordinal Scale,,,
+Introduction To Statistics,Measurement Scales,Interval Scale,,,
+Introduction To Statistics,Measurement Scales,Ratio Scale,,,
+Analyzing Data And Functions,Measures Of Central Tendency,Calculate Mean,,,
+Analyzing Data And Functions,Measures Of Central Tendency,Determine Median,,,
+Analyzing Data And Functions,Measures Of Central Tendency,Identify Mode,,,
+Analyzing Data And Functions,Measures Of Dispersion,Calculate Range,,,
+Analyzing Data And Functions,Measures Of Dispersion,Find Variance,,,
+Analyzing Data And Functions,Measures Of Dispersion,Determine Standard Deviation,,,
+Analyzing Data And Functions,Partial Fractions,Decompose Fractions,,,
+Analyzing Data And Functions,Partial Fractions,Solve Rational Equations,,,
+Analyzing Data And Functions,Partial Fractions,Perform Integration By Partial Fractions,,,
+Analyzing Data And Functions,Trigonometric Identities,Verify Identities,,,
+Analyzing Data And Functions,Trigonometric Identities,Simplify Expressions,,,
+Analyzing Data And Functions,Trigonometric Identities,Apply Double-Angle Identities,,,

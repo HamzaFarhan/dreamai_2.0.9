@@ -4,7 +4,7 @@ from collections import OrderedDict
 import dash_bootstrap_components as dbc
 import dash_cytoscape as cyto
 from dash import Dash, Input, Output, callback, html, dcc
-from vu_panel import Topics
+from vu_models import Topics
 
 cyto.load_extra_layouts()
 

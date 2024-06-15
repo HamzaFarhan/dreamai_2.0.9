@@ -2,7 +2,8 @@ import json
 from collections import defaultdict
 
 import panel as pn
-from vu_panel import Topics
+
+from .vu_models import Topics
 
 pn.extension("floatpanel", "gridstack", sizing_mode="stretch_both")  # type: ignore
 

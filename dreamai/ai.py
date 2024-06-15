@@ -1,14 +1,17 @@
+import inspect
 from enum import Enum
-from typing import Optional
+from typing import Callable, Optional, Type
 
 import instructor
 import tiktoken
+from pydantic import BaseModel, create_model
 from tenacity import Retrying, stop_after_attempt, wait_random
 
 
 class ModelName(str, Enum):
     GPT_3 = "gpt-3.5-turbo"
-    GPT_4 = "gpt-4o"
+    GPT_4O = "gpt-4o"
+    GPT_4 = "gpt-4-turbo"
     HAIKU = "claude-3-haiku-20240307"
     SONNET = "claude-3-sonnet-20240229"
     OPUS = "claude-3-opus-20240229"
@@ -22,6 +25,20 @@ MODEL = ModelName.GPT_3
 ATTEMPTS = 2
 MAX_TOKENS = 2048
 TEMPERATURE = 0.3
+
+
+def create_tool_model(func: Callable) -> Type[BaseModel]:
+    sig = inspect.signature(func)
+    fields = {}
+    for name, parameter in sig.parameters.items():
+        if parameter.annotation is not inspect.Parameter.empty and name != "return":
+            is_required = parameter.default == inspect.Parameter.empty
+            fields[name] = (
+                parameter.annotation,
+                ... if is_required else parameter.default,
+            )
+    model_name = "".join([s.title() for s in func.__name__.split("_")]) + "Tool"
+    return create_model(model_name, **fields)
 
 
 def count_gpt_tokens(text: str, model: ModelName = MODEL) -> int:

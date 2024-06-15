@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dreamai"
-version = "2.0.8"
+version = "2.0.9"
 description = "🔂"
 authors = ["Hamza Farhan <thehamza96@gmail.com>"]
 readme = "README.md"
@@ -42,6 +42,15 @@ python-multipart = "^0.0.9"
 dash-cytoscape = "^1.0.1"
 google-generativeai = "^0.5.4"
 g4f = "^0.3.1.9"
+google-auth-oauthlib = "^1.2.0"
+google-api-python-client = "^2.131.0"
+google-auth-httplib2 = "^0.2.0"
+fastcore = "^1.5.43"
+requests-html = "^0.10.0"
+lxml-html-clean = "^0.1.1"
+burr = {extras = ["start"], version = "^0.22.1"}
+loguru = "^0.7.2"
+aiofiles = "^23.2.1"
 
 [tool.poetry.group.dev.dependencies]
 fastui = "^0.6.0"

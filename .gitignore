@@ -20,3 +20,10 @@ JOB/chroma_dir
 JOB/user_profiles
 JOB/job_posts
 JOB/data
+*.png
+VU/dai_slides_drive_creds.json
+VU/dai_slides_drive_tokens.json
+VU/dai_slides_tokens.json
+VU/slides_creds.json
+VU/slides_tokens.json
+VU/dai_slides_creds.json

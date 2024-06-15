@@ -1,156 +1,31 @@
-import json
-import random
 from collections import OrderedDict
-from pathlib import Path
-from typing import Annotated, Literal, Optional
+from typing import Annotated, Literal, Union, Sequence
+from enum import Enum
+from pydantic import AfterValidator, BaseModel, Field
 
-import anthropic
-import instructor
-import openai
-from dotenv import load_dotenv
-from langsmith import traceable
-from langsmith.wrappers import wrap_openai
-from pydantic import (
-    AfterValidator,
-    BaseModel,
-    Field,
-    field_validator,
-    model_validator,
-)
-
-from dreamai.ai import ModelName, merge_same_role_messages, system_message, user_message
-from dreamai.utils import deindent
-
-load_dotenv()
-
-ask_oai = instructor.from_openai(wrap_openai(openai.OpenAI()))
-ask_cld = instructor.from_anthropic(anthropic.Anthropic())
-
-MODEL = ModelName.HAIKU
-MAX_TOKENS = 2048
-TEMPERATURE = 0.15
-ATTEMPTS = 3
-
-QUESTIONS_PER_FOLDER = 20
-CONCEPT_WORD_COUNT = 3
-MIN_SUBQUESTIONS = 2
-MAX_SUBQUESTIONS = 3
-MIN_TOPICS = 10
-MAX_TOPICS = 15
-MIN_SUBTOPICS = 3
-MAX_SUBTOPICS = 5
+MIN_SUBTOPICS = 2
+MAX_SUBTOPICS = 4
 MIN_CONCEPTS = 2
-MAX_CONCEPTS = 5
-MIN_QUESTIONS_PER_CONCEPT = 2
-MAX_QUESTIONS_PER_CONCEPT = 3
-MIN_PREREQUISITES = 2
-MAX_PREREQUISITES = 3
-CONFIDENCE_THRESHOLD = 0.4
-NUM_PREVIOUS_GROUPS = 10
-RANDOM_SEED = 42
-
-random.seed(RANDOM_SEED)
-
-
-@traceable(name="ask_cld_or_oai")
-def ask_cld_or_oai(
-    user_messages: list[dict[str, str]],
-    system: str = "",
-    model: ModelName = MODEL,
-    response_model: Optional[type] = None,
-    attempts: int = ATTEMPTS,
-    max_tokens: int = MAX_TOKENS,
-    temperature: float = TEMPERATURE,
-    validation_context: dict = {},
-    ask_kwargs: dict = {},
-):
-    ask_kwargs["model"] = model
-    ask_kwargs["max_retries"] = attempts
-    ask_kwargs["max_tokens"] = max_tokens
-    ask_kwargs["temperature"] = temperature
-    ask_kwargs["response_model"] = response_model
-    ask_kwargs["validation_context"] = validation_context
-    # print(f"ASK_KWARGS:\n{ask_kwargs}")
-    try:
-        if "gpt" in ask_kwargs["model"].lower():
-            if system:
-                user_messages.insert(0, system_message(system))
-            return ask_oai.create(
-                messages=user_messages,  # type: ignore
-                **ask_kwargs,
-            )
-        else:
-            return ask_cld.create(
-                system=system,
-                messages=merge_same_role_messages(user_messages),  # type: ignore
-                **ask_kwargs,
-            )
-    except Exception as e:
-        print(f"Error in ask_cld_or_oai. User messages: {user_messages}")
-        print(e)
-        return None
-
-
-class CreatedID(BaseModel):
-    id: str
-    confidence: float = Field(
-        description="Confidence in the ID. Must be between 0 and 1.", ge=0.0, le=1.0
-    )
-
-    @model_validator(mode="after")  # type: ignore
-    def validate_id(self) -> "CreatedID":
-        if self.confidence < CONFIDENCE_THRESHOLD:
-            self.id = ""
-        return self
-
-
-def create_prerequisite_group_ids(
-    group: "Group",
-    previous_groups: dict[str, "Group"],
-    model: ModelName = MODEL,
-    attempts: int = ATTEMPTS,
-    max_tokens: int = MAX_TOKENS,
-) -> list[str]:
-    groups_str = "\n".join([str(g) for g in previous_groups.values()])
-    sys_message = deindent(
-        f"""
-You are a world class math course instructor. You will be given a group with a topic, subtopic, and concept.
-You will also be given a list of previously created groups which may or may not be prerequisites to the group.
-Your job is to assign up to {MAX_PREREQUISITES} prerequisite group IDs to the group.
-For each ID you assign, also give a confidence score between 0. and 1.
-
-<groups>
-{groups_str}
-</groups>
-"""
-    )
-    group_message = deindent(
-        f"""
-<group>
-
-{str(group)}
-
-</group>
-"""
-    )
-    group_ids = ask_cld_or_oai(
-        user_messages=[user_message(group_message)],
-        system=sys_message,
-        model=model,
-        response_model=list[CreatedID],
-        attempts=attempts,
-        max_tokens=max_tokens,
-    )
-    return [g.id for g in group_ids if g.id] if group_ids else []
+MAX_CONCEPTS = 4
+STR_ATTRS = ["topic", "subtopic", "concept", "question_number"]
 
 
 def dict_to_ordereddict(d: dict | OrderedDict) -> OrderedDict:
     return OrderedDict(d)
 
 
+def dict_to_xml(d: dict) -> str:
+    xml_str = ""
+    for key, value in d.items():
+        xml_str += f"<{key}>\n{value}\n</{key}>\n"
+    return xml_str.strip()
+
+
 class CreatedSubtopic(BaseModel):
-    name: str
-    concepts: list[str] = Field(
+    name: Annotated[str, AfterValidator(str.title)]
+    concepts: Annotated[
+        list[str], AfterValidator(lambda concepts: [x.title() for x in concepts])
+    ] = Field(
         f"{MIN_CONCEPTS}-{MAX_CONCEPTS} concepts covered in the subtopic.",
         min_length=MIN_CONCEPTS,
         max_length=MAX_CONCEPTS,
@@ -158,7 +33,7 @@ class CreatedSubtopic(BaseModel):
 
 
 class CreatedTopic(BaseModel):
-    name: str
+    name: Annotated[str, AfterValidator(str.title)]
     subtopics: list[CreatedSubtopic] = Field(
         f"{MIN_SUBTOPICS}-{MAX_SUBTOPICS} ordered subtopics with concepts.",
         min_length=MIN_SUBTOPICS,
@@ -166,459 +41,438 @@ class CreatedTopic(BaseModel):
     )
 
 
-class ConceptWithQuestionIDs(BaseModel):
-    concept: str
-    question_ids: list[str] = Field(default_factory=list)
-
-    def add_question_id(self, question_id: str):
-        if len(self.question_ids) == MAX_QUESTIONS_PER_CONCEPT:
-            print(
-                f"Concept {self.concept} already has {MAX_QUESTIONS_PER_CONCEPT} questions."
-            )
-            return
-        if question_id in self.question_ids:
-            print(f"Question {question_id} already exists for concept {self.concept}.")
-            return
-        self.question_ids.append(question_id)
-        self.question_ids = sorted(self.question_ids, key=int)
-
-
-class Subtopic(BaseModel):
-    name: str
-    concepts: Annotated[
-        dict[str, ConceptWithQuestionIDs], AfterValidator(dict_to_ordereddict)
-    ] = Field(
-        description=f"{MIN_CONCEPTS}-{MAX_CONCEPTS} ordered concepts with question IDs.",
-        min_length=MIN_CONCEPTS,
-        max_length=MAX_CONCEPTS,
-    )
-
-
-class Topic(BaseModel):
-    name: str
-    subtopics: Annotated[dict[str, Subtopic], AfterValidator(dict_to_ordereddict)] = (
-        Field(
-            description=f"{MIN_SUBTOPICS}-{MAX_SUBTOPICS} ordered subtopics with concepts.",
-            min_length=MIN_SUBTOPICS,
-            max_length=MAX_SUBTOPICS,
-        )
-    )
-
-    @classmethod
-    def from_created_topic(cls, created_topic: CreatedTopic) -> "Topic":
-        return cls(
-            name=created_topic.name,
-            subtopics={
-                subtopic.name: Subtopic(
-                    name=subtopic.name,
-                    concepts={
-                        concept: ConceptWithQuestionIDs(concept=concept)
-                        for concept in subtopic.concepts
-                    },
-                )
-                for subtopic in created_topic.subtopics
-            },
-        )
-
-
-class Group(BaseModel):
-    id: str
+class Node(BaseModel):
     topic: str
-    subtopic: str
-    concept: str
-    prerequisite_ids: list[str] = Field(
-        description="List of prerequisite group IDs.", default_factory=list
-    )
-    prerequisite_of_ids: list[str] = Field(
-        description="List of group IDs that have this group as a prerequisite.",
-        default_factory=list,
-    )
+    prerequisite_ids: list[str] = Field(default_factory=list)
+    postrequisite_ids: list[str] = Field(default_factory=list)
+
+    @property
+    def id(self) -> str:
+        id = ""
+        for i, attr in enumerate(STR_ATTRS):
+            if hasattr(self, attr):
+                if i == 0:
+                    id += getattr(self, attr)
+                else:
+                    id += f"_{getattr(self, attr)}"
+        return id
 
     def __str__(self) -> str:
-        return f"""
-<id>
-{self.id}
-</id>
+        node_str = f"<id>\n{self.id}\n</id>"
+        for attr in STR_ATTRS:
+            if hasattr(self, attr):
+                # node_str += f"\n\n<{attr}>\n{getattr(self, attr)}\n</{attr}>"
+                node_str += f"\n\n{dict_to_xml({attr: getattr(self, attr)})}"
+        return node_str.strip()
 
-<topic>
-{self.topic}
-</topic>
-
-<subtopic>
-{self.subtopic}
-</subtopic>
-
-<concept>
-{self.concept}
-</concept>
-"""
-
-    def add_prequisite_ids(
-        self,
-        previous_groups: dict[str, "Group"],
-        model: ModelName = MODEL,
-        attempts: int = ATTEMPTS,
-        max_tokens: int = MAX_TOKENS,
-    ):
-        if not previous_groups:
+    def add_prerequisite_id(self, id: str):
+        if id == self.id:
             return
-        print(f"\nADDING PREREQUISITE IDS FOR GROUP: {self.id}\n")
-        self.prerequisite_ids += create_prerequisite_group_ids(
-            group=self,
-            previous_groups=previous_groups,
-            model=model,
-            attempts=attempts,
-            max_tokens=max_tokens,
-        )
-        self.prerequisite_ids = sorted(
-            list(set(self.prerequisite_ids)), key=int, reverse=True
-        )
-        for prerequisite_id in self.prerequisite_ids:
-            previous_groups[prerequisite_id].prerequisite_of_ids.append(self.id)
+        prerequisite_ids = set(self.prerequisite_ids)
+        prerequisite_ids.add(id)
+        self.prerequisite_ids = list(prerequisite_ids)
+
+    def add_postrequisite_id(self, id: str):
+        if id == self.id:
+            return
+        postrequisite_ids = set(self.postrequisite_ids)
+        postrequisite_ids.add(id)
+        self.postrequisite_ids = list(postrequisite_ids)
+
+
+class Topic(Node):
+    # subtopics: dict[str, "Subtopic"] = Field(default_factory=OrderedDict)
+    subtopics: Annotated[dict[str, "Subtopic"], AfterValidator(dict_to_ordereddict)] = (
+        Field(default_factory=OrderedDict)
+    )
+
+    def get(self, id: str) -> Node | None:
+        # if id.count("_") == 0 and id.count(".") > 0:
+        # return self.get_numbered(id)
+        split_id = id.split("_")
+        if split_id[0] != self.id:
+            print(f"ID {id} does not match topic {self.id}")
+            return
+        if len(split_id) == 1:
+            return self
+        elif len(split_id) == 2:
+            return self.subtopics[id]
+        elif len(split_id) == 3:
+            return self.subtopics["_".join(split_id[:2])].concepts[id]
+        elif len(split_id) == 4:
+            return (
+                self.subtopics["_".join(split_id[:2])]
+                .concepts["_".join(split_id[:3])]
+                .questions[id]
+            )
+        print(f"ID {id} not found")
+        return None
+
+    def add_subtopics(
+        self,
+        subtopics: Union[list[Union["Subtopic", str]], "Subtopic", str, None] = None,
+    ):
+        if subtopics is None or subtopics == [] or subtopics == "":
+            return
+        if not isinstance(subtopics, list):
+            subtopics = [subtopics]
+        for subtopic in subtopics:
+            if isinstance(subtopic, str):
+                subtopic = Subtopic(topic=self.topic, subtopic=subtopic)
+            subtopic.topic = self.topic
+            self.subtopics[subtopic.id] = subtopic
+
+    def add_concepts(self, concepts: Union[list["Concept"], "Concept", None] = None):
+        if concepts is None or concepts == []:
+            return
+        if not isinstance(concepts, list):
+            concepts = [concepts]
+        for concept in concepts:
+            concept.topic = self.topic
+            subtopic = self.subtopics.get(
+                f"{concept.topic}_{concept.subtopic}",
+                Subtopic(topic=concept.topic, subtopic=concept.subtopic),
+            )
+            subtopic.add_concepts(concept)
+            self.subtopics[subtopic.id] = subtopic
+
+    def add_questions(
+        self, questions: Union[list["Question"], "Question", None] = None
+    ):
+        if questions is None or questions == []:
+            return
+        if not isinstance(questions, list):
+            questions = [questions]
+        for question in questions:
+            question.topic = self.topic
+            subtopic = self.subtopics.get(
+                f"{question.topic}_{question.subtopic}",
+                Subtopic(topic=question.topic, subtopic=question.subtopic),
+            )
+            subtopic.add_qestions(question)
+            self.subtopics[subtopic.id] = subtopic
+
+    def add_dependancies(
+        self,
+        id: str,
+        dependancies: list[Node | str] | Node | str,
+        mode: Literal["pre", "post"] = "pre",
+    ):
+        if dependancies is None or dependancies == [] or dependancies == "":
+            return
+        split_id = id.split("_")
+        if split_id[0] != self.id:
+            print(f"ID {id} does not match topic {self.id}")
+            return
+        if not isinstance(dependancies, list):
+            dependancies = [dependancies]
+        for dependancy in dependancies:
+            if isinstance(dependancy, str):
+                dependancy_id = dependancy
+            else:
+                dependancy_id = dependancy.id
+            if dependancy_id == id:
+                continue
+            split_dependancy_id = dependancy_id.split("_")
+            for i, splits in enumerate(zip(split_id, split_dependancy_id)):
+                _, s2 = splits
+                if i == 0:
+                    if mode == "pre":
+                        self.add_prerequisite_id(s2)
+                    elif mode == "post":
+                        self.add_postrequisite_id(s2)
+                elif i == 1:
+                    subtopic_id = "_".join(split_id[:2])
+                    subtopic_dependancy_id = "_".join(split_dependancy_id[:2])
+                    if mode == "pre":
+                        self.subtopics[subtopic_id].add_prerequisite_id(
+                            subtopic_dependancy_id
+                        )
+                    elif mode == "post":
+                        self.subtopics[subtopic_id].add_postrequisite_id(
+                            subtopic_dependancy_id
+                        )
+                elif i == 2:
+                    subtopic_id = "_".join(split_id[:2])
+                    concept_id = "_".join(split_id[:3])
+                    concept_dependancy_id = "_".join(split_dependancy_id[:3])
+                    if mode == "pre":
+                        self.subtopics[subtopic_id].concepts[
+                            concept_id
+                        ].add_prerequisite_id(concept_dependancy_id)
+                    elif mode == "post":
+                        self.subtopics[subtopic_id].concepts[
+                            concept_id
+                        ].add_postrequisite_id(concept_dependancy_id)
+                elif i == 3:
+                    subtopic_id = "_".join(split_id[:2])
+                    concept_id = "_".join(split_id[:3])
+                    question_id = "_".join(split_id[:4])
+                    question_dependancy_id = "_".join(split_dependancy_id[:4])
+                    if mode == "pre":
+                        self.subtopics[subtopic_id].concepts[concept_id].questions[
+                            question_id
+                        ].add_prerequisite_id(question_dependancy_id)
+                    elif mode == "post":
+                        self.subtopics[subtopic_id].concepts[concept_id].questions[
+                            question_id
+                        ].add_postrequisite_id(question_dependancy_id)
 
 
 class Topics(BaseModel):
-    topics: Annotated[dict[str, Topic], AfterValidator(dict_to_ordereddict)]
-    groups: Annotated[dict[str, Group], AfterValidator(dict_to_ordereddict)] = Field(
-        default_factory=dict
+    topics: Annotated[dict[str, Topic], AfterValidator(dict_to_ordereddict)] = Field(
+        default_factory=OrderedDict
     )
 
-    def create_groups(
+    @property
+    def subtopics(self) -> dict[str, "Subtopic"]:
+        subtopics = OrderedDict()
+        for topic in self.topics.values():
+            subtopics.update(topic.subtopics)
+        return subtopics
+
+    @property
+    def concepts(self) -> dict[str, "Concept"]:
+        concepts = OrderedDict()
+        for subtopic in self.subtopics.values():
+            concepts.update(subtopic.concepts)
+        return concepts
+
+    @property
+    def questions(self) -> dict[str, "Question"]:
+        questions = OrderedDict()
+        for concept in self.concepts.values():
+            questions.update(concept.questions)
+        return questions
+
+    def get_numbered(self, id: str) -> Node | None:
+        split_id = id.split(".")
+        if len(split_id) == 1:
+            try:
+                return list(self.topics.values())[int(split_id[0]) - 1]
+            except IndexError:
+                print(f"No topic found with ID {split_id[0]}")
+                return
+        elif len(split_id) == 2:
+            try:
+                topic = list(self.topics.values())[int(split_id[0]) - 1]
+                return list(topic.subtopics.values())[int(split_id[1]) - 1]
+            except IndexError:
+                print(f"No subtopic found with ID {split_id[1]}")
+                return
+        elif len(split_id) == 3:
+            try:
+                topic = list(self.topics.values())[int(split_id[0]) - 1]
+                subtopic = list(topic.subtopics.values())[int(split_id[1]) - 1]
+                return list(subtopic.concepts.values())[int(split_id[2]) - 1]
+            except IndexError:
+                print(f"No concept found with ID {split_id[2]}")
+                return
+        elif len(split_id) == 4:
+            try:
+                topic = list(self.topics.values())[int(split_id[0]) - 1]
+                subtopic = list(topic.subtopics.values())[int(split_id[1]) - 1]
+                concept = list(subtopic.concepts.values())[int(split_id[2]) - 1]
+                return list(concept.questions.values())[int(split_id[3]) - 1]
+            except IndexError:
+                print(f"No question found with ID {split_id[3]}")
+                return
+        print(f"ID {id} not found")
+        return None
+
+    def get(self, id: str) -> Node | None:
+        if id.count("_") == 0 and id.count(".") == 0:
+            topic_id = id
+        elif id.count("_") > 0:
+            topic_id = id.split("_")[0]
+        elif id.count(".") > 0:
+            return self.get_numbered(id)
+        topic = self.topics.get(topic_id)
+        if topic is None:
+            print(f"No topic found with ID {topic_id}")
+            return
+        return topic.get(id)
+
+    def add_topics(
         self,
-        model: ModelName = MODEL,
-        attempts: int = ATTEMPTS,
-        max_tokens: int = MAX_TOKENS,
+        topics: list[Topic | str] | Topic | str | None = None,
     ):
-        group_id = 0
-        for topic_name, topic in self.topics.items():
-            for subtopic_name, subtopic in topic.subtopics.items():
-                for concept_name in subtopic.concepts.keys():
-                    group = Group(
-                        id=str(group_id),
-                        topic=topic_name,
-                        subtopic=subtopic_name,
-                        concept=concept_name,
-                    )
-                    previous_groups = {
-                        k: self.groups[k]
-                        for k in list(self.groups.keys())[-NUM_PREVIOUS_GROUPS:]
-                    }
-                    group.add_prequisite_ids(
-                        previous_groups=previous_groups,
-                        model=model,
-                        attempts=attempts,
-                        max_tokens=max_tokens,
-                    )
-                    self.groups[str(group_id)] = group
-                    group_id += 1
+        if topics is None or topics == [] or topics == "":
+            return
+        if not isinstance(topics, list):
+            topics = [topics]
+        for topic in topics:
+            if isinstance(topic, str):
+                topic = Topic(topic=topic)
+            self.topics[topic.id] = topic
 
-    def add_concept_question_id(
+    def add_subtopics(
         self,
-        question_id: str,
-        topic_name: str,
-        subtopic_name: str,
-        concept_name: str,
+        subtopics: Union[list["Subtopic"], "Subtopic", None] = None,
     ):
-        concept = (
-            self.topics[topic_name].subtopics[subtopic_name].concepts[concept_name]
+        if subtopics is None or subtopics == [] or subtopics == "":
+            return
+        if not isinstance(subtopics, list):
+            subtopics = [subtopics]
+        for subtopic in subtopics:
+            topic_key = subtopic.topic
+            topic = self.topics.get(topic_key, Topic(topic=topic_key))
+            topic.add_subtopics(subtopic)
+            self.topics[topic_key] = topic
+
+    def add_concepts(self, concepts: Union[list["Concept"], "Concept", None] = None):
+        if concepts is None or concepts == [] or concepts == "":
+            return
+        if not isinstance(concepts, list):
+            concepts = [concepts]
+        for concept in concepts:
+            topic_key = concept.topic
+            topic = self.topics.get(topic_key, Topic(topic=topic_key))
+            topic.add_concepts(concept)
+            self.topics[topic_key] = topic
+
+    def add_questions(
+        self,
+        questions: Union[list["Question"], "Question", None] = None,
+    ):
+        if questions is None or questions == []:
+            return
+        if not isinstance(questions, list):
+            questions = [questions]
+        for question in questions:
+            topic_key = question.topic
+            topic = self.topics.get(topic_key, Topic(topic=topic_key))
+            topic.add_questions(question)
+            self.topics[topic_key] = topic
+
+    def add_prerequisites(
+        self, id: str, prerequisites: list[Node | str] | Node | str | None = None
+    ):
+        if prerequisites is None or prerequisites == [] or prerequisites == "":
+            return
+        topic_key = id.split("_")[0]
+        self.topics[topic_key].add_dependancies(
+            id=id, dependancies=prerequisites, mode="pre"
         )
-        concept.add_question_id(question_id)
-        return self
+        if not isinstance(prerequisites, list):
+            prerequisites = [prerequisites]
+        for prereq in prerequisites:
+            if isinstance(prereq, str):
+                prereq_id = prereq
+            else:
+                prereq_id = prereq.id
+            if prereq_id == id:
+                continue
+            topic_key = prereq_id.split("_")[0]
+            self.topics[topic_key].add_dependancies(
+                id=prereq_id, dependancies=id, mode="post"
+            )
 
 
-def create_topic(
-    text: str, model: ModelName = MODEL, attempts: int = ATTEMPTS
-) -> Topic | None:
-    sys_message = deindent(
-        f"""
-            You are a world class math course instructor. Extract the topic, subtopics, and concepts. Feel free to use your knowledge of the subject.
-            {MIN_SUBTOPICS}-{MAX_SUBTOPICS} subtopics and {MIN_CONCEPTS}-{MAX_CONCEPTS} concepts each.
-            The topics, subtopics, and concepts should be ordered and no longer than 5 words each.
-            """
+class Subtopic(Node):
+    subtopic: str
+    concepts: Annotated[dict[str, "Concept"], AfterValidator(dict_to_ordereddict)] = (
+        Field(default_factory=OrderedDict)
     )
-    created_topic = ask_cld_or_oai(
-        user_messages=[user_message(text)],
-        system=sys_message,
-        model=model,
-        response_model=CreatedTopic,
-        attempts=attempts,
-        max_tokens=MAX_TOKENS,
+
+    def add_concepts(
+        self,
+        concepts: Union[Sequence[Union["Concept", str]], "Concept", str, None] = None,
+    ):
+        if concepts is None or concepts == [] or concepts == "":
+            return
+        if not isinstance(concepts, Sequence):
+            concepts = [concepts]
+        for concept in concepts:
+            if isinstance(concept, str):
+                concept = Concept(
+                    topic=self.topic, subtopic=self.subtopic, concept=concept
+                )
+            concept.topic = self.topic
+            concept.subtopic = self.subtopic
+            self.concepts[concept.id] = concept
+
+    def add_qestions(
+        self,
+        questions: Union[list["Question"], "Question", None] = None,
+    ):
+        if questions is None or questions == []:
+            return
+        if not isinstance(questions, list):
+            questions = [questions]
+        for question in questions:
+            question.topic = self.topic
+            question.subtopic = self.subtopic
+            concept = self.concepts.get(
+                f"{question.topic}_{question.subtopic}_{question.concept}",
+                Concept(
+                    topic=question.topic,
+                    subtopic=question.subtopic,
+                    concept=question.concept,
+                ),
+            )
+            concept.add_questions(question)
+            self.concepts[concept.id] = concept
+
+
+class Concept(Node):
+    subtopic: str
+    concept: str
+    questions: Annotated[dict[str, "Question"], AfterValidator(dict_to_ordereddict)] = (
+        Field(default_factory=OrderedDict)
     )
-    return Topic.from_created_topic(created_topic) if created_topic else None
 
-
-def create_topics(
-    outline_file: Path | str,
-    topics_file: Path | str,
-    model: ModelName = ModelName.GPT_4,
-    attempts: int = ATTEMPTS,
-    max_tokens: int = MAX_TOKENS,
-) -> Topics:
-    outline = Path(outline_file).read_text()
-    created_topics = [
-        create_topic(topic, model=model, attempts=attempts)
-        for topic in outline.splitlines()
-    ]
-    topics = Topics(topics={topic.name: topic for topic in created_topics if topic})
-    topics.create_groups(model=model, attempts=attempts, max_tokens=max_tokens)
-    with open(str(topics_file), "w") as f:
-        json.dump(topics.model_dump(), f, indent=2)
-    return topics
-
-
-def create_question_group_id(
-    groups: dict[str, Group],
-    question: "Question",
-    model: ModelName = MODEL,
-    attempts: int = ATTEMPTS,
-    max_tokens: int = MAX_TOKENS,
-) -> str:
-    groups_str = "\n".join([str(g) for g in groups.values()])
-    sys_message = deindent(
-        f"""
-You are a world class math course instructor. You will be given a question with a problem and solution.
-Assign the question to a topic, subtopic, and concept group. Return the group ID.
-
-<groups>
-{groups_str}
-</groups>
-"""
-    )
-    question_message = deindent(
-        f"""
-<question>
-
-{question.problem_solution()}
-
-</question>
-"""
-    )
-    group_id = ask_cld_or_oai(
-        user_messages=[user_message(question_message)],
-        system=sys_message,
-        model=model,
-        response_model=Literal[*groups.keys(), "OTHER"],  # type: ignore
-        attempts=attempts,
-        max_tokens=max_tokens,
-    )
-    return group_id if group_id else "OTHER"
-
-
-def create_subquestions_decision(
-    question: "Question",
-    model: ModelName = MODEL,
-    attempts: int = ATTEMPTS,
-    max_tokens: int = MAX_TOKENS,
-) -> bool:
-    system = deindent("""
-                You are a world class math course instructor. You will be given a question with a problem and solution.
-                You must decide if the question should be broken down into subquestions.
-                If a question is higher than high school level, it should be broken down into subquestions.
-                Return True if the question should be broken down, otherwise return False.
-                """)
-    user_messages = [user_message(f"<question>\n{str(question)}\n</question>")]
-    try:
-        res = ask_cld_or_oai(
-            user_messages=user_messages,
-            system=system,
-            model=model,
-            response_model=bool,
-            attempts=attempts,
-            max_tokens=max_tokens,
-        )
-        return res if res is not None else False
-    except Exception as e:
-        print(f"Error in create_subquestions_decision. User messages: {user_messages}")
-        print(e)
-        return False
-
-
-def create_subquestions(
-    question: "Question",
-    model: ModelName = MODEL,
-    attempts: int = ATTEMPTS,
-    max_tokens: int = MAX_TOKENS,
-) -> "SubQuestions | None":
-    system = deindent(
-        f"""
-You are a world class math course instructor.
-You will be given a question with a 'problem', a 'solution', a 'topic', a 'subtopic', and a 'concept'.
-Based on the main question's problem and solution, break the question down into {MIN_SUBQUESTIONS}-{MAX_SUBQUESTIONS} subquestions.
-The subquestions are basically the steps to solving the main question.
-So the solution of the last subquestion should be the solution of the main question.
-We want the students to show their working. That's why we need the subquestions.
-The subquestions will be contained in the main question's solution. So the ids can be 1, 2, 3...
-For each subquestion:
-    1. Give it an id.
-    2. Don't repeat the main question's 'problem' or 'solution'.
-    3. Define the 'problem'.
-    4. Give a detailed 'solution'.
-"""
-    )
-    user_messages = [user_message(f"<question>\n{str(question)}\n</question>")]
-    return ask_cld_or_oai(
-        user_messages=user_messages,
-        system=system,
-        response_model=SubQuestions,
-        model=model,
-        attempts=attempts,
-        max_tokens=max_tokens,
-    )
+    def add_questions(
+        self,
+        questions: Union[
+            list[Union["BaseQuestion", "Question"]], "BaseQuestion", "Question", None
+        ] = None,
+    ):
+        if questions is None or questions == []:
+            return
+        if not isinstance(questions, list):
+            questions = [questions]
+        for question in questions:
+            subquestions = (
+                question.subquestions if isinstance(question, Question) else []
+            )
+            question = Question(
+                topic=self.topic,
+                subtopic=self.subtopic,
+                concept=self.concept,
+                problem=question.problem,
+                solution=question.solution,
+                question_number=len(self.questions) + 1,
+            )
+            question.subquestions = subquestions
+            self.questions[question.id] = question
 
 
 class BaseQuestion(BaseModel):
-    id: str
     problem: str
     solution: str
 
-    def problem_solution(self) -> str:
-        return f"<problem>\n{self.problem}\n</problem>\n\n<solution>\n{self.solution}\n</solution>"
-
     def __str__(self) -> str:
-        return f"""
-<id>
-{self.id}
-</id>
-
-{self.problem_solution()}
-"""
-
-    # @field_validator("id")
-    # @classmethod
-    # def validate_id(cls, id: str, info: ValidationInfo) -> str:
-    #     print(f"\nVALIDATING ID for {id}\n")
-    #     context: dict | None = info.context
-    #     if context is None:
-    #         return id
-    #     questions: dict[str, "BaseQuestion"] | None = context.get("questions")
-    #     if questions is None:
-    #         return id
-    #     counter = 1
-    #     while id in questions:
-    #         id = f"{id}_{counter}"
-    #         counter += 1
-    #     return id
+        # return f"<problem>\n{self.problem}\n</problem>\n\n<solution>\n{self.solution}\n</solution>"
+        return f"{dict_to_xml({'problem': self.problem})}\n\n{dict_to_xml({'solution': self.solution})}"
 
 
-class SubQuestions(BaseModel):
-    subquestions: list[BaseQuestion] = Field(
-        min_length=MIN_SUBQUESTIONS, max_length=MAX_SUBQUESTIONS
-    )
-
-    @field_validator("subquestions")
-    @classmethod
-    def print_number_of_subquestions(
-        cls, subquestions: list[BaseQuestion]
-    ) -> list[BaseQuestion]:
-        print(f"\nNUMBER OF SUBQUESTIONS: {len(subquestions)}\n")
-        return subquestions
+class QuestionDifficulty(str, Enum):
+    EASY = "easy"
+    MEDIUM = "medium"
+    HARD = "hard"
 
 
-class Question(BaseQuestion):
-    topic: str = ""
-    subtopic: str = ""
-    concept: str = ""
-    group_id: str = ""
+class Question(Node, BaseQuestion):
+    subtopic: str
+    concept: str
+    question_number: int = 1
+    difficulty: QuestionDifficulty = QuestionDifficulty.EASY
     subquestions: list[BaseQuestion] = Field(default_factory=list)
+    code: str = ""
 
     def __str__(self) -> str:
         question_str = super().__str__()
-        if self.topic:
-            question_str += f"\n<topic>\n{self.topic}\n</topic>\n\n<subtopic>\n{self.subtopic}\n</subtopic>\n\n<concept>\n{self.concept}\n</concept>\n"
-        return question_str
-
-    def assign_group(
-        self,
-        topics: Topics,
-        model: ModelName = MODEL,
-        attempts: int = ATTEMPTS,
-        max_tokens: int = MAX_TOKENS,
-    ):
-        if (not self.topic) and len(topics.groups) > 0:
-            print(f"\nASSIGNING GROUP FOR QUESTION: {self.id}\n")
-            group_id = create_question_group_id(
-                groups=topics.groups,
-                question=self,
-                model=model,
-                attempts=attempts,
-                max_tokens=max_tokens,
-            )
-            print(f"GROUP ID: {group_id}")
-            group = topics.groups.get(group_id)
-            if not group:
-                self.group_id = "OTHER"
-                return
-            self.topic = group.topic
-            self.subtopic = group.subtopic
-            self.concept = group.concept
-            self.group_id = group_id
-            topics.add_concept_question_id(
-                question_id=self.id,
-                topic_name=self.topic,
-                subtopic_name=self.subtopic,
-                concept_name=self.concept,
-            )
-
-    def get_prerequisite_question_ids(self, topics: Topics) -> list[str]:
-        if self.group_id in ["OTHER", ""]:
-            return []
-        prerequisite_ids = set()
-        group = topics.groups[self.group_id]
-        for prerequisite_group_id in group.prerequisite_ids:
-            prerequisite_group = topics.groups.get(prerequisite_group_id)
-            if not prerequisite_group:
-                continue
-            prerequisite_group_questions = (
-                topics.topics[prerequisite_group.topic]
-                .subtopics[prerequisite_group.subtopic]
-                .concepts[prerequisite_group.concept]
-                .question_ids
-            )
-            if not prerequisite_group_questions:
-                continue
-            prerequisite_ids.add(random.choice(prerequisite_group_questions))
-            if len(prerequisite_ids) == MAX_PREREQUISITES:
-                break
-        return sorted(prerequisite_ids, key=int)[:MAX_PREREQUISITES]
-
-    def add_subquestions(
-        self,
-        model: ModelName = MODEL,
-        attempts: int = ATTEMPTS,
-        max_tokens: int = MAX_TOKENS,
-    ):
-        if self.group_id in ["OTHER", ""]:
-            return
-        print(f"\nADDING SUBQUESTIONS FOR QUESTION: {self.id}\n")
-        if create_subquestions_decision(
-            question=self, model=model, attempts=attempts, max_tokens=max_tokens
-        ):
-            subquestions = create_subquestions(
-                question=self, model=model, attempts=attempts, max_tokens=max_tokens
-            )
-            if subquestions:
-                self.subquestions = subquestions.subquestions
-
-
-# data_dir = Path("/media/hamza/data2/MATH/train/")
-# questions_dir = Path("math_102_questions")
-# question_id = 0
-# for folder in data_dir.iterdir():
-#     if folder.is_dir() and folder.name != "counting_and_probability":
-#         folder_questions = []
-#         for question_file in folder.glob("*.json"):
-#             question = json.loads(question_file.read_text())
-#             if "5" in question["level"]:
-#                 dest = questions_dir / f"{folder.name}/{question_id}.json"
-#                 os.makedirs(dest.parent, exist_ok=True)
-#                 with open(dest, "w") as f:
-#                     json.dump(
-#                         {
-#                             "id": str(question_id),
-#                             "problem": question["problem"],
-#                             "solution": question["solution"],
-#                         },
-#                         f,
-#                         indent=2,
-#                     )
-#                 question_id += 1
+        for i, subquestion in enumerate(self.subquestions, start=1):
+            question_str += f"\n\n{dict_to_xml({f'subquestion_{i}': subquestion})}"
+        return question_str.strip()
